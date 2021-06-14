@@ -1,0 +1,8 @@
+class Texture{
+
+    constructor(){
+
+    }
+
+    
+}

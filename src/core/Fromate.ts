@@ -214,7 +214,13 @@ enum ComponentFormate{
     /**
      * gl.FLOAT
      */
-    FLOAT = 0x1406
+    FLOAT = 0x1406,
+
+    /**
+     * 半精度浮点
+     * gl.HALF_FLOAT_OES
+     */
+    HALF_FLOAT_OES = 0x8D61
 }
 
 export {

@@ -1,7 +1,7 @@
 /**
  * 矢量类型长度
  */
- enum VectorFormateSize {
+enum VectorFormateSize {
     /**
      * 点向量
      */
@@ -42,10 +42,33 @@
  * webgl元数据类型size
  */
 const ComponentFormateSize = {
+
     /**
-     * gl.Float
+     * gl.unsinged_byte
+     */
+    0x1401: 1,
+
+    /**
+     * GL_UNSIGNED_SHORT
+     */
+
+    0x1403: 2,
+
+    /**
+    * GL_UNSIGNED_INT
+    */
+    0x1405: 4,
+
+    /**
+     * gl.float
      */
     0x1406: 4,
+
+    /**
+     * 需要扩展支持，半精度浮点
+     * GL_HALF_FLOAT_OES
+     */
+    0x8D61: 2
 }
 
 export {
