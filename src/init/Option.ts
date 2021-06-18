@@ -2,7 +2,7 @@
  * @description default webgl option
  * https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/getContext
  */
-const GLOption: WebGLContextAttributes = {
+const WebGLOption: WebGLContextAttributes = {
     alpha: true,                         //指示canvas包含alpha缓冲区
     antialias: false,                    //默认不开抗锯齿
     depth: true,                         //默认开启16位深度缓冲，
@@ -15,5 +15,5 @@ const GLOption: WebGLContextAttributes = {
 }
 
 export {
-    GLOption
+    WebGLOption
 }

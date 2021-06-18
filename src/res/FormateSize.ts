@@ -44,29 +44,44 @@ enum VectorFormateSize {
 const ComponentFormateSize = {
 
     /**
-     * gl.unsinged_byte
+     * gl.BYTE, 5120, (int8)
+     */
+    0x1400: 1,
+
+    /**
+     * gl.unsinged_byte, 5121 (uint8)
      */
     0x1401: 1,
 
     /**
-     * GL_UNSIGNED_SHORT
+     * gl.SHORT, 5122 (int16)
+     */
+    0x1402: 2,
+
+    /**
+     * GL_UNSIGNED_SHORT, 5123 (uint16)
      */
 
     0x1403: 2,
 
     /**
-    * GL_UNSIGNED_INT
+     * gl.INT, 5124, (int32)
+     */
+    0x1404: 4,
+
+    /**
+    * GL_UNSIGNED_INT, 5125, (uint32)
     */
     0x1405: 4,
 
     /**
-     * gl.float
+     * gl.FLOAT, 5126, (float32)
      */
     0x1406: 4,
 
     /**
      * 需要扩展支持，半精度浮点
-     * GL_HALF_FLOAT_OES
+     * gl.GL_HALF_FLOAT_OES (float16)
      */
     0x8D61: 2
 }

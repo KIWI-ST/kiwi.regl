@@ -181,38 +181,39 @@ enum VectorFormate {
  * webgl元数据类型，例如 FLOAT, INT等
  */
 enum ComponentFormate{
+
     /**
-     * gl.BYTE
+     * gl.BYTE, 5120
      */
     BYTE = 0x1400,
 
     /**
-     * gl.UNSIGNED_BYTE
+     * gl.UNSIGNED_BYTE, 5121
      */
-    UNSIGNED_BYTE = 0x1401,
+    UNSIGNED_BYTE = 0x1401, 
 
     /**
-     * gl.SHORT
+     * gl.SHORT, 5122
      */
     SHORT = 0x1402,
 
     /**
-     * gl.UNSIGNED_SHORT
+     * gl.UNSIGNED_SHORT, 5123
      */
     UNSIGNED_SHORT = 0x1403,
 
     /**
-     * gl.INT
+     * gl.INT, 5124
      */
     INT = 0x1404,
 
     /**
-     * gl.UNSIGNED_INT
+     * gl.UNSIGNED_INT, 5125
      */
     UNSIGNED_INT = 0x1405,
 
     /**
-     * gl.FLOAT
+     * gl.FLOAT, 5126
      */
     FLOAT = 0x1406,
 

@@ -6,5 +6,5 @@ const FLOAT = new Float32Array(1);
 const INT = new Uint32Array(FLOAT.buffer);
 
 const toHalfFloat = (array: any) => {
-    const ushorts = Bufferpool
+    // const ushorts = Bufferpool
 }
