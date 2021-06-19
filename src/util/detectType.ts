@@ -1,11 +1,12 @@
 import { ComponentFormate } from "../res/Fromate";
 
 /**
- * 
+ * 通过值推断类型数组类型
+ * @description 类型枚举 ComponentFormate
  * @param v 
  * @returns 探测数据类型，如果不属于任何一类则默认为Float
  */
-const detectType = (v: any): ComponentFormate => {
+const detectDtype = (v: any): ComponentFormate => {
     const protoName = Object.prototype.toString.call(v);
     switch (protoName) {
         case `[object Int8Array]`:
@@ -30,4 +31,4 @@ const detectType = (v: any): ComponentFormate => {
     }
 }
 
-export { detectType }
+export { detectDtype }
