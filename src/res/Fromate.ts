@@ -7,7 +7,14 @@
 /**
  * 限定输入类型必须是typedArray
  */
- type TypedArrayFormate = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array;
+type TypedArrayFormate = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array;
+
+/**
+ * 数据维度，默认为1
+ * 2和3用在ELEMENT_ARRAY_BUFFER类型下
+ * 为 REGLBuffer 和 REGLElementBuffer 提供类型判断
+ */
+type DimensionTypeFormate = 1 | 2 | 3;
 
 /**
  * RGB颜色表示Texture，Image颜色读取规则
@@ -180,7 +187,7 @@ enum VectorFormate {
 /**
  * webgl元数据类型，例如 FLOAT, INT等
  */
-enum ComponentFormate{
+enum ComponentFormate {
 
     /**
      * gl.BYTE, 5120
@@ -190,7 +197,7 @@ enum ComponentFormate{
     /**
      * gl.UNSIGNED_BYTE, 5121
      */
-    UNSIGNED_BYTE = 0x1401, 
+    UNSIGNED_BYTE = 0x1401,
 
     /**
      * gl.SHORT, 5122
@@ -226,6 +233,7 @@ enum ComponentFormate{
 
 export {
     TypedArrayFormate,
+    DimensionTypeFormate,
     ImageFormate,
     TextureFormate,
     BufferFormate,
