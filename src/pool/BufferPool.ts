@@ -1,0 +1,5 @@
+class BufferPool {
+    constructor(parameters) {
+        
+    }
+}

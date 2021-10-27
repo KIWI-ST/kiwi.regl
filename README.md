@@ -1,4 +1,4 @@
-# kiwi.regl
+# pipegl
 👑 Functional WebGL
 
-> rewritten in typescript
+> rewritten regl by typescript
