@@ -28,7 +28,7 @@ const CBlendFunc = {
      * EXT_blend_minmax, max(v1, v1)
      */
     MAX_EXT: 0x8008
-};
+}
 
 /**
  * component data type gl enum
@@ -68,7 +68,7 @@ const CComponent = {
      * 5126
      */
     FLOAT: 0x1406,
-};
+}
 
 /**
  * supported render type
@@ -108,7 +108,7 @@ const CPrimitive = {
      * draw triangle with the first point as the center and the other points around it
      */
     TRIANGLE_FAN: 6,
-};
+}
 
 /**
  * Texture enum, TextureCube:
@@ -162,7 +162,7 @@ const CTextureMapTarget = {
      * 
      */
     TEXTURE_CUBE_MAP_NEGATIVE_Z: 0x851A,
-};
+}
 
 /**
  * shader type
@@ -177,7 +177,7 @@ const CShaderTarget = {
      * vertex shader
      */
     VERTEX_SHADER: 0x8B31,
-};
+}
 
 /**
  * arraybuffer obejct
@@ -192,7 +192,7 @@ const CArraybufferTarget = {
      * 
      */
     ELEMENT_ARRAY_BUFFER: 0x8893,
-};
+}
 
 /**
  * draw type, the different areas of memory alloc data
@@ -212,7 +212,7 @@ const CUsage = {
      * common use, often changed
      */
     DYNAMIC_DRAW: 0x88E8,
-};
+}
 
 /**
  * element buffer data dimension
@@ -232,7 +232,7 @@ const CDimension = {
      * 
      */
     TRIANGLES: 3
-};
+}
 
 /**
  * active type
@@ -247,7 +247,7 @@ const CActiveTarget = {
      * actived uniforms in linked program
      */
     ACTIVE_UNIFORMS: 0x8B86,
-};
+}
 
 /**
  * vector type (size)
@@ -287,7 +287,7 @@ const CVector = {
      * 3x3 matrix
      */
     MAT4: 16,
-};
+}
 
 /**
  * framebuffer attachment target
@@ -302,7 +302,7 @@ const CAttachmentTarget = {
      * render buffer object
      */
     RENDERBUFFER: 0x8D41,
-};
+}
 
 /**
  * fill texture mode
@@ -322,7 +322,7 @@ const CTextureFillTarget = {
      * mirror repreat
      */
     MIRRORED_REPEAT: 0x8370,
-};
+}
 
 /**
  * interpretation mode
@@ -342,7 +342,7 @@ const CMipmapHint = {
      * the most correct or the highest quality option should be used
      */
     NICEST: 0x1102
-};
+}
 
 /**
  *    wrap_T
@@ -362,7 +362,7 @@ const CTextureWrapTarget = {
      * vertical
      */
     TEXTURE_WRAP_T: 0x2803,
-};
+}
 
 /**
  * MAG filter
@@ -377,7 +377,7 @@ const CTextureMAGFilter = {
      * 
      */
     LINAR: 0x2601,
-};
+}
 
 /**
  * min filter
@@ -412,7 +412,7 @@ const CTextureMINFilter = {
      * 
      */
     LINEAR_MIPMAP_LINEAR: 0x2703,
-};
+}
 
 /**
  * color space
@@ -427,7 +427,7 @@ const CColorSpace = {
      * 
      */
     BROWSER_DEFAULT_WEBGL: 0x9244,
-};
+}
 
 const CTextureComponent = {
     /**
@@ -489,7 +489,7 @@ const CTextureComponent = {
      * depth stencil default
      */
     UNSIGNED_INT_24_8_WEBGL: 0x84FA,
-};
+}
 
 /**
  * indicate texture channels
@@ -554,7 +554,7 @@ const CTextureColor = {
      *  common used in bufferStorage, support depth/rbo
      */
     DEPTH_STENCIL: 0x84F9,
-};
+}
 
 /**
  * convert texture type to component type
@@ -569,7 +569,7 @@ const CTextureColor2Component = {
      * 0x8034
      */
     RGB5_A1: 'UNSIGNED_SHORT_5_5_5_1'
-};
+}
 
 /**
  * compress algorithm 
@@ -594,7 +594,7 @@ const CTextureCompressed = {
      * rgba s3tc dxt5
      */
     COMPRESSED_RGBA_S3TC_DXT5_EXT: 0x83F3,
-};
+}
 
 /**
  * texture component to size
@@ -659,7 +659,7 @@ const CTextureComponentSize = {
      * UNSIGNED_INT_24_8_WEBGL
      */
     0x84FA: 4,
-};
+}
 
 /**
  * combine texture channel count
@@ -709,7 +709,7 @@ const CTextureChannelCount = {
      * SRGB_ALPHA_EXT, unsized sRGB format with unsized alpha compinent
      */
     0x8c42: 4,
-};
+}
 
 /**
  * renderbuffer support color type
@@ -764,7 +764,7 @@ const CRenderbufferColor = {
      * rgba32f
      */
     RGBA32F_EXT: 0x8814,
-};
+}
 
 /**
  * 
@@ -795,7 +795,7 @@ const CWebGLStatusTYPE = {
      * 
      */
     NUMBER: 5,
-};
+}
 
 /**
  * 
@@ -845,7 +845,7 @@ const CWebGLStatusFLAG = {
      * lock pixel
      */
     SCISSOR_TEXT: CWebGLStatusTYPE.FLAG,
-};
+}
 
 /**
  * 
@@ -930,7 +930,7 @@ const CWebGLStatusVariable = {
      * 
      */
     viewport: CWebGLStatusTYPE.DECARRAY,
-};
+}
 
 export {
     CWebGLStatusTYPE,
