@@ -1,5 +1,5 @@
-import { TypedArrayFormat } from '../core/Format';
 import { SComponent } from '../core/Support';
+import { TypedArrayFormat } from '../core/Format';
 
 /**
  * @param v search 16 pow of 2
