@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/KIWI-ST/pipegl#readme",
   "devDependencies": {
-    "parcel": "^1.12.3",
+    "kiwi.codegen": "^0.0.3",
+    "parcel": "^2.0.0",
     "typescript": "^4.4.4"
   }
 }
