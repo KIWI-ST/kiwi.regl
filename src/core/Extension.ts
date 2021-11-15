@@ -3,7 +3,7 @@ import { ExtensionFormat } from "./Format";
 /**
  * 
  */
-interface IExtensionLib {
+interface IExtension {
     EXT_blend_minmax?: EXT_blend_minmax,
     EXT_texture_filter_anisotropic?: EXT_texture_filter_anisotropic,
     EXT_frag_depth?: EXT_frag_depth,
@@ -28,7 +28,7 @@ interface IExtensionLib {
  * 
  */
 type SExtension = keyof {
-    [key in keyof IExtensionLib]: string
+    [key in keyof IExtension]: string
 }
 
 /**
@@ -36,7 +36,7 @@ type SExtension = keyof {
  * @author axmand
  * @description rendering context management
  */
-class ExtensionLib {
+class Extension {
     /**
      * rendering context
      */
@@ -45,7 +45,7 @@ class ExtensionLib {
     /**
      * extension library
      */
-    private extensions: IExtensionLib;
+    private extensions: IExtension;
 
     /**
      * 
@@ -89,7 +89,7 @@ class ExtensionLib {
 }
 
 export {
-    IExtensionLib,
     SExtension,
-    ExtensionLib
+    IExtension,
+    Extension
 }

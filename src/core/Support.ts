@@ -102,7 +102,7 @@ type SWebGLStatusFLAG = keyof {
     [key in keyof typeof CWebGLStatusFLAG]: string
 }
 
-type SWebGLStatusVariable = {
+type SWebGLStatusVariable = keyof {
     [key in keyof typeof CWebGLStatusVariable]: string
 }
 

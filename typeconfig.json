@@ -11,6 +11,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "lib": [
+            "scr**/*",
             "es2017",
             "dom"
         ]

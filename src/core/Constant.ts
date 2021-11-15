@@ -844,7 +844,7 @@ const CWebGLStatusFLAG = {
     /**
      * lock pixel
      */
-    SCISSOR_TEXT: CWebGLStatusTYPE.FLAG,
+    SCISSOR_TEST: CWebGLStatusTYPE.FLAG,
 }
 
 /**
@@ -910,6 +910,11 @@ const CWebGLStatusVariable = {
      * 
      */
     polygonOffset: CWebGLStatusTYPE.DECARRAY,
+
+    /**
+     * 
+     */
+    sampleCoverage:CWebGLStatusTYPE.DECARRAY,
 
     /**
      * 

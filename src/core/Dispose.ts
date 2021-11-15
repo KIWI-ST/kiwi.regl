@@ -34,6 +34,11 @@ abstract class Dispose {
      * @description dispose resource
      */
     abstract dispose(): void;
+    
+    /**
+     * 降低引用
+     */
+    abstract deRef():void;
 }
 
 export { Dispose }
