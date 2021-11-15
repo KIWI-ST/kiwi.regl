@@ -6,16 +6,22 @@
 ### core ###
 - [x] Constant
 - [x] Dispose
-- [x] ExtensionLib
+- [x] Extension
 - [x] Format
+- [x] Limit
+- [x] Props
+- [x] Shared
+- [x] Status
 - [x] Support
 
 ### utils ###
 - [x] check
 - [x] defaultValue
 - [x] detectComponent
-- [x] flatten
+- [x] getFlatten
 - [x] getIdx
 
 ### pool ###
 - [x] BufferPool
+
+### res ###
