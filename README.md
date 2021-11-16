@@ -10,9 +10,13 @@
 - [x] Format
 - [x] Limit
 - [x] Props
-- [x] Shared
 - [x] Status
 - [x] Support
+
+### pool ###
+- [x] BufferPool
+
+### res ###
 
 ### utils ###
 - [x] check
@@ -20,8 +24,5 @@
 - [x] detectComponent
 - [x] getFlatten
 - [x] getIdx
-
-### pool ###
-- [x] BufferPool
-
-### res ###
+- [x] isTypedArray
+- [x] toHalfFloat

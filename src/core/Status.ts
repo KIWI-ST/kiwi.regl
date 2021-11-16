@@ -93,16 +93,16 @@ class Status {
         if (CWebGLStatusFLAG[key]) {
             const k = key as SWebGLStatusFLAG;
             const cur = Status.CURRENT_FLAG_SET.get(k);
-            const nxt = this.NEXT_FLAG_SET.get(k);
-            return cur != nxt;
+            const next = this.NEXT_FLAG_SET.get(k);
+            return cur != next;
         }
         else if (CWebGLStatusVariable[key]) {
             const k = key as SWebGLStatusVariable;
             const cur = Status.CURRENT_VARIABLE_SET.get(k);
-            const nxt = this.NEXT_VARIABLE_SET.get(k);
+            const next = this.NEXT_VARIABLE_SET.get(k);
             if (!cur) return true;
-            else if (cur.length !== nxt.length) return true
-            else return cur.reduce((pre: boolean, current, i: number) => pre && current != nxt[i], true);
+            else if (cur.length !== next.length) return true
+            else return cur.join() !== next.join();
         }
         else check(false, `错误：Status-不支持的webgl状态修改，请检查状态是否合法`);
     }
