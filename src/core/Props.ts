@@ -1,3 +1,6 @@
+/**
+ * prop对象抽象类型
+ */
 type TProps = {
     /**
      * 指代vec2/vec3/mat等

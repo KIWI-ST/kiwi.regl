@@ -1,4 +1,4 @@
-import { check } from "./../utils/check";
+import { check } from "./../util/check";
 import { CWebGLStatusFLAG, CWebGLStatusVariable } from "./Constant";
 import { SWebGLStatusFLAG, SWebGLStatusVariable } from "./Support";
 
