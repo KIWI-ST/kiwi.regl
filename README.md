@@ -17,6 +17,7 @@
 - [x] BufferPool
 
 ### res ###
+- [x] REGLBUffer
 
 ### utils ###
 - [x] check
