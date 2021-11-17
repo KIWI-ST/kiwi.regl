@@ -17,7 +17,10 @@
 - [x] BufferPool
 
 ### res ###
-- [x] REGLBUffer
+- [x] REGLBuffer
+
+### state ###
+- [x] StringState
 
 ### utils ###
 - [x] check
@@ -27,3 +30,4 @@
 - [x] getIdx
 - [x] isTypedArray
 - [x] toHalfFloat
+- [x] createTexFlag
