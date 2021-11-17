@@ -22,7 +22,7 @@ import {
     CWebGLStatusVariable
 } from "./Constant";
 
-type SArraybufferTargert = keyof {
+type SArraybufferTarget = keyof {
     [key in keyof typeof CArraybufferTarget]: string
 }
 
@@ -127,7 +127,7 @@ export {
     STextureMapTarget,
     SAttachmentTarget,
     STextureFillTarget,
-    SArraybufferTargert,
+    SArraybufferTarget,
     SWebGLStatusFLAG,
     SWebGLStatusVariable,
     SWebGLStatus

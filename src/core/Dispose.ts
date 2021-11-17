@@ -1,4 +1,4 @@
-import { getIdx } from "../utils/getIdx";
+import { getIdx } from "../util/getIdx";
 
 /**
  * @date 2021/8/16
