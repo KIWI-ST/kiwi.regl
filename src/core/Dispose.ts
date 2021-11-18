@@ -16,7 +16,7 @@ abstract class Dispose {
     /**
      * @description ID
      */
-    private id: number = getIdx();
+    protected id: number = getIdx();
 
     /**
     * @description get disposable object ID

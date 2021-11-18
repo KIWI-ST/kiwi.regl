@@ -68,6 +68,27 @@ class REGLBuffer extends Dispose {
 
     /**
      * 
+     */
+    get Dimension():number{
+        return this.dimension;
+    }
+
+    /**
+     * 
+     */
+    get ByteLength():number{
+        return this.byteLength;
+    }
+
+    /**
+     * 
+     */
+    get Component():number{
+        return this.component;
+    }
+
+    /**
+     * 
      * @param gl 
      * @param target 
      * @param usage 
@@ -159,4 +180,7 @@ class REGLBuffer extends Dispose {
     }
 }
 
-export { REGLBuffer }
+export { 
+    REGLBUFFER_SET,
+    REGLBuffer 
+}
