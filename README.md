@@ -18,9 +18,13 @@
 
 ### res ###
 - [x] REGLBuffer
+- [x] REGLElementbuffer
+- [x] REGLProgram
+- [x] REGLShader
 
 ### state ###
 - [x] StringState
+= [x] ShaderState
 
 ### utils ###
 - [x] check
@@ -31,3 +35,5 @@
 - [x] isTypedArray
 - [x] toHalfFloat
 - [x] createTexFlag
+- [x] createPerformance
+- [x] createStats
