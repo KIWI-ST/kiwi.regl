@@ -937,6 +937,25 @@ const CWebGLStatusVariable = {
     viewport: CWebGLStatusTYPE.DECARRAY,
 }
 
+/**
+ * active attribute info type size
+ */
+const CAttributeTS={
+    5126:1,     //float
+
+    35664:2,    //float_vec2
+    35665:3,    //float_vec3
+    35666:4,    //float_vec4
+
+    35667:2,    //int_vec2
+    35668:3,    //int_vec3
+    35669:4,    //int_vec4
+
+    35671:2,    //bool_vec2
+    35672:3,    //bool_vec3
+    35673:4,    //bool_vec4
+}
+
 export {
     CWebGLStatusTYPE,
     CWebGLStatusFLAG,
@@ -968,5 +987,7 @@ export {
     CActiveTarget,
     CAttachmentTarget,
     CTextureFillTarget,
-    CTextureMapTarget
+    CTextureMapTarget,
+
+    CAttributeTS,
 }

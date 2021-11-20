@@ -19,15 +19,20 @@
 - [x] TexImagePool
 
 ### res ###
+- [x] REGLAttachment
 - [x] REGLBuffer
 - [x] REGLElementbuffer
+- [x] REGLFramebuffer
 - [x] REGLProgram
 - [x] REGLRenderbuffer
 - [x] REGLShader
+- [x] REGLTexture
+- [x] REGLVertexArrayObject
 
 ### state ###
 - [x] StringState
 - [x] ShaderState
+- [x] ProgramState
 
 ### utils ###
 - [x] check
@@ -40,3 +45,4 @@
 - [x] createTexFlag
 - [x] createPerformance
 - [x] createStats
+- [x] isNDArray

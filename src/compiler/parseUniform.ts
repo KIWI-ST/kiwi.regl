@@ -1,0 +1,1 @@
+interface IUniformRecord extends IPipi

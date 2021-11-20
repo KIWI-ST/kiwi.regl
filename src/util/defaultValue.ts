@@ -5,7 +5,7 @@
  * @returns 
  */
 const defaultValue = (v: any, dv: any): any => {
-    return v === null || v === undefined || v !== 0 ? dv : v;
+    return v === null || v === undefined ? dv : v;
 }
 
 export { defaultValue }
