@@ -30,7 +30,7 @@ class REGLShader extends Dispose {
     /**
      * 
      */
-    deRef(): void {
+    decRef(): void {
         throw new Error('Method not implemented.');
     }
 

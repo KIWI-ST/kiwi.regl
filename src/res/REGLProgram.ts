@@ -48,7 +48,7 @@ class REGLProgram extends Dispose {
     /**
      * 
      */
-    deRef(): void {
+    decRef(): void {
         throw new Error('Method not implemented.');
     }
 
@@ -85,6 +85,11 @@ class REGLProgram extends Dispose {
     /**
      * 
      */
+    private attPosition: Map<string, IActiveInfo>;
+
+    /**
+     * 
+     */
     private shaderState: ShaderState;
 
     /**
@@ -104,6 +109,19 @@ class REGLProgram extends Dispose {
      */
     get Attributes(): IActiveInfo[] {
         return this.attributes;
+    }
+
+    /**
+     * 获取激活的attribute信息，包含name/location, 为vao对象绑定备用
+     */
+    get AttActiveInfo(): Map<string, IActiveInfo> {
+        if (!this.attPosition) {
+            this.attPosition = new Map();
+            this.attributes.forEach((att: IActiveInfo) => {
+                this.attPosition.set(att.name, att);
+            })
+        }
+        return this.attPosition;
     }
 
     constructor(

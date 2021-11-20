@@ -15,16 +15,19 @@
 
 ### pool ###
 - [x] BufferPool
+- [x] MipmapPool
+- [x] TexImagePool
 
 ### res ###
 - [x] REGLBuffer
 - [x] REGLElementbuffer
 - [x] REGLProgram
+- [x] REGLRenderbuffer
 - [x] REGLShader
 
 ### state ###
 - [x] StringState
-= [x] ShaderState
+- [x] ShaderState
 
 ### utils ###
 - [x] check

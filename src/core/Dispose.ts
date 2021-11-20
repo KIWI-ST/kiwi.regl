@@ -38,7 +38,7 @@ abstract class Dispose {
     /**
      * 降低引用
      */
-    abstract deRef():void;
+    abstract decRef():void;
 }
 
 export { Dispose }
