@@ -10,7 +10,7 @@ import { SArraybufferTarget, SComponent, SDimension, SUsage } from './../core/Su
 /**
  * 全局存储buffer
  */
-const REGLBUFFER_SET: Map<number, REGLBuffer> = new Map();
+const BUFFER_SET: Map<number, REGLBuffer> = new Map();
 
 /**
  * 
@@ -110,7 +110,7 @@ class REGLBuffer extends Dispose {
         this.usage = CUsage[usage || 'STATIC_DRAW'];
         this.dimension = CDimension[dimension || 'POINTS'];
         this.component = CComponent[component || 'UNSIGNED_BYTE'];
-        REGLBUFFER_SET.set(this.ID, this);
+        BUFFER_SET.set(this.ID, this);
     }
 
     /**
@@ -181,6 +181,6 @@ class REGLBuffer extends Dispose {
 }
 
 export { 
-    REGLBUFFER_SET,
+    BUFFER_SET,
     REGLBuffer 
 }

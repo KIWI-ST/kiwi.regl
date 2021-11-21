@@ -2,7 +2,7 @@ import { CArraybufferTarget, CUsage } from "../core/Constant";
 import { Dispose } from "../core/Dispose";
 import { ShapedArrayFormat } from "../core/Format";
 import { SArraybufferTarget, SComponent, SDimension, SUsage } from "../core/Support";
-import { REGLBuffer, REGLBUFFER_SET } from "../res/REGLBuffer";
+import { REGLBuffer, BUFFER_SET } from "../res/REGLBuffer";
 import { IStats } from "../util/createStats";
 
 /**
@@ -12,7 +12,7 @@ class BufferState{
     /**
      * 
      */
-    static REGLBUFFER_SET: Map<number, REGLBuffer> = REGLBUFFER_SET;
+    static REGLBUFFER_SET: Map<number, REGLBuffer> = BUFFER_SET;
 
     /**
      *  

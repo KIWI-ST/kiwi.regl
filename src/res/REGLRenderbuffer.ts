@@ -140,4 +140,7 @@ class REGLRenderbuffer extends Dispose {
     }
 }
 
-export { REGLRenderbuffer }
+export {
+    RENDERBUFFER_SET,
+    REGLRenderbuffer
+}

@@ -37,6 +37,9 @@
 - [x] ShaderState
 - [x] ProgramState
 - [x] TextureState
+- [x] AttributeState
+- [x] RenderbufferState
+- [x] FramebufferState
 
 ### utils ###
 - [x] check
@@ -54,3 +57,5 @@
 - [x] getExtendCopy
 - [x] getPixelSize
 - [x] isPowerOf2
+- [x] isBufferArray
+- [x] checkAttribute

@@ -8,6 +8,7 @@ import { IPerformance } from './../util/createPerformance';
 import { REGLElementbuffer } from './../res/REGLElementbuffer';
 import { Extension } from "./Extension";
 import { Limit } from "./Limit";
+import { IAttributeRecord, REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
 
 /**
  * 全局静态值，包含属性/对象/函数

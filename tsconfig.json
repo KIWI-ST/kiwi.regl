@@ -10,7 +10,8 @@
         "experimentalDecorators": true,
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "lib": ["DOM", "ES2017"]
     },
     "rootDir": "src",
     "include": [

@@ -286,16 +286,16 @@ class TextureState {
         w: number,
         h: number,
         c: number,
-        stride: number[],
+        stride: number[] = [0,0,0],
         offset: number = 0,
         opts: {
             min?: STextureMINFilter,             //minFilter
             mag?: STextureMAGFilter,             //magFilter
             wrapS?: STextureFillTarget,          //wrapS
             wrapT?: STextureFillTarget,          //wrapT
-            mipmap: SMipmapHint,                 //mipmap采样方式
+            mipmap?: SMipmapHint,                 //mipmap采样方式
             anisotropic?: 1 | 2 | 3,                 //各项异性过滤
-        }
+        }={}
     ): REGLTexture => {
         const gl = this.gl;
         //parse options to get reglTexInfo
