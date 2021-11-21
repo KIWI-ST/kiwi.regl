@@ -19,7 +19,7 @@ class REGLBuffer extends Dispose {
     /**
      * 
      */
-    deRef(): void {
+    decRef(): void {
         this.refCount--;
     }
 

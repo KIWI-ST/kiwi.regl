@@ -1,21 +1,7 @@
+import { getExtend } from '../util/getExtendCopy';
 import { bufferPool0 } from './BufferPool';
 import { TypedArrayFormat } from './../core/Format';
 import { ITexFlag, createTexFlag } from './../util/createTexFlag';
-
-/**
- * 
- * @param target 
- * @param exts 
- * @returns 
- */
-const extend = (target: object, ...exts: object[]): object => {
-    exts.forEach((ext: object) => {
-        const keys = Object.keys(ext);
-        for (let i = 0, len = keys.length; i < len; ++i)
-            target[keys[i]] = ext[keys[i]];
-    });
-    return target;
-}
 
 /**
  * Texture Image 属性设置
@@ -79,7 +65,7 @@ class TexImagePool {
         if (this.texImageQueue.length > 0)
             return this.texImageQueue.pop();
         const A = createTexImage(), B = createTexFlag();
-        return extend(A, B) as ITexImage;
+        return getExtend(A, B) as ITexImage;
     }
 
     /**
@@ -88,7 +74,7 @@ class TexImagePool {
      */
     freeImage = (texImage: ITexImage): void => {
         if (texImage.neddsFree) bufferPool0.free(texImage.data);
-        extend(texImage, createTexImage());
+        getExtend(texImage, createTexImage());
         this.texImageQueue.push(texImage);
     }
 }

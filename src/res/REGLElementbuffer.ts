@@ -23,7 +23,7 @@ class REGLElementbuffer extends Dispose {
     /**
      * 
      */
-    deRef(): void {
+    decRef(): void {
         throw new Error("Method not implemented.");
     }
 
@@ -54,6 +54,13 @@ class REGLElementbuffer extends Dispose {
      */
     get ByteLength(): number {
         return this.reglBuffer.ByteLength;
+    }
+
+    /**
+     * 
+     */
+    set Primitive(v: number) {
+        this.primitive = v;
     }
 
     /**
