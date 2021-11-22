@@ -2,13 +2,24 @@ import { REGLFramebuffer } from "../res/REGLFramebuffer";
 import { REGLShader } from "../res/REGLShader";
 import { REGLTexture } from "../res/REGLTexture";
 import { isNDArray } from "../util/isNDArray";
-import { REGLProgram } from './../res/REGLProgram';
+import { IActiveInfo, REGLProgram } from './../res/REGLProgram';
 import { Status } from './Status';
 import { IPerformance } from './../util/createPerformance';
 import { REGLElementbuffer } from './../res/REGLElementbuffer';
 import { Extension } from "./Extension";
 import { Limit } from "./Limit";
 import { IAttributeRecord, REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
+import { AttributeState } from "../state/AttributeState";
+import { BufferState } from "../state/BufferState";
+import { ElementState } from "../state/ElementState";
+import { ProgramState } from "../state/ProgramState";
+import { ShaderState } from "../state/ShaderState";
+import { StringState } from "../state/StringState";
+import { TextureState } from "../state/TextureState";
+import { RenderbufferState } from "../state/RenderbufferState";
+import { FramebufferState } from "../state/FramebufferState";
+import { Procedure, Template } from 'kiwi.codegen';
+import { REGLBuffer } from "../res/REGLBuffer";
 
 /**
  * 全局静态值，包含属性/对象/函数
@@ -49,7 +60,7 @@ const PipelineConstant = {
      * 在draw buffer插件下调用
      */
     drawBuffer: [[0]],
-}
+};
 
 /**
  * 指示资源会被link到pipeline，需要保存资源id
@@ -142,17 +153,217 @@ interface IPipelineData {
     framebuffer?: REGLFramebuffer | { (performance: IPerformance, batchId: number): REGLFramebuffer };
 }
 
-interface IPipelineSchema{
+/**
+ * 构造pipeline时必须的资源准备
+ */
+interface IPipelineSchema {
 
-    gl:WebGLRenderingContext;
+    gl: WebGLRenderingContext;
 
-    extLib:Extension;
+    extLib: Extension;
 
-    limLib:Limit;
+    limLib: Limit;
 
-    // attributeState:AttributeShate
+    attributeState: AttributeState;
+
+    bufferState: BufferState;
+
+    elementState: ElementState;
+
+    programState: ProgramState;
+
+    shaderState: ShaderState;
+
+    stringState: StringState;
+
+    textureState: TextureState;
+
+    renderbufferState: RenderbufferState;
+
+    framebufferState: FramebufferState;
+
+    /**
+     * 性能统计
+     */
+    performance: IPerformance;
+
+    primitive: number;
+
+    /**
+     * draw Count
+     */
+    count: number;
+
+    /**
+     * draw Offset
+     */
+    offset: number;
+
+    /**
+     * 实例绘制次数
+     */
+    instances?: number;
 }
 
-export{
-    IPipelineLink
+/**
+ * 存储的全局变量对应的codegen生成的变量名
+ */
+type SVariable =
+    | keyof {
+        [key in keyof typeof PipelineConstant]: string
+    }
+    | keyof {
+        [key in keyof IPipelineSchema]: string
+    }
+    | keyof {
+        [key in keyof IPipelineData]: string
+    }
+    | keyof {
+        /**
+         * 常量
+         */
+        pipeConstant?: string;
+
+        /**
+         * 数据集合
+         */
+        pipeData?: string;
+
+        /**
+         * 各种管理类型state的数据集合
+         */
+        pipeState?: string
+    };
+
+/**
+ * @@author axmand
+ * Pipeline设计思想：
+ * -隔离webgl上下文
+ * -记录draw状态
+ * -共享context
+ * 
+ * 通过codegen->compiler->function从形态上和逻辑上保持各个绘制流程(draw pipeline)的隔离
+ */
+class Pipeline {
+    /**
+     * 
+     */
+    private template: Template;
+
+    /**
+     * 记录管道数据
+     */
+    private pipelineSchema: IPipelineSchema;
+
+    /**
+     * 缓存变量对应的pipeline/link等
+     */
+    private variableNameSet: Map<SVariable | string, string> = new Map();
+
+    /**
+     * 
+     */
+    private batchId: number;
+
+    /**
+     * 绘制批次id，在一阵内返回
+     */
+    get BatchID(): number {
+        return this.batchId;
+    }
+
+    /**
+     * 
+     * @param v 
+     * @returns 
+     */
+    public getVariable = (v: SVariable): string => {
+        return this.variableNameSet.get(v);
+    }
+
+    /**
+     * 
+     * @param pipelineSchema 
+     */
+    constructor(pipelineSchema: IPipelineSchema) {
+        this.template = new Template();
+        this.pipelineSchema = pipelineSchema;
+        this.batchId = 0;
+        //处理state数据
+        this.append(pipelineSchema);
+        //处理constant数据
+        this.link(PipelineConstant, 'pipeConstant');
+        Object.keys(PipelineConstant)?.forEach((key: string) => {
+            this.variableNameSet.set(key, this.template.def(`${this.getVariable('pipeConstant')}.${key}`));
+        });
+    }
+
+    /**
+     * 
+     * @param v 
+     * @param linkName 
+     */
+    private appendData = (v: IPipelineSchema | IPipelineData, linkName: SVariable): void => {
+        this.link(v, linkName);
+        Object.keys(v)?.forEach((key: string) => {
+            this.variableNameSet.set(key, this.template.def(`${this.getVariable(linkName)}.${key}`));
+        });
+    }
+
+    /**
+     * 
+     * @param v 
+     */
+    public append = (v: IPipelineSchema | IPipelineData): void => {
+        const ne: SVariable = ((v as IPipelineSchema).attributeState !== undefined) && ((v as IPipelineSchema).bufferState !== undefined) ? 'pipeState' : 'pipeData';
+        this.appendData(v, ne);
+    }
+
+    /**
+     * carete closure function
+     * @param name 
+     * @param parameterCount 
+     * @returns 
+     */
+    public proc = (name: string, parameterCount: number): Procedure => {
+        return this.template.procedure(name, parameterCount);
+    }
+
+    /**
+     * define value
+     * @param v 
+     * @returns 
+     */
+    public def = (v: string | number | boolean | number[] | string[]): string => {
+        return this.template.def(v);
+    }
+
+    /**
+     * link as function input variables
+     * @param v 
+     */
+    public link(v: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): REGLTexture } | { (performance: IPerformance, batchId: number): REGLFramebuffer }): string
+    public link(v: number[] | IActiveInfo | REGLBuffer | REGLElementbuffer | REGLTexture | REGLFramebuffer | Status): string
+    public link(v: Object, name: SVariable): string
+    public link(v?: any, name?: any): string {
+        const v0 = this.template.link(v);
+        if (name) this.variableNameSet.set(name, v0);
+        else this.variableNameSet.set(v0, v0);
+        return v0;
+    }
+
+    /**
+     * 
+     * @returns soruce code
+     */
+    public compile = (): string => {
+        return this.template.compile();
+    }
+}
+
+export {
+    IPipelineLink,
+    IPipelineData,
+    IPipelineSchema,
+    Pipeline,
 }

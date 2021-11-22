@@ -33,6 +33,22 @@ class ShaderState {
     private stringState: StringState;
 
     /**
+     * 
+     * @param gl 
+     * @param stringState 
+     * @param stats 
+     */
+    constructor(
+        gl:WebGLRenderingContext,
+        stringState:StringState,
+        stats:IStats
+    ){
+        this.gl = gl;
+        this.stringState = stringState;
+        this.stats = stats;
+    }
+
+    /**
      * create new reglshader object
      * @example
      * const reglShader = shaderState.createShader('FRAGMENT_SHADER', this.stringState.id(FragRawSourceText));
