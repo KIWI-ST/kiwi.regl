@@ -1,10 +1,11 @@
 {
   "name": "pipegl",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "parcel example/index.html"
+    "compile": "parcel build src/index.ts",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
