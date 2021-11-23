@@ -3,6 +3,22 @@
 
 > rewritten regl by typescript
 
+### compiler ###
+- [X] CompilerCore
+- [X] emitAttribute
+- [X] emitBatch
+- [X] emitElement
+- [X] emitFramebuffer
+- [X] emitProgram
+- [X] emitStatus
+- [X] emitUniform
+- [X] parseAttribute
+- [X] parseConfigure
+- [X] parseElement
+- [X] parseProgram
+- [X] parseStatus
+- [X] parseUniform
+
 ### core ###
 - [x] Constant
 - [x] Dispose
@@ -20,15 +36,15 @@
 - [x] TexImagePool
 
 ### res ###
-- [x] REGLAttachment
-- [x] REGLBuffer
-- [x] REGLElementbuffer
-- [x] REGLFramebuffer
-- [x] REGLProgram
-- [x] REGLRenderbuffer
-- [x] REGLShader
-- [x] REGLTexture
-- [x] REGLVertexArrayObject
+- [x] GAttachment
+- [x] GBuffer
+- [x] GElementbuffer
+- [x] GFramebuffer
+- [x] GProgram
+- [x] GRenderbuffer
+- [x] GShader
+- [x] GTexture
+- [x] GVertexArrayObject
 
 ### state ###
 - [x] BufferState
