@@ -1,7 +1,7 @@
 # pipegl
 👑 Functional WebGL
 
-> rewritten regl completed in typescript, and helps you quickly implement rendering logic by providing smarter tips!
+> Rewritten regl completed in typescript, and helps you quickly implement rendering logic by providing smarter tips !
 
 ### compiler ###
 - [x] CompilerCore
