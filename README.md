@@ -4,20 +4,20 @@
 > rewritten regl by typescript
 
 ### compiler ###
-- [X] CompilerCore
-- [X] emitAttribute
-- [X] emitBatch
-- [X] emitElement
-- [X] emitFramebuffer
-- [X] emitProgram
-- [X] emitStatus
-- [X] emitUniform
-- [X] parseAttribute
-- [X] parseConfigure
-- [X] parseElement
-- [X] parseProgram
-- [X] parseStatus
-- [X] parseUniform
+- [x] CompilerCore
+- [x] emitAttribute
+- [x] emitBatch
+- [x] emitElement
+- [x] emitFramebuffer
+- [x] emitProgram
+- [x] emitStatus
+- [x] emitUniform
+- [x] parseAttribute
+- [x] parseConfigure
+- [x] parseElement
+- [x] parseProgram
+- [x] parseStatus
+- [x] parseUniform
 
 ### core ###
 - [x] Constant
@@ -29,6 +29,7 @@
 - [x] Status
 - [x] Support
 - [x] Transpose
+- [x] Pipe
 
 ### pool ###
 - [x] BufferPool
