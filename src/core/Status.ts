@@ -75,7 +75,7 @@ class Status {
         this.setFlag('POLYGON_OFFSET_FILL', false);
         this.setVariable('polygonOffset', [0, 0]);
         //8.sample coverage
-        this.setFlag('SAMPLE_ALPHA_TOCONVERAGE', false);
+        this.setFlag('SAMPLE_ALPHA_TO_COVERAGE', false);
         this.setFlag('SAMPLE_COVERAGE', false);
         this.setVariable('sampleCoverage', [1, false]);
         //9.stencil

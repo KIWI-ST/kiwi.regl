@@ -829,7 +829,7 @@ const CWebGLStatusFLAG = {
     /**
      * 
      */
-    SAMPLE_ALPHA_TOCONVERAGE: CWebGLStatusTYPE.FLAG,
+    SAMPLE_ALPHA_TO_COVERAGE: CWebGLStatusTYPE.FLAG,
 
     /**
      * 

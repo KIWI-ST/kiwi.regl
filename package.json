@@ -1,9 +1,10 @@
 {
   "name": "pipegl",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "dev": "parcel example/benchmark.html",
     "compile": "parcel build src/index.ts",
     "prepublish": "npm run compile"
   },

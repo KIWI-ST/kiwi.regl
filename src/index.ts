@@ -29,7 +29,7 @@ import { createStats, IStats } from "./util/createStats";
 /**
  * 
  */
-interface IREGLCommand {
+interface IPipeCommand {
     /**
      * 常规一次绘制
      */
@@ -42,7 +42,7 @@ interface IREGLCommand {
     draw<T extends TProps>(prop: T): void;
 
     /**
-     * 动态property绘制
+     * 动态property绘制，批量绘制
      * @param props 
      */
     batch<T extends TProps>(props: T[]): void;
@@ -72,26 +72,59 @@ class PipeGL {
     */
     private extLib: Extension;
 
+    /**
+     * 
+     */
     private stats: IStats;
 
+    /**
+     * 
+     */
     private bufferState: BufferState;
 
+    /**
+     * 
+     */
     private elementState: ElementState;
 
+    /**
+     * 
+     */
     private attributeState: AttributeState;
 
+    /**
+     * 
+     */
     private stringState: StringState;
 
+    /**
+     * 
+     */
     private textureState: TextureState;
 
+    /**
+     * 
+     */
     private shaderState: ShaderState;
 
+    /**
+     * 
+     */
     private programState: ProgramState;
 
+    /**
+     * 
+     */
     private renderbufferState: RenderbufferState;
 
+    /**
+     * 
+     */
     private framebufferState: FramebufferState;
 
+    /**
+     * 
+     */
     private performance: IPerformance;
 
     /**
@@ -147,8 +180,8 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    public compile = <TA extends TAttribute, TU extends TUniform>(opts: ICompileOption<TA, TU>) => {
-        return this.compilerCore.compile(opts) as unknown as IREGLCommand;
+    public compile = <TA extends TAttribute, TU extends TUniform>(opts: ICompileOption<TA, TU>): IPipeCommand => {
+        return this.compilerCore.compile(opts) as unknown as IPipeCommand;
     }
 
     /**
@@ -157,7 +190,7 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    vao = <TA extends TAttribute>(
+    public vao = <TA extends TAttribute>(
         atts: TA,
         opts: {
             elements?: REGLElementbuffer | ShapedArrayFormat,
@@ -181,7 +214,7 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    texture2D = (
+    public texture2D = (
         data: TypedArrayFormat,
         w: number,
         h: number,
@@ -205,7 +238,7 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    renderbuffer = (
+    public renderbuffer = (
         opts: {
             w: number,
             h: number,
@@ -221,7 +254,7 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    buffer = (
+    public buffer = (
         data: ShapedArrayFormat,
         opts: {
             target?: SArraybufferTarget,
@@ -246,7 +279,7 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    framebuffer = (
+    public framebuffer = (
         opts: {
             colors?: (REGLTexture | REGLRenderbuffer)[],
             depth?: REGLRenderbuffer,
@@ -261,7 +294,7 @@ class PipeGL {
      * 
      * @param opts 
      */
-    clear = (
+    public clear = (
         opts: {
             color: number[],
             depth?: boolean,
@@ -283,6 +316,7 @@ class PipeGL {
 
 export {
     PipeGL,
+    IPipeCommand,
     IPerformance,
     IAttributeBuffer,
     TAttribute,

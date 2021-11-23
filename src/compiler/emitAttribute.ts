@@ -45,7 +45,7 @@ const emitBuffer = (
     if (extLib.get('ANGLE_instanced_arrays')) {
         const DIVISOR = record.divisor || 0;
         const cond3 = iBlock.createConditionT(`${BINDING_NAME}.divisor!==${DIVISOR}`);
-        cond3.Then.push(`${pipeline.getVariable('extLib')}.get('ANGLE_instanced_arrays).vertexAttribDivisorANGLE(${LOCATION_NAME}, ${DIVISOR})`);
+        cond3.Then.push(`${pipeline.getVariable('extLib')}.get('ANGLE_instanced_arrays').vertexAttribDivisorANGLE(${LOCATION_NAME}, ${DIVISOR})`);
         cond3.Then.push(`${BINDING_NAME}.divisor=${DIVISOR}`);
     }
 }
