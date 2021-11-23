@@ -1,6 +1,6 @@
-import { IAttributeBuffer } from "../compiler/parseAttribute";
 import { check } from "./check";
 import { isNDArray } from "./isNDArray";
+import { IAttributeBuffer } from "../compiler/parseAttribute";
 
 /**
  * 

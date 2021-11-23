@@ -29,4 +29,5 @@ const detectComponent = (data: any): SComponent => {
             return 'FLOAT';
     }
 }
+
 export { detectComponent }

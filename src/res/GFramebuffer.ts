@@ -2,12 +2,12 @@ import { Dispose } from "../core/Dispose";
 import { Limit } from "../core/Limit";
 import { check } from "../util/check";
 import { IStats } from "../util/createStats";
-import { REGLAttachment } from "./REGLAttachment";
+import { GAttachment } from "./GAttachment";
 
 /**
  * 全局FBO资源统计
  */
-const FRAMEBUFFER_SET: Map<number, REGLFramebuffer> = new Map();
+const FRAMEBUFFER_SET: Map<number, GFramebuffer> = new Map();
 
 /**
  * @author axmand
@@ -30,7 +30,7 @@ const FRAMEBUFFER_SET: Map<number, REGLFramebuffer> = new Map();
  * 因此写入可能较慢，当然依然可以使用FBO渲染到纹理，当需要在像素上执行多次传递以
  * 构建场景，或在一个场景的表面上绘制场景时，是十分有用的
  */
-class REGLFramebuffer extends Dispose {
+class GFramebuffer extends Dispose {
     /**
      * 
      */
@@ -79,22 +79,22 @@ class REGLFramebuffer extends Dispose {
     /**
      * 
      */
-    private colorAttachments: REGLAttachment[] = [];
+    private colorAttachments: GAttachment[] = [];
 
     /**
      * 
      */
-    private depthAttachment: REGLAttachment = null;
+    private depthAttachment: GAttachment = null;
 
     /**
      * 
      */
-    private stencilAttachment: REGLAttachment = null;
+    private stencilAttachment: GAttachment = null;
 
     /**
      * 
      */
-    private depthStencilAttachment: REGLAttachment = null;
+    private depthStencilAttachment: GAttachment = null;
 
     /**
      * 
@@ -109,7 +109,7 @@ class REGLFramebuffer extends Dispose {
     /**
      * 
      */
-    get ColorAttachments(): REGLAttachment[] {
+    get ColorAttachments(): GAttachment[] {
         return this.colorAttachments;
     }
 
@@ -136,10 +136,10 @@ class REGLFramebuffer extends Dispose {
      */
     public refreshAttachment = (
         opts: {
-            colorAttachments?: REGLAttachment[],
-            depthAttachment?: REGLAttachment,
-            stencilAttachment?: REGLAttachment,
-            depthStencilAttachment?: REGLAttachment
+            colorAttachments?: GAttachment[],
+            depthAttachment?: GAttachment,
+            stencilAttachment?: GAttachment,
+            depthStencilAttachment?: GAttachment
         }
     ) => {
         this.colorAttachments = opts.colorAttachments;
@@ -170,7 +170,7 @@ class REGLFramebuffer extends Dispose {
         const gl = this.gl;
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
         //color attchment
-        this.colorAttachments?.forEach((colorAttachment: REGLAttachment, i: number) => {
+        this.colorAttachments?.forEach((colorAttachment: GAttachment, i: number) => {
             colorAttachment.attach(gl.COLOR_ATTACHMENT0 + i);
         })
         for (let i = this.colorAttachments.length; i < this.limLib.maxColorAttachments; ++i) {
@@ -202,5 +202,5 @@ class REGLFramebuffer extends Dispose {
 
 export {
     FRAMEBUFFER_SET,
-    REGLFramebuffer
+    GFramebuffer
 }

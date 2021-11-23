@@ -1,25 +1,25 @@
 
-import { check } from './../util/check';
-import { Dispose } from './../core/Dispose';
+import { check } from '../util/check';
+import { Dispose } from '../core/Dispose';
 import { CShaderTarget } from '../core/Constant';
-import { SShaderTarget } from './../core/Support';
+import { SShaderTarget } from '../core/Support';
 
 /**
  * 
  */
-const FRAGSHADER_SET: Map<number, REGLShader> = new Map();
+const FRAGSHADER_SET: Map<number, GShader> = new Map();
 
 /**
  * 
  */
-const VERTSHADER_SET: Map<number, REGLShader> = new Map();
+const VERTSHADER_SET: Map<number, GShader> = new Map();
 
 /**
  * @author axamnd
  * @example
  * const shader = new REGLShader(gl, id);
  */
-class REGLShader extends Dispose {
+class GShader extends Dispose {
     /**
      * 
      */
@@ -83,5 +83,5 @@ class REGLShader extends Dispose {
 export {
     VERTSHADER_SET,
     FRAGSHADER_SET,
-    REGLShader
+    GShader
 }

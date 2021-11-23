@@ -1,14 +1,14 @@
-import { REGLFramebuffer } from "../res/REGLFramebuffer";
-import { REGLShader } from "../res/REGLShader";
-import { REGLTexture } from "../res/REGLTexture";
+import { GFramebuffer } from "../res/GFramebuffer";
+import { GShader } from "../res/GShader";
+import { GTexture } from "../res/GTexture";
 import { isNDArray } from "../util/isNDArray";
-import { IActiveInfo, REGLProgram } from './../res/REGLProgram';
+import { IActiveInfo, GProgram } from '../res/GProgram';
 import { Status } from './Status';
 import { IPerformance } from './../util/createPerformance';
-import { REGLElementbuffer } from './../res/REGLElementbuffer';
+import { GElementbuffer } from '../res/GElementbuffer';
 import { Extension } from "./Extension";
 import { Limit } from "./Limit";
-import { IAttributeRecord, REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
+import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
 import { ElementState } from "../state/ElementState";
@@ -19,7 +19,7 @@ import { TextureState } from "../state/TextureState";
 import { RenderbufferState } from "../state/RenderbufferState";
 import { FramebufferState } from "../state/FramebufferState";
 import { Procedure, Template } from 'kiwi.codegen';
-import { REGLBuffer } from "../res/REGLBuffer";
+import { GBuffer } from "../res/GBuffer";
 
 /**
  * 全局静态值，包含属性/对象/函数
@@ -42,14 +42,14 @@ const PipelineConstant = {
      * @param v 
      * @returns 
      */
-    isTexture: (v: any) => v instanceof REGLTexture,
+    isTexture: (v: any) => v instanceof GTexture,
 
     /**
      * 
      * @param v 
      * @returns 
      */
-    isFramebuffer: (v: any) => v instanceof REGLFramebuffer,
+    isFramebuffer: (v: any) => v instanceof GFramebuffer,
 
     /**
      * 使用draw buffer插件时调用
@@ -105,7 +105,7 @@ interface IPipelineData {
     /**
      * 
      */
-    program: REGLProgram;
+    program: GProgram;
 
     /**
      * 
@@ -125,12 +125,12 @@ interface IPipelineData {
     /**
      * 
      */
-    fragShader: REGLShader;
+    fragShader: GShader;
 
     /**
      * 
      */
-    vertShader: REGLShader;
+    vertShader: GShader;
 
     /**
      * 
@@ -140,17 +140,17 @@ interface IPipelineData {
     /**
      * 
      */
-    vao?: REGLVertexArrayObject;
+    vao?: GVertexArrayObject;
 
     /**
      * 
      */
-    element?: REGLElementbuffer;
+    element?: GElementbuffer;
 
     /**
      * 
      */
-    framebuffer?: REGLFramebuffer | { (performance: IPerformance, batchId: number): REGLFramebuffer };
+    framebuffer?: GFramebuffer | { (performance: IPerformance, batchId: number): GFramebuffer };
 }
 
 /**
@@ -342,8 +342,8 @@ class Pipeline {
      * link as function input variables
      * @param v 
      */
-    public link(v: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): REGLTexture } | { (performance: IPerformance, batchId: number): REGLFramebuffer }): string
-    public link(v: number[] | IActiveInfo | REGLBuffer | REGLElementbuffer | REGLTexture | REGLFramebuffer | Status): string
+    public link(v: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): GTexture } | { (performance: IPerformance, batchId: number): GFramebuffer }): string
+    public link(v: number[] | IActiveInfo | GBuffer | GElementbuffer | GTexture | GFramebuffer | Status): string
     public link(v: Object, name: SVariable): string
     public link(v?: any, name?: any): string {
         const v0 = this.template.link(v);

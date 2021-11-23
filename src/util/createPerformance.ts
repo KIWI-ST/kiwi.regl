@@ -2,9 +2,20 @@
  * performance stats attributes
  */
 interface IPerformance {
-    gupTime: number,
-    cpuTime: number,
-    count: number
+    /**
+     * 
+     */
+    gupTime: number;
+
+    /**
+     * 
+     */
+    cpuTime: number;
+
+    /**
+     * 
+     */
+    count: number;
 }
 
 /**

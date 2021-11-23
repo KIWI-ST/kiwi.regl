@@ -1,6 +1,6 @@
 import { ShapedArrayFormat } from "../core/Format";
 import { SPrimitive } from "../core/Support";
-import { REGLElementbuffer } from "../res/REGLElementbuffer";
+import { GElementbuffer } from "../res/GElementbuffer";
 import { ElementState } from "../state/ElementState";
 import { isNDArray } from "../util/isNDArray";
 
@@ -16,7 +16,7 @@ const praseElement = (
         elementState?: ElementState,
         primitive?: SPrimitive
     }
-): REGLElementbuffer | null => {
+): GElementbuffer | null => {
     const { element, elementState } = opts;
     //}{先处理shapedArrayformt时数据
     if (element && isNDArray(element)) {

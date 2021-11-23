@@ -1,7 +1,7 @@
 import { check } from "../util/check";
 import { ShaderState } from "./ShaderState";
 import { StringState } from "./StringState";
-import { PROGRAM_SET, REGLProgram } from "../res/REGLProgram";
+import { PROGRAM_SET, GProgram } from "../res/GProgram";
 
 /**
  * @author axmand
@@ -10,7 +10,7 @@ class ProgramState {
     /**
      * 
      */
-    static PROGRAM_SET: Map<number, REGLProgram> = PROGRAM_SET;
+    static PROGRAM_SET: Map<number, GProgram> = PROGRAM_SET;
 
     /**
      * 
@@ -30,12 +30,12 @@ class ProgramState {
     /**
      * 
      */
-    private reglProgram: REGLProgram;
+    private reglProgram: GProgram;
 
     /**
      * 
      */
-    get Current(): REGLProgram {
+    get Current(): GProgram {
         return this.reglProgram;
     }
 
@@ -66,13 +66,13 @@ class ProgramState {
         frag: string,
         vert: string,
         attribLocations: string[]
-    ): REGLProgram => {
+    ): GProgram => {
         check(vert.length >= 0, `ProgramState error: vertex shader is missing`);
         check(frag.length >= 0, `ProgramState error: fragment shader is missing`);
         const gl = this.gl, shaderState = this.shaderState, stringState = this.stringState;
         const fragShader = shaderState.createShader('FRAGMENT_SHADER', stringState.id(frag));
         const vertShader = shaderState.createShader('VERTEX_SHADER', stringState.id(vert));
-        const reglProgram = new REGLProgram(gl, shaderState, stringState, fragShader.ID, vertShader.ID, attribLocations);
+        const reglProgram = new GProgram(gl, shaderState, stringState, fragShader.ID, vertShader.ID, attribLocations);
         return reglProgram;
     }
 

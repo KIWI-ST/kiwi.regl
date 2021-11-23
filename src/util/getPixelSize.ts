@@ -1,5 +1,5 @@
-import { CTextureComponent, CTextureComponentSize } from "../core/Constant";
 import { STextureComponent } from "../core/Support";
+import { CTextureComponent, CTextureComponentSize } from "../core/Constant";
 
 /**
  * 计算纹理类型的像素值存储所需字节数

@@ -2,8 +2,8 @@ import { Block } from "kiwi.codegen";
 import { CArraybufferTarget, CAttributeTS } from "../core/Constant";
 import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
-import { IActiveInfo } from "../res/REGLProgram";
-import { IAttributeRecord, REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
+import { IActiveInfo } from "../res/GProgram";
+import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 
 /**
  * 
@@ -63,7 +63,7 @@ const emitAttribute = (
     pipeline: Pipeline,
     iBlock: Block,
     extLib: Extension,
-    vao: REGLVertexArrayObject,
+    vao: GVertexArrayObject,
     attributes: IActiveInfo[],
     attributeRecordSet: Map<string, IAttributeRecord>
 ): void => {

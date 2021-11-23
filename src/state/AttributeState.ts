@@ -1,19 +1,19 @@
-import { IAttributeBuffer, TAttribute } from "../compiler/parseAttribute";
-import { CColorSpace, CComponent } from "../core/Constant";
-import { Extension } from "../core/Extension";
-import { ShapedArrayFormat } from "../core/Format";
-import { Limit } from "../core/Limit";
-import { SPrimitive } from "../core/Support";
-import { REGLBuffer } from "../res/REGLBuffer";
-import { REGLElementbuffer } from "../res/REGLElementbuffer";
-import { IAttributeRecord, REGLVertexArrayObject, VAO_SET } from "../res/REGLVertexArrayObject";
 import { check } from "../util/check";
-import { checkAttribute } from "../util/checkAttribute";
+import { Limit } from "../core/Limit";
 import { IStats } from "../util/createStats";
-import { isBufferArray } from "../util/isBufferArray";
+import { GBuffer } from "../res/GBuffer";
+import { Extension } from "../core/Extension";
+import { SPrimitive } from "../core/Support";
+import { CComponent } from "../core/Constant";
 import { BufferState } from "./BufferState";
 import { ElementState } from "./ElementState";
 import { ProgramState } from "./ProgramState";
+import { isBufferArray } from "../util/isBufferArray";
+import { GElementbuffer } from "../res/GElementbuffer";
+import { checkAttribute } from "../util/checkAttribute";
+import { ShapedArrayFormat } from "../core/Format";
+import { IAttributeBuffer, TAttribute } from "../compiler/parseAttribute";
+import { IAttributeRecord, GVertexArrayObject, VAO_SET } from "../res/GVertexArrayObject";
 
 /**
  * 
@@ -22,7 +22,7 @@ class AttributeState {
     /**
      * 
      */
-    static VAO_SET: Map<number, REGLVertexArrayObject> = VAO_SET;
+    static VAO_SET: Map<number, GVertexArrayObject> = VAO_SET;
 
     /**
      * 
@@ -72,7 +72,7 @@ class AttributeState {
     /**
      * 
      */
-    private current: REGLVertexArrayObject;
+    private current: GVertexArrayObject;
 
     /**
      * 
@@ -82,7 +82,7 @@ class AttributeState {
     /**
      * 
      */
-    get Current(): REGLVertexArrayObject {
+    get Current(): GVertexArrayObject {
         return this.current;
     }
 
@@ -183,7 +183,7 @@ class AttributeState {
                 const buf = isBufferArray(v0.buffer) ? this.bufferState.createBuffer({
                     data: v0.buffer as ShapedArrayFormat,
                     target: 'ARRAY_BUFFER',
-                }) : v0.buffer as REGLBuffer;
+                }) : v0.buffer as GBuffer;
                 //record属性设置
                 record.offset = v0.offset | 0;
                 check(record.offset >= 0, `offset只能是大于等于0的数字`);
@@ -212,17 +212,17 @@ class AttributeState {
     public createREGLVertexArrayObject = <TA extends TAttribute>(
         attrs: TA,
         opts: {
-            elements?: REGLElementbuffer | ShapedArrayFormat,
+            elements?: GElementbuffer | ShapedArrayFormat,
             offset?: number,
             count?: number,
             instances?: number,
             primitive?: SPrimitive
         } = {}
-    ): REGLVertexArrayObject => {
+    ): GVertexArrayObject => {
         const RECORD_SET = this.applyAttribute(attrs);
-        let ELEMENTS: REGLElementbuffer = null;
+        let ELEMENTS: GElementbuffer = null;
         if (opts.elements) {
-            if (opts.elements instanceof REGLElementbuffer)
+            if (opts.elements instanceof GElementbuffer)
                 ELEMENTS = opts.elements;
             else
                 ELEMENTS = this.elementState.createElementbuffer({
@@ -231,7 +231,7 @@ class AttributeState {
                     primitive: opts.primitive || 'TRIANGLES'
                 });
         }
-        const vertexArrayObject = new REGLVertexArrayObject(
+        const vertexArrayObject = new GVertexArrayObject(
             {
                 gl: this.gl,
                 extVAO: this.extVAO,
@@ -255,7 +255,7 @@ class AttributeState {
      * 
      * @param vao 
      */
-    public setVAO = (vao: REGLVertexArrayObject): void => {
+    public setVAO = (vao: GVertexArrayObject): void => {
         if (vao) this.current = vao;
         else {
             this.Current?.decRef();

@@ -4,9 +4,9 @@ import { ShapedArrayFormat } from "../core/Format";
 import { Limit } from "../core/Limit";
 import { IPipelineData, Pipeline } from "../core/Pipeline";
 import { SPrimitive, SWebGLStatus } from "../core/Support";
-import { REGLElementbuffer } from "../res/REGLElementbuffer";
-import { REGLFramebuffer } from "../res/REGLFramebuffer";
-import { IAttributeRecord, REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
+import { GElementbuffer } from "../res/GElementbuffer";
+import { GFramebuffer } from "../res/GFramebuffer";
+import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
 import { ElementState } from "../state/ElementState";
@@ -75,7 +75,7 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
     /**
      * 
      */
-    framebuffer?: { (performance: IPerformance, batchId: number): REGLFramebuffer } | REGLFramebuffer;
+    framebuffer?: { (performance: IPerformance, batchId: number): GFramebuffer } | GFramebuffer;
 
     /**
      * 
@@ -90,7 +90,7 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
     /**
      * 
      */
-    vao?: REGLVertexArrayObject;
+    vao?: GVertexArrayObject;
 }
 
 class CompilerCore {
@@ -188,9 +188,9 @@ class CompilerCore {
             programState: ProgramState,
             renderbufferState: RenderbufferState,
             framebufferState: FramebufferState,
-            vao?: REGLVertexArrayObject,
+            vao?: GVertexArrayObject,
             primitive?: SPrimitive,
-            framebuffer?: { (performance: IPerformance, batchId: number): REGLFramebuffer } | REGLFramebuffer,
+            framebuffer?: { (performance: IPerformance, batchId: number): GFramebuffer } | GFramebuffer,
             elements?: ShapedArrayFormat,
             offset?: number,
             count?: number,
@@ -198,7 +198,7 @@ class CompilerCore {
             status?: SWebGLStatus
         }
     ): IPipelineData => {
-        let elementbuffer: REGLElementbuffer = null, attributeRecordSet: Map<string, IAttributeRecord> = null;
+        let elementbuffer: GElementbuffer = null, attributeRecordSet: Map<string, IAttributeRecord> = null;
         //解析attribute, 为VAO准备资源
         // const attributeLocations = parseAttribLocation();
         const status = parseStatus(opts);

@@ -1,12 +1,11 @@
-import { CPrimitive } from "../core/Constant";
-import { Extension } from "../core/Extension";
-import { ShapedArrayFormat } from "../core/Format";
-import { SComponent, SDimension, SPrimitive, SUsage } from "../core/Support";
-import { REGLElementbuffer, REGLELEMENTBUFFER_SET } from "../res/REGLElementbuffer";
 import { check } from "../util/check";
 import { IStats } from "../util/createStats";
-import { defaultValue } from "../util/defaultValue";
+import { Extension } from "../core/Extension";
+import { CPrimitive } from "../core/Constant";
 import { BufferState } from "./BufferState";
+import { ShapedArrayFormat } from "../core/Format";
+import { GElementbuffer, REGLELEMENTBUFFER_SET } from "../res/GElementbuffer";
+import { SComponent, SDimension, SPrimitive, SUsage } from "../core/Support";
 
 /**
  * @author axmand
@@ -16,12 +15,12 @@ class ElementState {
     /**
      * 
      */
-    static ELEMENTBUFFER_SET: Map<number, REGLElementbuffer> = REGLELEMENTBUFFER_SET;
+    static ELEMENTBUFFER_SET: Map<number, GElementbuffer> = REGLELEMENTBUFFER_SET;
 
     /**
      * 
      */
-    private streamPool: REGLElementbuffer[] = [];
+    private streamPool: GElementbuffer[] = [];
 
     /**
      * 
@@ -69,14 +68,14 @@ class ElementState {
      */
     private initElement = (
         opts: {
-            reglElementbuffer: REGLElementbuffer,
+            reglElementbuffer: GElementbuffer,
             data: ShapedArrayFormat,
             component: SComponent,
             usage: SUsage,
             primitive: SPrimitive,
             count?: number
         }
-    ): REGLElementbuffer => {
+    ): GElementbuffer => {
         opts.reglElementbuffer.bind();
         opts.reglElementbuffer.paddingWithData(opts.data, opts.usage, opts.component);
         //推断primitive类型
@@ -128,7 +127,7 @@ class ElementState {
      * @param id 
      * @returns 
      */
-    public getElementbuffer = (id: number): REGLElementbuffer => {
+    public getElementbuffer = (id: number): GElementbuffer => {
         return ElementState.ELEMENTBUFFER_SET.get(id);
     }
 
@@ -146,7 +145,7 @@ class ElementState {
             dimension?: SDimension,
             count?: number
         }
-    ): REGLElementbuffer => {
+    ): GElementbuffer => {
         const data = opts.data,
             count = opts.count || 0,
             usage = opts.usage || 'STATIC_DRAW',
@@ -163,7 +162,7 @@ class ElementState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new REGLElementbuffer(reglbuffer, primitive);
+        const reglElementbuffer = new GElementbuffer(reglbuffer, primitive);
         this.stats.elementsCount++;
         return this.initElement({
             reglElementbuffer: reglElementbuffer,
@@ -189,7 +188,7 @@ class ElementState {
             dimension?: SDimension,
             count?: number
         }
-    ): REGLElementbuffer => {
+    ): GElementbuffer => {
         const data = opts.data,
             count = opts.count || 0,
             usage = opts.usage || 'STREAM_DRAW',
@@ -206,7 +205,7 @@ class ElementState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new REGLElementbuffer(reglbuffer, primitive);
+        const reglElementbuffer = new GElementbuffer(reglbuffer, primitive);
         this.stats.elementsCount++;
         return this.initElement({
             reglElementbuffer: reglElementbuffer,
@@ -222,7 +221,7 @@ class ElementState {
      * 
      * @param streamElementbuffer 
      */
-    public destoryStreamElementbuffer = (streamElementbuffer:REGLElementbuffer):void=>{
+    public destoryStreamElementbuffer = (streamElementbuffer:GElementbuffer):void=>{
         this.streamPool.push(streamElementbuffer);
     }
 }

@@ -2,17 +2,17 @@ import { CPrimitive } from "../core/Constant";
 import { Dispose } from "../core/Dispose";
 import { ShapedArrayFormat, TypedArrayFormat } from "../core/Format";
 import { SComponent, SPrimitive, SUsage } from "../core/Support";
-import { REGLBuffer } from "./REGLBuffer";
+import { GBuffer } from "./GBuffer";
 
 /**
  * 
  */
-const REGLELEMENTBUFFER_SET: Map<number, REGLElementbuffer> = new Map();
+const REGLELEMENTBUFFER_SET: Map<number, GElementbuffer> = new Map();
 
 /**
  * @author axmand
  */
-class REGLElementbuffer extends Dispose {
+class GElementbuffer extends Dispose {
     /**
      * 
      */
@@ -40,7 +40,7 @@ class REGLElementbuffer extends Dispose {
     /**
      * 
      */
-    private reglBuffer: REGLBuffer;
+    private reglBuffer: GBuffer;
 
     /**
      * 
@@ -97,7 +97,7 @@ class REGLElementbuffer extends Dispose {
      * @param primitive 
      */
     constructor(
-        reglBuffer: REGLBuffer,
+        reglBuffer: GBuffer,
         primitive: SPrimitive = 'TRIANGLES'
 
     ) {
@@ -137,5 +137,5 @@ class REGLElementbuffer extends Dispose {
 
 export {
     REGLELEMENTBUFFER_SET,
-    REGLElementbuffer
+    GElementbuffer
 }

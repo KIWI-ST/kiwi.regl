@@ -1,7 +1,7 @@
 import { Block } from "kiwi.codegen";
 import { Pipeline } from "../core/Pipeline";
-import { IActiveInfo } from "../res/REGLProgram";
-import { REGLTexture } from "../res/REGLTexture";
+import { IActiveInfo } from "../res/GProgram";
+import { GTexture } from "../res/GTexture";
 import { check } from "../util/check";
 import { isNDArray } from "../util/isNDArray";
 import { IUniformRecord } from "./parseUniform";
@@ -103,7 +103,7 @@ const emitUniform = (
         const { prefix, isMatrix } = UComponent(component);
         //获取后缀，处理静态值
         if (record.v) {
-            if (record.v instanceof REGLTexture) {
+            if (record.v instanceof GTexture) {
                 //bind regltexture
                 record.dn = pipeline.link(record.v);
                 iBlock.push(`${GL_NAME}.uniform${prefix}(${record.ln}.location, ${record.dn}.bind())`);

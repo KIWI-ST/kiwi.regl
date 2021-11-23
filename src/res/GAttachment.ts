@@ -1,13 +1,13 @@
 import { Dispose } from "../core/Dispose";
-import { REGLTexture } from "./REGLTexture";
-import { REGLRenderbuffer } from './REGLRenderbuffer';
+import { GTexture } from "./GTexture";
+import { GRenderbuffer } from './GRenderbuffer';
 import { SAttachmentTarget } from "../core/Support";
 import { CAttachmentTarget } from "../core/Constant";
 
 /**
  * @author axmand
  */
-class REGLAttachment extends Dispose {
+class GAttachment extends Dispose {
     /**
      * 
      */
@@ -31,12 +31,12 @@ class REGLAttachment extends Dispose {
     /**
      * 
      */
-    private reglTexture: REGLTexture;
+    private reglTexture: GTexture;
 
     /**
      * 
      */
-    private reglRenderbuffer: REGLRenderbuffer;
+    private reglRenderbuffer: GRenderbuffer;
 
     /**
      * 
@@ -56,21 +56,27 @@ class REGLAttachment extends Dispose {
     /**
      * 
      */
-    get Texture(): REGLTexture {
+    get Texture(): GTexture {
         return this.reglTexture;
     }
 
+    /**
+     * 
+     * @param gl 
+     * @param target 
+     * @param attach 
+     */
     constructor(
         gl: WebGLRenderingContext,
         target: SAttachmentTarget,
-        attach: REGLTexture | REGLRenderbuffer
+        attach: GTexture | GRenderbuffer
     ) {
         super();
         this.gl = gl;
         this.target = CAttachmentTarget[target || 'TEXTURE_2D'] || 0;
-        if (attach instanceof REGLTexture)
+        if (attach instanceof GTexture)
             this.reglTexture = attach;
-        else if (attach instanceof REGLRenderbuffer)
+        else if (attach instanceof GRenderbuffer)
             this.reglRenderbuffer = attach;
         this.width = this.reglTexture?.Width || this.reglRenderbuffer?.Width || 0;
         this.height = this.reglTexture?.Height || this.reglRenderbuffer?.Height || 0;
@@ -82,11 +88,11 @@ class REGLAttachment extends Dispose {
      */
     public attach = (location: number): void => {
         const gl = this.gl;
-        if (this.reglTexture) gl.framebufferTexture2D(gl.FRAMEBUFFER, location, this.target, this.reglTexture.Texutre, 0);
-        else gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, this.target, this.reglRenderbuffer.Renderbuffer);
+        if (this.reglTexture) 
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, location, this.target, this.reglTexture.Texutre, 0);
+        else 
+            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, this.target, this.reglRenderbuffer.Renderbuffer);
     }
 }
 
-export {
-    REGLAttachment
-}
+export { GAttachment }

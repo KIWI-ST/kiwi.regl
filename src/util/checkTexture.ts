@@ -1,12 +1,12 @@
-import { CTextureChannelCount, CTextureColor, CTextureCompressed } from "../core/Constant";
-import { Extension } from "../core/Extension";
-import { Limit } from "../core/Limit";
-import { STextureColor, STextureComponent, STextureCompressed } from "../core/Support";
-import { IMipmap } from "../pool/MipmapPool";
-import { ITexInfo } from "../res/REGLTexture";
 import { check } from "./check";
-import { getPixelSize } from "./getPixelSize";
+import { Limit } from "../core/Limit";
+import { IMipmap } from "../pool/MipmapPool";
+import { ITexInfo } from "../res/GTexture";
+import { Extension } from "../core/Extension";
 import { isPowerOf2 } from "./isPowerOf2";
+import { getPixelSize } from "./getPixelSize";
+import { STextureColor, STextureComponent, STextureCompressed } from "../core/Support";
+import { CTextureChannelCount, CTextureColor, CTextureCompressed } from "../core/Constant";
 
 /**
  * 
@@ -98,6 +98,6 @@ const checkMipmapTexture2D = (
 }
 
 export {
-    checkTexture2D as checkTexture2d,
+    checkTexture2D,
     checkMipmapTexture2D
 }

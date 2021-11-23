@@ -65,7 +65,7 @@ const createStats = (): IStats => {
         cubeCount: 0,
         renderbufferCount: 0,
         maxTextureUnits: 0       //assign by limLib.maxTextureUnits
-    }
+    };
     return stats;
 }
 

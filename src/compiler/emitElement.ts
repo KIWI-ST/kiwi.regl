@@ -2,8 +2,8 @@ import { Block } from "kiwi.codegen";
 import { CComponent } from "../core/Constant";
 import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
-import { REGLElementbuffer } from "../res/REGLElementbuffer";
-import { REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
+import { GElementbuffer } from "../res/GElementbuffer";
+import { GVertexArrayObject } from "../res/GVertexArrayObject";
 
 /**
  * 
@@ -17,9 +17,9 @@ import { REGLVertexArrayObject } from "../res/REGLVertexArrayObject";
 const emitElement = (
     pipeline: Pipeline,
     extLib: Extension,
-    vao: REGLVertexArrayObject,
+    vao: GVertexArrayObject,
     iBlock: Block,
-    element: REGLElementbuffer,
+    element: GElementbuffer,
     instances: number
 ): void => {
     //1.根据vao是否存在判断直接只用值或使用变量

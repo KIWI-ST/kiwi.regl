@@ -3,8 +3,8 @@ import { Extension } from "../core/Extension";
 import { ShapedArrayFormat } from "../core/Format";
 import { Pipeline } from "../core/Pipeline";
 import { SComponent } from "../core/Support";
-import { REGLBuffer } from "../res/REGLBuffer";
-import { IAttributeRecord } from "../res/REGLVertexArrayObject";
+import { GBuffer } from "../res/GBuffer";
+import { IAttributeRecord } from "../res/GVertexArrayObject";
 import { BufferState } from "../state/BufferState";
 import { check } from "../util/check";
 import { checkAttribute } from "../util/checkAttribute";
@@ -17,7 +17,7 @@ interface IAttributeBuffer {
     /**
      * 数组对象（缓冲）
      */
-    buffer: REGLBuffer | ShapedArrayFormat;
+    buffer: GBuffer | ShapedArrayFormat;
 
     /**
      * 顶点属性偏移量，按byte位偏移
@@ -128,7 +128,7 @@ const parseAttribute = <TA extends TAttribute>(
             const buf = isBufferArray(v0.buffer) ? bufferState.createBuffer({
                 data: v0.buffer as ShapedArrayFormat,
                 target: 'ARRAY_BUFFER',
-            }) : v0.buffer as REGLBuffer;
+            }) : v0.buffer as GBuffer;
             //record属性设置
             record.offset = v0.offset | 0;
             check(record.offset >= 0, `offset只能是大于等于0的数字`);

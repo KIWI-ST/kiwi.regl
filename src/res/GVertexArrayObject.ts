@@ -3,9 +3,9 @@ import { Dispose } from "../core/Dispose";
 import { IPipelineLink } from "../core/Pipeline";
 import { SPrimitive } from "../core/Support";
 import { IStats } from "../util/createStats";
-import { REGLBuffer } from "./REGLBuffer";
-import { REGLElementbuffer } from "./REGLElementbuffer";
-import { defaultValue } from './../util/defaultValue';
+import { GBuffer } from "./GBuffer";
+import { GElementbuffer } from "./GElementbuffer";
+import { defaultValue } from '../util/defaultValue';
 import { check } from "../util/check";
 import { ProgramState } from "../state/ProgramState";
 
@@ -26,7 +26,7 @@ interface IAttributeRecord extends IPipelineLink {
     /**
      * Attribute记录的缓冲对象（数据）
      */
-    buffer?: number[] | REGLBuffer | REGLElementbuffer;
+    buffer?: number[] | GBuffer | GElementbuffer;
 
     /**
      * 指示数据归一化
@@ -61,12 +61,12 @@ interface IAttributeRecord extends IPipelineLink {
 /**
  * VertexArrayObject MAP
  */
-const VAO_SET: Map<number, REGLVertexArrayObject> = new Map();
+const VAO_SET: Map<number, GVertexArrayObject> = new Map();
 
 /**
  * 
  */
-class REGLVertexArrayObject extends Dispose {
+class GVertexArrayObject extends Dispose {
     /**
      * 
      */
@@ -94,7 +94,7 @@ class REGLVertexArrayObject extends Dispose {
     /**
      * element arraybuffer 
      */
-    private elements: REGLElementbuffer;
+    private elements: GElementbuffer;
 
     /**
      * 
@@ -149,14 +149,14 @@ class REGLVertexArrayObject extends Dispose {
     /**
      * 
      */
-    set Elements(v: REGLElementbuffer) {
+    set Elements(v: GElementbuffer) {
         this.elements = v;
     }
 
     /**
      * element arraybuffer
      */
-    get Elements(): REGLElementbuffer {
+    get Elements(): GElementbuffer {
         return this.elements;
     }
 
@@ -216,7 +216,7 @@ class REGLVertexArrayObject extends Dispose {
     public refresh = (
         opts: {
             recordSet?: Map<string, IAttributeRecord>,
-            elements?: REGLElementbuffer,
+            elements?: GElementbuffer,
             offset?: number,
             count?: number,
             instances?: number,
@@ -244,7 +244,7 @@ class REGLVertexArrayObject extends Dispose {
         this.attributeSet?.forEach((att: IAttributeRecord, loc: string) => {
             if (att.buffer) {
                 //顶点缓冲
-                if (att.buffer instanceof REGLBuffer) {
+                if (att.buffer instanceof GBuffer) {
                     const act = this.programState.Current.AttActiveInfo.get(loc);
                     check(act, `VAO错误：VAO绑定属性与当前Program不一致`);
                     const pos = act.location as number;
@@ -274,5 +274,5 @@ class REGLVertexArrayObject extends Dispose {
 export {
     VAO_SET,
     IAttributeRecord,
-    REGLVertexArrayObject
+    GVertexArrayObject
 }

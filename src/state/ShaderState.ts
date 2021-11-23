@@ -1,7 +1,7 @@
 import { IStats } from './../util/createStats';
 import { StringState } from './StringState';
 import { SShaderTarget } from '../core/Support';
-import { REGLShader, FRAGSHADER_SET, VERTSHADER_SET } from './../res/REGLShader';
+import { GShader, FRAGSHADER_SET, VERTSHADER_SET } from '../res/GShader';
 
 /**
  * 
@@ -10,12 +10,12 @@ class ShaderState {
     /**
      * frag shader map
      */
-    private static FRAGSHADER_SET: Map<number, REGLShader> = FRAGSHADER_SET;
+    private static FRAGSHADER_SET: Map<number, GShader> = FRAGSHADER_SET;
 
     /**
      * vertex shader map
      */
-    private static VERTSHADER_SET: Map<number, REGLShader> = VERTSHADER_SET;
+    private static VERTSHADER_SET: Map<number, GShader> = VERTSHADER_SET;
 
     /**
      * 
@@ -56,12 +56,12 @@ class ShaderState {
      * @param id 
      * @returns 
      */
-    public createShader = (target: SShaderTarget, id: number): REGLShader => {
+    public createShader = (target: SShaderTarget, id: number): GShader => {
         const SHADER_SET = target === 'FRAGMENT_SHADER' ? ShaderState.FRAGSHADER_SET : ShaderState.VERTSHADER_SET;
         let shader = SHADER_SET.get(id);
         if (!shader) {
             const source = this.stringState.str(id);
-            shader = new REGLShader(this.gl, id, source, target);
+            shader = new GShader(this.gl, id, source, target);
         }
         return shader;
     }

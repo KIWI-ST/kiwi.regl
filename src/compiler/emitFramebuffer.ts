@@ -1,7 +1,7 @@
 import { Block } from "kiwi.codegen";
 import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
-import { REGLFramebuffer } from "../res/REGLFramebuffer";
+import { GFramebuffer } from "../res/GFramebuffer";
 import { IPerformance } from "../util/createPerformance";
 
 /**
@@ -16,7 +16,7 @@ const emitFramebuffer = (
     pipeline: Pipeline,
     iBlock: Block,
     oBlock: Block,
-    framebuffer: REGLFramebuffer | { (performance: IPerformance, batchId: number): REGLFramebuffer },
+    framebuffer: GFramebuffer | { (performance: IPerformance, batchId: number): GFramebuffer },
     extLib: Extension
 ): void => {
     const GL_NAME = pipeline.getVariable('gl'),
@@ -28,7 +28,7 @@ const emitFramebuffer = (
         NEXT_NAME = `${FRAMEBUFFERSTATE_NAME}.Next`,
         CURRENT_NAME = `${FRAMEBUFFERSTATE_NAME}.Current`;
     //如果fbo存在，则使用fbo
-    if (framebuffer instanceof REGLFramebuffer) {
+    if (framebuffer instanceof GFramebuffer) {
         const FRAMEBUFFER_NAME = pipeline.link(framebuffer);
         const NEXT_FRAMEBUFFER_CACHED_NAME = iBlock.def(`${NEXT_NAME}`);
         iBlock.push(`${NEXT_NAME}=${FRAMEBUFFER_NAME}`);

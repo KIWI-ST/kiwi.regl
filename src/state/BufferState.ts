@@ -1,9 +1,8 @@
-import { CArraybufferTarget, CUsage } from "../core/Constant";
-import { Dispose } from "../core/Dispose";
-import { ShapedArrayFormat } from "../core/Format";
-import { SArraybufferTarget, SComponent, SDimension, SUsage } from "../core/Support";
-import { REGLBuffer, BUFFER_SET } from "../res/REGLBuffer";
 import { IStats } from "../util/createStats";
+import { ShapedArrayFormat } from "../core/Format";
+import { GBuffer, BUFFER_SET } from "../res/GBuffer";
+import { CArraybufferTarget, CUsage } from "../core/Constant";
+import { SArraybufferTarget, SComponent, SDimension, SUsage } from "../core/Support";
 
 /**
  * 
@@ -12,12 +11,12 @@ class BufferState{
     /**
      * 
      */
-    static REGLBUFFER_SET: Map<number, REGLBuffer> = BUFFER_SET;
+    static REGLBUFFER_SET: Map<number, GBuffer> = BUFFER_SET;
 
     /**
      *  
      */
-    private streamPool: REGLBuffer[] = [];
+    private streamPool: GBuffer[] = [];
 
     /**
      * 
@@ -27,7 +26,7 @@ class BufferState{
     /**
      * 
      */
-    private reglBuffer: REGLBuffer;
+    private reglBuffer: GBuffer;
 
     /**
      * 
@@ -46,7 +45,6 @@ class BufferState{
         this.gl = gl;
         this.stats = stats;
     }
-
 
     /**
      * 
@@ -68,14 +66,14 @@ class BufferState{
             data?: ShapedArrayFormat,
             byteLength?: number
         }
-    ): REGLBuffer => {
+    ): GBuffer => {
         const data = opts.data,
             byteLength = opts.byteLength || 0,
             usage = opts.usage || 'STATIC_DRAW',
             component = opts.component || 'FLOAT',
             dimension = opts.dimension || 'POINTS',
             target = opts.target || 'ARRAY_BUFFER';
-        const buffer = new REGLBuffer(this.gl, target, usage, component, dimension);
+        const buffer = new GBuffer(this.gl, target, usage, component, dimension);
         buffer.bind();
         if (!data && byteLength > 0)
             this.gl.bufferData(CArraybufferTarget[target], byteLength, CUsage[usage]);
@@ -92,9 +90,9 @@ class BufferState{
      * @param target 
      * @returns 
      */
-    public createStreambuffer = (data: ShapedArrayFormat, target: SArraybufferTarget): REGLBuffer => {
+    public createStreambuffer = (data: ShapedArrayFormat, target: SArraybufferTarget): GBuffer => {
         const usage = 'STREAM_DRAW', component = 'FLOAT', dimension = 'POINTS';
-        const buffer = this.streamPool.pop() || new REGLBuffer(this.gl, target, usage, component, dimension);
+        const buffer = this.streamPool.pop() || new GBuffer(this.gl, target, usage, component, dimension);
         buffer.bind();
         buffer.paddingWithData(data, usage, component);
         this.reglBuffer = buffer;
@@ -105,7 +103,7 @@ class BufferState{
      * 
      * @param streambuffer 
      */
-    public destoryStreambuffer = (streambuffer: REGLBuffer): void => {
+    public destoryStreambuffer = (streambuffer: GBuffer): void => {
         this.streamPool.push(streambuffer);
     }
 }

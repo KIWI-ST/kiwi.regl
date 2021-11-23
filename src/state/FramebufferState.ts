@@ -1,10 +1,10 @@
 import { Extension } from "../core/Extension";
 import { Limit } from "../core/Limit";
 import { SRenderbufferColor, STextureComponent } from "../core/Support";
-import { REGLAttachment } from "../res/REGLAttachment";
-import { FRAMEBUFFER_SET, REGLFramebuffer } from "../res/REGLFramebuffer";
-import { REGLRenderbuffer } from "../res/REGLRenderbuffer";
-import { REGLTexture } from "../res/REGLTexture";
+import { GAttachment } from "../res/GAttachment";
+import { FRAMEBUFFER_SET, GFramebuffer } from "../res/GFramebuffer";
+import { GRenderbuffer } from "../res/GRenderbuffer";
+import { GTexture } from "../res/GTexture";
 import { IStats } from "../util/createStats";
 import { RenderbufferState } from "./RenderbufferState";
 import { TextureState } from "./TextureState";
@@ -21,7 +21,7 @@ class FramebufferState {
     /**
      * 
      */
-    static FRAMEBUFFER_SET: Map<number, REGLFramebuffer> = FRAMEBUFFER_SET;
+    static FRAMEBUFFER_SET: Map<number, GFramebuffer> = FRAMEBUFFER_SET;
 
     /**
      * 
@@ -56,38 +56,38 @@ class FramebufferState {
     /**
      * 
      */
-    private current: REGLFramebuffer;
+    private current: GFramebuffer;
 
     /**
      * 
      */
-    private next: REGLFramebuffer;
+    private next: GFramebuffer;
 
     /**
      * 
      */
-    set Current(v: REGLFramebuffer) {
+    set Current(v: GFramebuffer) {
         this.current = v;
     }
 
     /**
      * 
      */
-    get Current(): REGLFramebuffer {
+    get Current(): GFramebuffer {
         return this.current;
     }
 
     /**
      * 
      */
-    set Next(v: REGLFramebuffer) {
+    set Next(v: GFramebuffer) {
         this.next = v;
     }
 
     /**
      * 
      */
-    get Next(): REGLFramebuffer {
+    get Next(): GFramebuffer {
         return this.next;
     }
 
@@ -128,7 +128,7 @@ class FramebufferState {
             format: SRenderbufferColor,
             component: STextureComponent
         }
-    ): REGLAttachment => {
+    ): GAttachment => {
         const gl = this.gl;
         if (opts.isTexture) {
             const texture = this.textureState.createTexture2D(
@@ -138,7 +138,7 @@ class FramebufferState {
                 opts.c
             );
             //texutre.refCount = 0;
-            return new REGLAttachment(gl, 'TEXTURE_2D', texture);
+            return new GAttachment(gl, 'TEXTURE_2D', texture);
         }
         else {
             const rbo = this.renderbufferState.createRenderbuffer({
@@ -147,32 +147,32 @@ class FramebufferState {
                 format: opts.format || 'RGBA4'
             });
             // rbo.refCount = 0;
-            return new REGLAttachment(gl, 'RENDERBUFFER', rbo);
+            return new GAttachment(gl, 'RENDERBUFFER', rbo);
         }
     }
 
     public createFramebuffer = (
         opts: {
-            colors?: (REGLTexture | REGLRenderbuffer)[],
-            depth?: REGLRenderbuffer,
-            stencil?: REGLRenderbuffer,
-            depthStencil?: REGLRenderbuffer
+            colors?: (GTexture | GRenderbuffer)[],
+            depth?: GRenderbuffer,
+            stencil?: GRenderbuffer,
+            depthStencil?: GRenderbuffer
         }
-    ): REGLFramebuffer => {
+    ): GFramebuffer => {
         const gl = this.gl;
-        const fbo = new REGLFramebuffer(gl, this.limLib, this.stats);
+        const fbo = new GFramebuffer(gl, this.limLib, this.stats);
         //1.colors
-        const colorAttachments: REGLAttachment[] = [];
-        opts.colors?.forEach((color: REGLTexture | REGLRenderbuffer) => {
-            const TYPE = color instanceof REGLTexture ? 'TEXTURE_2D' : 'RENDERBUFFER';
-            colorAttachments.push(new REGLAttachment(gl, TYPE, color));
+        const colorAttachments: GAttachment[] = [];
+        opts.colors?.forEach((color: GTexture | GRenderbuffer) => {
+            const TYPE = color instanceof GTexture ? 'TEXTURE_2D' : 'RENDERBUFFER';
+            colorAttachments.push(new GAttachment(gl, TYPE, color));
         });
         //2.depth
-        const depthAttachment: REGLAttachment = !opts.depth ? null : new REGLAttachment(gl, 'RENDERBUFFER', opts.depth);
+        const depthAttachment: GAttachment = !opts.depth ? null : new GAttachment(gl, 'RENDERBUFFER', opts.depth);
         //3.stencil
-        const stencilAttachment: REGLAttachment = !opts.stencil ? null : new REGLAttachment(gl, 'RENDERBUFFER', opts.stencil);
+        const stencilAttachment: GAttachment = !opts.stencil ? null : new GAttachment(gl, 'RENDERBUFFER', opts.stencil);
         //4.depthStencil
-        const depthStencilAttachment: REGLAttachment = !opts.depthStencil ? null : new REGLAttachment(gl, 'RENDERBUFFER', opts.depthStencil);
+        const depthStencilAttachment: GAttachment = !opts.depthStencil ? null : new GAttachment(gl, 'RENDERBUFFER', opts.depthStencil);
         //5.refresh attachment
         fbo.refreshAttachment({
             colorAttachments,

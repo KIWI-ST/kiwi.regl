@@ -1,8 +1,8 @@
-import { check } from './../util/check';
-import { Limit } from './../core/Limit';
-import { IStats } from './../util/createStats';
-import { Dispose } from './../core/Dispose';
-import { IMipmap } from './../pool/MipmapPool';
+import { check } from '../util/check';
+import { Limit } from '../core/Limit';
+import { IStats } from '../util/createStats';
+import { Dispose } from '../core/Dispose';
+import { IMipmap } from '../pool/MipmapPool';
 import { ITexFlag } from '../util/createTexFlag';
 import { CTextureMapTarget } from '../core/Constant';
 import { STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
@@ -59,12 +59,12 @@ interface ITexInfo {
 /**
  * 纹理资源映射
  */
-const TEXTURE_SET: Map<number, REGLTexture> = new Map();
+const TEXTURE_SET: Map<number, GTexture> = new Map();
 
 /**
  * 当前设备维护的总纹理资源
  */
-const TEXTURE_UNIT_ARR: REGLTexture[] = [];
+const TEXTURE_UNIT_ARR: GTexture[] = [];
 
 /**
  * 临时用来active绑定纹理的纹理单元  
@@ -79,7 +79,7 @@ const TEXTURE2D$1: number = 0x0DE1;
 /**
  * 
  */
-class REGLTexture extends Dispose {
+class GTexture extends Dispose {
     /**
      * 
      */
@@ -321,5 +321,5 @@ export {
     TEXTURE_UNIT_ARR,
     TEXTURE_SET,
     ITexInfo,
-    REGLTexture
+    GTexture
 }

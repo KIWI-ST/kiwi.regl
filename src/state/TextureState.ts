@@ -1,18 +1,18 @@
-import { CColorSpace, CMipmapHint, CTextureColor, CTextureComponent, CTextureFillTarget, CTextureMAGFilter, CTextureMapTarget, CTextureMINFilter } from "../core/Constant";
-import { Extension } from "../core/Extension";
-import { TypedArrayFormat } from "../core/Format";
+import { check } from "../util/check";
 import { Limit } from "../core/Limit";
-import { SMipmapHint, STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
+import { IStats } from "../util/createStats";
+import { getCopy } from "../util/getExtendCopy";
+import { ITexFlag } from "../util/createTexFlag";
+import { Extension } from "../core/Extension";
 import { Transpose } from "../core/Transpose";
+import { detectComponent } from "../util/detectComponent";
+import { TypedArrayFormat } from "../core/Format";
+import { checkMipmapTexture2D } from "../util/checkTexture";
 import { IMipmap, mipmapPool0 } from "../pool/MipmapPool";
 import { ITexImage, texImagePool0 } from "../pool/TexImagePool";
-import { ITexInfo, REGLTexture, TEXTURE_SET } from "../res/REGLTexture";
-import { check } from "../util/check";
-import { checkMipmapTexture2D } from "../util/checkTexture";
-import { IStats } from "../util/createStats";
-import { ITexFlag } from "../util/createTexFlag";
-import { detectComponent } from "../util/detectComponent";
-import { getCopy } from "../util/getExtendCopy";
+import { ITexInfo, GTexture, TEXTURE_SET } from "../res/GTexture";
+import { SMipmapHint, STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
+import { CColorSpace, CMipmapHint, CTextureColor, CTextureComponent, CTextureFillTarget, CTextureMAGFilter, CTextureMapTarget, CTextureMINFilter } from "../core/Constant";
 
 /**
  * Int8Array:       // 8为有符号整数，长度1个字节
@@ -37,12 +37,14 @@ const CHANNEL_TEX_COLOR = {
     4: 'RGBA'
 };
 
-
+/**
+ * 
+ */
 class TextureState {
     /**
      * 
      */
-    static TEXTURE_SET: Map<number, REGLTexture> = TEXTURE_SET;
+    static TEXTURE_SET: Map<number, GTexture> = TEXTURE_SET;
 
     /**
      * 
@@ -296,10 +298,10 @@ class TextureState {
             mipmap?: SMipmapHint,                 //mipmap采样方式
             anisotropic?: 1 | 2 | 3,                 //各项异性过滤
         }={}
-    ): REGLTexture => {
+    ): GTexture => {
         const gl = this.gl;
         //parse options to get reglTexInfo
-        const reglTexture = new REGLTexture(gl, this.limLib, 'TEXTURE_2D', this.stats);
+        const reglTexture = new GTexture(gl, this.limLib, 'TEXTURE_2D', this.stats);
         //1.texInfo
         const texInfo = this.fixTexInfo(opts);
         reglTexture.TexInfo = texInfo;

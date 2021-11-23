@@ -1,5 +1,5 @@
 import { isFunction } from "../util/isFunction";
-import { REGLTexture } from "../res/REGLTexture";
+import { GTexture } from "../res/GTexture";
 import { IPerformance } from "../util/createPerformance";
 import { Props, TProps } from "../core/Props";
 import { IPipelineLink, Pipeline } from "../core/Pipeline";
@@ -21,12 +21,12 @@ interface IUniformRecord extends IPipelineLink {
     /**
      * 
      */
-    v?: boolean | number | number[] | REGLTexture;
+    v?: boolean | number | number[] | GTexture;
 
     /**
      * 
      */
-    f?: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): REGLTexture }
+    f?: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): GTexture }
 }
 
 /**
@@ -36,7 +36,7 @@ interface IUniformRecord extends IPipelineLink {
  * new (performance:IPerformance, batchId:number):number[]
  */
 type TUniform = {
-    [propName in string]: Props<TProps> | boolean | number | number[] | REGLTexture | { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): REGLTexture }
+    [propName in string]: Props<TProps> | boolean | number | number[] | GTexture | { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): GTexture }
 }
 
 /**

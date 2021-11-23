@@ -1,6 +1,9 @@
 import { bufferPool0 } from './../pool/BufferPool';
 import { TypedArrayFormat } from "../core/Format";
 
+/**
+ * empity float
+ */
 const FLOAT = new Float32Array(1), INT = new Uint32Array(FLOAT.buffer);
 
 /**

@@ -1,13 +1,13 @@
-import { check } from './../util/check';
-import { Dispose } from './../core/Dispose';
-import { ShaderState } from './../state/ShaderState';
+import { check } from '../util/check';
+import { Dispose } from '../core/Dispose';
+import { ShaderState } from '../state/ShaderState';
 import { StringState } from '../state/StringState';
 import { CActiveTarget } from '../core/Constant';
 
 /**
  * program set
  */
-const PROGRAM_SET: Map<number, REGLProgram> = new Map();
+const PROGRAM_SET: Map<number, GProgram> = new Map();
 
 /**
  * actived uniform or attribute
@@ -37,7 +37,7 @@ interface IActiveInfo {
 /**
  * @author axmand
  */
-class REGLProgram extends Dispose {
+class GProgram extends Dispose {
     /**
      * 
      */
@@ -249,5 +249,5 @@ class REGLProgram extends Dispose {
 export {
     PROGRAM_SET,
     IActiveInfo,
-    REGLProgram
+    GProgram
 }

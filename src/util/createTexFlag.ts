@@ -9,25 +9,25 @@ interface ITexFlag {
      * 目标纹理输出类型（输出转换）
      * 默认值：gl.RGBA
      */
-    texColor?: STextureColor | STextureCompressed,
+    texColor?: STextureColor | STextureCompressed;
 
     /**
      * 输入文件纹理数据类型
      * 默认值：gl.RGBA
      */
-    inTexColor?: STextureColor | STextureCompressed,
+    inTexColor?: STextureColor | STextureCompressed;
 
     /**
      * 纹理数据类型
      * 默认值：gl.BYTE
      */
-    component?: STextureComponent,
+    component?: STextureComponent;
 
     /**
      * 指示纹理是否压缩
      * 不需要显式指定，自动根据输入输出格式判断
      */
-    compressed?: boolean,
+    compressed?: boolean;
 
     /**
      * 预乘alpha，告诉gl上下文该纹理的颜色值已预先乘过alpha通道值
@@ -37,7 +37,7 @@ interface ITexFlag {
      * https://segmentfault.com/a/1190000002990030
      * 默认值：false
      */
-    premultiplyAlpha?: boolean,
+    premultiplyAlpha?: boolean;
 
     /**
      * Y轴翻转,标识纹理坐标Y是否翻转
@@ -55,30 +55,30 @@ interface ITexFlag {
      * 应对gl.DrawPixel设置，考虑效率
      * 要求drawPixel时每一行byte大小（读取像素纹理方式）
      */
-    unpackAlignment?: 1 | 2 | 4 | 8,
+    unpackAlignment?: 1 | 2 | 4 | 8;
 
     /**
      * GL_BROWSER_DEFAULT_WEBGL
      * 指示WebGL是否允许浏览器应用色彩空间转换
      * 默认值：gl.NONE
      */
-    colorSpace?: SColorSpace,
+    colorSpace?: SColorSpace;
 
     /**
      * shape - width
      */
-    width?: number,
+    width?: number;
 
     /**
      * shape -height
      */
-    height?: number,
+    height?: number;
 
     /**
      * shape - channel 通道数量
      * 支持数量<=4 (RGBA)
      */
-    channels?: number
+    channels?: number;
 }
 
 /**
@@ -97,8 +97,8 @@ const createTexFlag = (): ITexFlag => {
         width: 0,                               //默认纹理宽度0像素
         height: 0,                              //默认纹理高度0像素
         channels: 0                             //默认纹理深度0
-    }
-    return texFlags
+    };
+    return texFlags;
 }
 
 export { 

@@ -1,21 +1,21 @@
 import { check } from '../util/check';
-import { Dispose } from './../core/Dispose';
+import { Dispose } from '../core/Dispose';
 import { bufferPool0 } from '../pool/BufferPool';
-import { detectComponent } from './../util/detectComponent';
-import { ShapedArrayFormat, TypedArrayFormat } from './../core/Format';
+import { detectComponent } from '../util/detectComponent';
+import { ShapedArrayFormat, TypedArrayFormat } from '../core/Format';
 import { flattenArrayWithShape, getArrayShape } from '../util/getFlatten';
 import { CArraybufferTarget, CComponent, CDimension, CUsage } from '../core/Constant';
-import { SArraybufferTarget, SComponent, SDimension, SUsage } from './../core/Support';
+import { SArraybufferTarget, SComponent, SDimension, SUsage } from '../core/Support';
 
 /**
  * 全局存储buffer
  */
-const BUFFER_SET: Map<number, REGLBuffer> = new Map();
+const BUFFER_SET: Map<number, GBuffer> = new Map();
 
 /**
  * 
  */
-class REGLBuffer extends Dispose {
+class GBuffer extends Dispose {
     /**
      * 
      */
@@ -140,7 +140,7 @@ class REGLBuffer extends Dispose {
      * @param component 
      * @returns 
      */
-    public paddingWithData = (data: ShapedArrayFormat, usage: SUsage, component: SComponent): REGLBuffer => {
+    public paddingWithData = (data: ShapedArrayFormat, usage: SUsage, component: SComponent): GBuffer => {
         this.usage = CUsage[usage || 'STATIC_DRAW'];
         const shape = getArrayShape(data);
         //获取d0, 用于判断dtype
@@ -182,5 +182,5 @@ class REGLBuffer extends Dispose {
 
 export { 
     BUFFER_SET,
-    REGLBuffer 
+    GBuffer 
 }

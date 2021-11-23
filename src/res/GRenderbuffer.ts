@@ -6,7 +6,7 @@ import { CRenderbufferColor } from "../core/Constant";
 /**
  * RBO 资源集
  */
-const RENDERBUFFER_SET: Map<number, REGLRenderbuffer> = new Map();
+const RENDERBUFFER_SET: Map<number, GRenderbuffer> = new Map();
 
 /**
  * @author axmand
@@ -23,7 +23,7 @@ const RENDERBUFFER_SET: Map<number, REGLRenderbuffer> = new Map();
  * 3.清理屏幕调用 gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT)彻底清理FBO附着类型
  * 
  */
-class REGLRenderbuffer extends Dispose {
+class GRenderbuffer extends Dispose {
     /**
      * 
      */
@@ -142,5 +142,5 @@ class REGLRenderbuffer extends Dispose {
 
 export {
     RENDERBUFFER_SET,
-    REGLRenderbuffer
+    GRenderbuffer
 }

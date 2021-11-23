@@ -1,5 +1,5 @@
-import { REGLProgram } from "../res/REGLProgram";
-import { REGLShader } from "../res/REGLShader";
+import { GProgram } from "../res/GProgram";
+import { GShader } from "../res/GShader";
 import { ProgramState } from "../state/ProgramState";
 import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
@@ -22,9 +22,9 @@ const parseProgram = (
 ): {
     fragId?: number,
     vertId?: number,
-    fragShader?: REGLShader,
-    vertShader?: REGLShader,
-    program?: REGLProgram
+    fragShader?: GShader,
+    vertShader?: GShader,
+    program?: GProgram
 } => {
 
     const { frag, vert, stringState, shaderState, programState } = opts;
