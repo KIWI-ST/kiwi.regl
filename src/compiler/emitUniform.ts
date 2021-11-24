@@ -60,6 +60,7 @@ const UComponent = (component: number): IUC => {
         case 35678://texture_sample_2d
         case 35680://0x8B60
             UTYPE.prefix = '1i';
+            break;
         default:
             check(false, `emitUniforms error:不支持的uniform类型${component}`);
     }

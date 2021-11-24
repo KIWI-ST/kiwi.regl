@@ -6,10 +6,10 @@ import { Extension } from "../core/Extension";
 import { SPrimitive } from "../core/Support";
 import { CComponent } from "../core/Constant";
 import { BufferState } from "./BufferState";
-import { ElementState } from "./ElementState";
+import { ElementsState } from "./ElementState";
 import { ProgramState } from "./ProgramState";
 import { isBufferArray } from "../util/isBufferArray";
-import { GElementbuffer } from "../res/GElementbuffer";
+import { GElementsbuffer } from "../res/GElementsbuffer";
 import { checkAttribute } from "../util/checkAttribute";
 import { ShapedArrayFormat } from "../core/Format";
 import { IAttributeBuffer, TAttribute } from "../compiler/parseAttribute";
@@ -52,7 +52,7 @@ class AttributeState {
     /**
      * 
      */
-    private elementState: ElementState;
+    private elementState: ElementsState;
 
     /**
      * 
@@ -101,7 +101,7 @@ class AttributeState {
         extLib: Extension,
         limLib: Limit,
         bufferState: BufferState,
-        elementState: ElementState,
+        elementState: ElementsState,
         programState: ProgramState,
         stats: IStats
     ) {
@@ -212,7 +212,7 @@ class AttributeState {
     public createREGLVertexArrayObject = <TA extends TAttribute>(
         attrs: TA,
         opts: {
-            elements?: GElementbuffer | ShapedArrayFormat,
+            elements?: GElementsbuffer | ShapedArrayFormat,
             offset?: number,
             count?: number,
             instances?: number,
@@ -220,12 +220,12 @@ class AttributeState {
         } = {}
     ): GVertexArrayObject => {
         const RECORD_SET = this.applyAttribute(attrs);
-        let ELEMENTS: GElementbuffer = null;
+        let ELEMENTS: GElementsbuffer = null;
         if (opts.elements) {
-            if (opts.elements instanceof GElementbuffer)
+            if (opts.elements instanceof GElementsbuffer)
                 ELEMENTS = opts.elements;
             else
-                ELEMENTS = this.elementState.createElementbuffer({
+                ELEMENTS = this.elementState.createElementsbuffer({
                     data: opts.elements,
                     component: 'UNSIGNED_SHORT',
                     primitive: opts.primitive || 'TRIANGLES'

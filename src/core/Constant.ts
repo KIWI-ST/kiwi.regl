@@ -932,6 +932,11 @@ const CWebGLStatusVariable = {
     stencilOpSeparate: CWebGLStatusTYPE.DECARRAY,
 
     /**
+     * 模板缓冲后的操作方式
+     */
+    stencilOp:CWebGLStatusTYPE.DECARRAY,
+
+    /**
      * 
      */
     viewport: CWebGLStatusTYPE.DECARRAY,
@@ -941,19 +946,55 @@ const CWebGLStatusVariable = {
  * active attribute info type size
  */
 const CAttributeTS={
+    /**
+     * FLOAT
+     */
     5126:1,     //float
 
-    35664:2,    //float_vec2
-    35665:3,    //float_vec3
-    35666:4,    //float_vec4
+    /**
+     * FLOAT_VEC2
+     */
+    35664:2,
 
-    35667:2,    //int_vec2
-    35668:3,    //int_vec3
-    35669:4,    //int_vec4
+    /**
+     * FLOAT_VEC3
+     */
+    35665:3,  
 
-    35671:2,    //bool_vec2
-    35672:3,    //bool_vec3
-    35673:4,    //bool_vec4
+    /**
+     * FLOAT_VEC4
+     */
+    35666:4,
+
+    /**
+     * INT_VEC2
+     */
+    35667:2,    
+
+    /**
+     * INT_VEC3
+     */
+    35668:3,    
+
+    /**
+     * INT_VEC4
+     */
+    35669:4,
+
+    /**
+     * BOOL_VEC2
+     */
+    35671:2,   
+
+    /**
+     * BOOL_VEC3
+     */
+    35672:3,   
+
+    /**
+     * BOOL_VEC4
+     */
+    35673:4,
 }
 
 export {

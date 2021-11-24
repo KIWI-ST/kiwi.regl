@@ -1,7 +1,7 @@
 import { ShapedArrayFormat } from "../core/Format";
 import { SPrimitive } from "../core/Support";
-import { GElementbuffer } from "../res/GElementbuffer";
-import { ElementState } from "../state/ElementState";
+import { GElementsbuffer } from "../res/GElementsbuffer";
+import { ElementsState } from "../state/ElementState";
 import { isNDArray } from "../util/isNDArray";
 
 /**
@@ -10,22 +10,22 @@ import { isNDArray } from "../util/isNDArray";
  * @param opts 
  * @returns 
  */
-const praseElement = (
+const praseElements = (
     opts: {
-        element?: ShapedArrayFormat,
-        elementState?: ElementState,
+        elements?: ShapedArrayFormat,
+        elementState?: ElementsState,
         primitive?: SPrimitive
     }
-): GElementbuffer | null => {
-    const { element, elementState } = opts;
+): GElementsbuffer | null => {
+    const { elements, elementState } = opts;
     //}{先处理shapedArrayformt时数据
-    if (element && isNDArray(element)) {
-        return elementState.createElementbuffer({
-            data: element,
+    if (elements && isNDArray(elements)) {
+        return elementState.createElementsbuffer({
+            data: elements,
             component: 'UNSIGNED_SHORT',
             primitive: opts.primitive || 'TRIANGLES'
         });
     }
 }
 
-export { praseElement }
+export { praseElements }

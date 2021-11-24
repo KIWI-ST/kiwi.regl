@@ -5,13 +5,13 @@ import { isNDArray } from "../util/isNDArray";
 import { IActiveInfo, GProgram } from '../res/GProgram';
 import { Status } from './Status';
 import { IPerformance } from './../util/createPerformance';
-import { GElementbuffer } from '../res/GElementbuffer';
+import { GElementsbuffer } from '../res/GElementsbuffer';
 import { Extension } from "./Extension";
 import { Limit } from "./Limit";
 import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
-import { ElementState } from "../state/ElementState";
+import { ElementsState } from "../state/ElementState";
 import { ProgramState } from "../state/ProgramState";
 import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
@@ -145,7 +145,7 @@ interface IPipelineData {
     /**
      * 
      */
-    element?: GElementbuffer;
+    element?: GElementsbuffer;
 
     /**
      * 
@@ -168,7 +168,7 @@ interface IPipelineSchema {
 
     bufferState: BufferState;
 
-    elementState: ElementState;
+    elementState: ElementsState;
 
     programState: ProgramState;
 
@@ -343,7 +343,7 @@ class Pipeline {
      * @param v 
      */
     public link(v: { (performance: IPerformance, batchId: number): number } | { (performance: IPerformance, batchId: number): number[] } | { (performance: IPerformance, batchId: number): GTexture } | { (performance: IPerformance, batchId: number): GFramebuffer }): string
-    public link(v: number[] | IActiveInfo | GBuffer | GElementbuffer | GTexture | GFramebuffer | Status): string
+    public link(v: number[] | IActiveInfo | GBuffer | GElementsbuffer | GTexture | GFramebuffer | Status): string
     public link(v: Object, name: SVariable): string
     public link(v?: any, name?: any): string {
         const v0 = this.template.link(v);

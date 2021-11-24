@@ -30,7 +30,7 @@ interface IMipmap extends ITexFlag {
 }
 
 /**
- * 
+ * mipmap resource pool
  */
 class MipmapPool {
     /**
@@ -43,7 +43,7 @@ class MipmapPool {
      * @returns 
      */
     allocMipmap = (): IMipmap => {
-        const mipmap: IMipmap = this.mipmapQueue.pop() || createTexFlag as IMipmap;
+        const mipmap: IMipmap = this.mipmapQueue.pop() || createTexFlag() as IMipmap;
         mipmap.genMipmaps = false;
         mipmap.mipmapHint = CMipmapHint['DONT_CARE'];
         mipmap.mipmask = 0;

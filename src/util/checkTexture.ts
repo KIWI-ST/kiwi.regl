@@ -80,7 +80,7 @@ const checkMipmapTexture2D = (
         if(mipimg){
             const mw = w>>i, mh = h>>i;
             check(mipData.mipmask & (1<<i), `CheckTexture2D error: mipmap数据缺失`);
-            check(mipimg.width === mw && mipimg.height ==mh, `CheckTexture2D error: 错误的mipmap images shape信息`);
+            check(mipimg.width === mw && mipimg.height === mh, `CheckTexture2D error: 错误的mipmap images shape信息`);
             check(mipimg.texColor === mipData.texColor && mipimg.inTexColor === mipData.inTexColor && mipimg.component ===mipData.component, `CheckTexture2D error: 不合适的mipmap image数据类型`);
             //compressed
             if(mipimg.compressed){

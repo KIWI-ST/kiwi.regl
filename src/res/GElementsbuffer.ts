@@ -7,12 +7,12 @@ import { GBuffer } from "./GBuffer";
 /**
  * 
  */
-const REGLELEMENTBUFFER_SET: Map<number, GElementbuffer> = new Map();
+const REGLELEMENTBUFFER_SET: Map<number, GElementsbuffer> = new Map();
 
 /**
  * @author axmand
  */
-class GElementbuffer extends Dispose {
+class GElementsbuffer extends Dispose {
     /**
      * 
      */
@@ -137,5 +137,5 @@ class GElementbuffer extends Dispose {
 
 export {
     REGLELEMENTBUFFER_SET,
-    GElementbuffer
+    GElementsbuffer
 }

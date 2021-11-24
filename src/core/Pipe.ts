@@ -3,11 +3,11 @@ import { GFramebuffer, GTexture, GVertexArrayObject, TAttribute, TUniform } from
 import { CompilerCore, ICompileOption } from "../compiler/CompilerCore";
 import { IConfigure, parseConfigure } from "../compiler/parseConfigure";
 import { GBuffer } from "../res/GBuffer";
-import { GElementbuffer } from "../res/GElementbuffer";
+import { GElementsbuffer } from "../res/GElementsbuffer";
 import { GRenderbuffer } from "../res/GRenderbuffer";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
-import { ElementState } from "../state/ElementState";
+import { ElementsState } from "../state/ElementState";
 import { FramebufferState } from "../state/FramebufferState";
 import { ProgramState } from "../state/ProgramState";
 import { RenderbufferState } from "../state/RenderbufferState";
@@ -82,7 +82,7 @@ class PipeGL {
     /**
      * 
      */
-    private elementState: ElementState;
+    private elementState: ElementsState;
 
     /**
      * 
@@ -147,7 +147,7 @@ class PipeGL {
         this.stringState = new StringState();
         this.bufferState = new BufferState(this.gl, this.stats);
         this.textureState = new TextureState(this.gl, this.extLib, this.limLib, this.stats);
-        this.elementState = new ElementState(this.gl, this.extLib, this.bufferState, this.stats);
+        this.elementState = new ElementsState(this.gl, this.extLib, this.bufferState, this.stats);
         this.shaderState = new ShaderState(this.gl, this.stringState, this.stats);
         this.programState = new ProgramState(this.gl, this.shaderState, this.stringState);
         this.attributeState = new AttributeState(this.gl, this.extLib, this.limLib, this.bufferState, this.elementState, this.programState, this.stats);
@@ -190,7 +190,7 @@ class PipeGL {
     public vao = <TA extends TAttribute>(
         atts: TA,
         opts: {
-            elements?: GElementbuffer | ShapedArrayFormat,
+            elements?: GElementsbuffer | ShapedArrayFormat,
             offset?: number,
             count?: number,
             instances?: number,

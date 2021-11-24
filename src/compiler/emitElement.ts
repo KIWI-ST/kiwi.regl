@@ -2,7 +2,7 @@ import { Block } from "kiwi.codegen";
 import { CComponent } from "../core/Constant";
 import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
-import { GElementbuffer } from "../res/GElementbuffer";
+import { GElementsbuffer } from "../res/GElementsbuffer";
 import { GVertexArrayObject } from "../res/GVertexArrayObject";
 
 /**
@@ -19,7 +19,7 @@ const emitElement = (
     extLib: Extension,
     vao: GVertexArrayObject,
     iBlock: Block,
-    element: GElementbuffer,
+    element: GElementsbuffer,
     instances: number
 ): void => {
     //1.根据vao是否存在判断直接只用值或使用变量
@@ -31,7 +31,7 @@ const emitElement = (
     //2.使用实例化绘制
     if (extLib.get('ANGLE_instanced_arrays') && instances > 0) {
         if (element) {
-            const ELEMENT_NAME = iBlock.def(`${pipeline.getVariable('elementState')}.getElementbuffer(${element.ID})`);
+            const ELEMENT_NAME = iBlock.def(`${pipeline.getVariable('elementState')}.getElementsbuffer(${element.ID})`);
             iBlock.push(`${ELEMENT_NAME}.bind()`);
             iBlock.push(`${pipeline.getVariable('extLib')}.get('ANGLE_instanced_arrays').drawElementsInstancedANGLE(${ELEMENT_NAME}.Primitive, ${ELEMENT_NAME}.VertCount,${ELEMENT_NAME}.Component, ${OFFSET_NAME}<<(${ELEMENT_NAME}.Component - ${CComponent.UNSIGNED_BYTE})>>1, ${INSTANCES_NAME})`);
         }
@@ -39,7 +39,7 @@ const emitElement = (
     }
     //3.drawElement绘制
     else if (element) {
-        const ELEMENT_NAME = iBlock.def(`${pipeline.getVariable('elementState')}.getElementbuffer(${element.ID})`);
+        const ELEMENT_NAME = iBlock.def(`${pipeline.getVariable('elementState')}.getElementsbuffer(${element.ID})`);
         iBlock.push(`${ELEMENT_NAME}.bind()`);
         //字节单位，指定元素数组缓冲区中的偏移量。必须是给定类型大小的有效倍数
         iBlock.push(`${GL_NAME}.drawElements(${ELEMENT_NAME}.Primitive, ${ELEMENT_NAME}.VertCount,${ELEMENT_NAME}.Component, ${OFFSET_NAME}<<(${ELEMENT_NAME}.Component - ${CComponent.UNSIGNED_BYTE})>>1)`);

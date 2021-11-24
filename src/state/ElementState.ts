@@ -4,23 +4,23 @@ import { Extension } from "../core/Extension";
 import { CPrimitive } from "../core/Constant";
 import { BufferState } from "./BufferState";
 import { ShapedArrayFormat } from "../core/Format";
-import { GElementbuffer, REGLELEMENTBUFFER_SET } from "../res/GElementbuffer";
+import { GElementsbuffer, REGLELEMENTBUFFER_SET } from "../res/GElementsbuffer";
 import { SComponent, SDimension, SPrimitive, SUsage } from "../core/Support";
 
 /**
  * @author axmand
  * @description 构造 ELEMENT_ARRAY_BUFFER缓冲
  */
-class ElementState {
+class ElementsState {
     /**
      * 
      */
-    static ELEMENTBUFFER_SET: Map<number, GElementbuffer> = REGLELEMENTBUFFER_SET;
+    static ELEMENTBUFFER_SET: Map<number, GElementsbuffer> = REGLELEMENTBUFFER_SET;
 
     /**
      * 
      */
-    private streamPool: GElementbuffer[] = [];
+    private streamPool: GElementsbuffer[] = [];
 
     /**
      * 
@@ -66,16 +66,16 @@ class ElementState {
      * @param opts 
      * @returns 
      */
-    private initElement = (
+    private initElements = (
         opts: {
-            reglElementbuffer: GElementbuffer,
+            reglElementbuffer: GElementsbuffer,
             data: ShapedArrayFormat,
             component: SComponent,
             usage: SUsage,
             primitive: SPrimitive,
             count?: number
         }
-    ): GElementbuffer => {
+    ): GElementsbuffer => {
         opts.reglElementbuffer.bind();
         opts.reglElementbuffer.paddingWithData(opts.data, opts.usage, opts.component);
         //推断primitive类型
@@ -108,7 +108,7 @@ class ElementState {
             case 'BYTE':
                 component = 'UNSIGNED_BYTE';
                 break;
-            case 'UNSIGNED_INT':
+            case 'UNSIGNED_SHORT':
             case 'SHORT':
                 component = 'UNSIGNED_SHORT';
                 break;
@@ -117,7 +117,7 @@ class ElementState {
                 component = this.extLib.get('OES_element_index_uint') ? 'UNSIGNED_INT' : 'UNSIGNED_SHORT';
                 break;
             default:
-                check(false, `ElementState Error: unvilade paramter ${component}`);
+                check(false, `ElementsState Error: unvilade paramter ${component}`);
         }
         return component;
     }
@@ -127,8 +127,8 @@ class ElementState {
      * @param id 
      * @returns 
      */
-    public getElementbuffer = (id: number): GElementbuffer => {
-        return ElementState.ELEMENTBUFFER_SET.get(id);
+    public getElementsbuffer = (id: number): GElementsbuffer => {
+        return ElementsState.ELEMENTBUFFER_SET.get(id);
     }
 
     /**
@@ -136,7 +136,7 @@ class ElementState {
      * @param opts 
      * @returns 
      */
-    public createElementbuffer = (
+    public createElementsbuffer = (
         opts: {
             data: ShapedArrayFormat,
             component: SComponent,
@@ -145,7 +145,7 @@ class ElementState {
             dimension?: SDimension,
             count?: number
         }
-    ): GElementbuffer => {
+    ): GElementsbuffer => {
         const data = opts.data,
             count = opts.count || 0,
             usage = opts.usage || 'STATIC_DRAW',
@@ -162,9 +162,9 @@ class ElementState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new GElementbuffer(reglbuffer, primitive);
+        const reglElementbuffer = new GElementsbuffer(reglbuffer, primitive);
         this.stats.elementsCount++;
-        return this.initElement({
+        return this.initElements({
             reglElementbuffer: reglElementbuffer,
             data: data,
             component: component,
@@ -179,7 +179,7 @@ class ElementState {
      * @param opts 
      * @returns 
      */
-    public createStreamElementbuffer = (
+    public createStreamElementsbuffer = (
         opts: {
             data: ShapedArrayFormat,
             component: SComponent,
@@ -188,7 +188,7 @@ class ElementState {
             dimension?: SDimension,
             count?: number
         }
-    ): GElementbuffer => {
+    ): GElementsbuffer => {
         const data = opts.data,
             count = opts.count || 0,
             usage = opts.usage || 'STREAM_DRAW',
@@ -205,9 +205,9 @@ class ElementState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new GElementbuffer(reglbuffer, primitive);
+        const reglElementbuffer = new GElementsbuffer(reglbuffer, primitive);
         this.stats.elementsCount++;
-        return this.initElement({
+        return this.initElements({
             reglElementbuffer: reglElementbuffer,
             data: data,
             component: component,
@@ -221,9 +221,9 @@ class ElementState {
      * 
      * @param streamElementbuffer 
      */
-    public destoryStreamElementbuffer = (streamElementbuffer:GElementbuffer):void=>{
+    public destoryStreamElementsbuffer = (streamElementbuffer:GElementsbuffer):void=>{
         this.streamPool.push(streamElementbuffer);
     }
 }
 
-export { ElementState }
+export { ElementsState }

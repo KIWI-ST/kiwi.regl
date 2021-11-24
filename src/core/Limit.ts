@@ -293,6 +293,11 @@ class Limit {
         this.maxTextureUnits = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
 
         /**
+         * 设备支持的最大纹理分辨率
+         */
+        this.maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+
+        /**
          * 与显卡强相关，一般是16
          */
         this.maxAttributes = gl.getParameter(gl.MAX_VERTEX_ATTRIBS);

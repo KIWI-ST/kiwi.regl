@@ -27,7 +27,7 @@ class Transpose {
      * @param data 
      */
     private static postConvert = (image: ITexImage, data: TypedArrayFormat): void => {
-        if (image.component = 'HALF_FLOAT_OES') {
+        if (image.component === 'HALF_FLOAT_OES') {
             image.data = toHalfFloat(data);
             bufferPool0.freeType(data);
         }

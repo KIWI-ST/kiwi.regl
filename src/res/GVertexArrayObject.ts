@@ -4,7 +4,7 @@ import { IPipelineLink } from "../core/Pipeline";
 import { SPrimitive } from "../core/Support";
 import { IStats } from "../util/createStats";
 import { GBuffer } from "./GBuffer";
-import { GElementbuffer } from "./GElementbuffer";
+import { GElementsbuffer } from "./GElementsbuffer";
 import { defaultValue } from '../util/defaultValue';
 import { check } from "../util/check";
 import { ProgramState } from "../state/ProgramState";
@@ -26,7 +26,7 @@ interface IAttributeRecord extends IPipelineLink {
     /**
      * Attribute记录的缓冲对象（数据）
      */
-    buffer?: number[] | GBuffer | GElementbuffer;
+    buffer?: number[] | GBuffer | GElementsbuffer;
 
     /**
      * 指示数据归一化
@@ -94,7 +94,7 @@ class GVertexArrayObject extends Dispose {
     /**
      * element arraybuffer 
      */
-    private elements: GElementbuffer;
+    private elements: GElementsbuffer;
 
     /**
      * 
@@ -149,14 +149,14 @@ class GVertexArrayObject extends Dispose {
     /**
      * 
      */
-    set Elements(v: GElementbuffer) {
+    set Elements(v: GElementsbuffer) {
         this.elements = v;
     }
 
     /**
      * element arraybuffer
      */
-    get Elements(): GElementbuffer {
+    get Elements(): GElementsbuffer {
         return this.elements;
     }
 
@@ -216,7 +216,7 @@ class GVertexArrayObject extends Dispose {
     public refresh = (
         opts: {
             recordSet?: Map<string, IAttributeRecord>,
-            elements?: GElementbuffer,
+            elements?: GElementsbuffer,
             offset?: number,
             count?: number,
             instances?: number,

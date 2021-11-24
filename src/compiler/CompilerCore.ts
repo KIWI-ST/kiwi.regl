@@ -4,12 +4,12 @@ import { ShapedArrayFormat } from "../core/Format";
 import { Limit } from "../core/Limit";
 import { IPipelineData, Pipeline } from "../core/Pipeline";
 import { SPrimitive, SWebGLStatus } from "../core/Support";
-import { GElementbuffer } from "../res/GElementbuffer";
+import { GElementsbuffer } from "../res/GElementsbuffer";
 import { GFramebuffer } from "../res/GFramebuffer";
 import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
-import { ElementState } from "../state/ElementState";
+import { ElementsState } from "../state/ElementState";
 import { FramebufferState } from "../state/FramebufferState";
 import { ProgramState } from "../state/ProgramState";
 import { RenderbufferState } from "../state/RenderbufferState";
@@ -26,7 +26,7 @@ import { emitProgram } from "./emitProgram";
 import { emitStatus } from "./emitStatus";
 import { emitUniform } from "./emitUniform";
 import { parseAttribute, TAttribute } from "./parseAttribute";
-import { praseElement } from "./parseElement";
+import { praseElements } from "./parseElement";
 import { parseProgram } from "./parseProgram";
 import { parseStatus } from "./parseStatus";
 import { parseUniform, TUniform } from "./parseUniform";
@@ -108,7 +108,7 @@ class CompilerCore {
 
     private bufferState: BufferState;
 
-    private elementState: ElementState;
+    private elementState: ElementsState;
 
     private attributeState: AttributeState;
 
@@ -139,7 +139,7 @@ class CompilerCore {
             limLib: Limit,
             bufferState: BufferState,
             textureState: TextureState,
-            elementState: ElementState,
+            elementState: ElementsState,
             attributeState: AttributeState,
             stringState: StringState,
             shaderState: ShaderState,
@@ -181,7 +181,7 @@ class CompilerCore {
             limLib: Limit,
             bufferState: BufferState,
             textureState: TextureState,
-            elementState: ElementState,
+            elementState: ElementsState,
             attributeState: AttributeState,
             stringState: StringState,
             shaderState: ShaderState,
@@ -198,12 +198,12 @@ class CompilerCore {
             status?: SWebGLStatus
         }
     ): IPipelineData => {
-        let elementbuffer: GElementbuffer = null, attributeRecordSet: Map<string, IAttributeRecord> = null;
+        let elementbuffer: GElementsbuffer = null, attributeRecordSet: Map<string, IAttributeRecord> = null;
         //解析attribute, 为VAO准备资源
         // const attributeLocations = parseAttribLocation();
         const status = parseStatus(opts);
         if (!opts.vao) {
-            elementbuffer = praseElement(opts);
+            elementbuffer = praseElements(opts);
             //解析attributes和unifroms后构造record数组备用
             attributeRecordSet = parseAttribute(opts);
         }
