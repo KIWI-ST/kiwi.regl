@@ -67,10 +67,9 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
 let last = 1;
 
 const anim = (framestamp:number) => {
-    // console.log(1000/(framestamp - last));
+    console.log(1000/(framestamp - last));
     last = framestamp;
-
-    const rand = 200;
+    const rand = 400;
     const batch = [];
     for (let k = 0; k < rand; k++) {
         const pos: number[][] = [];
