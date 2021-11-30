@@ -8,6 +8,8 @@ import { GElementsbuffer } from "./GElementsbuffer";
 import { defaultValue } from '../util/defaultValue';
 import { check } from "../util/check";
 import { ProgramState } from "../state/ProgramState";
+import { Props, TProps } from "../core/Props";
+
 
 /**
  * 
@@ -17,6 +19,11 @@ interface IAttributeRecord extends IPipelineLink {
      * attribute location name
      */
     name?: string;
+
+    /**
+     * props 动态属性
+     */
+    p?: Props<TProps>;
 
     /**
      * 每个顶点属性组成的数量，例如vec3为3

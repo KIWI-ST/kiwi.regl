@@ -50,6 +50,9 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
      */
     attributes?: TA;
 
+    /**
+     * 
+     */
     uniforms?: TU;
 
     /**
@@ -94,9 +97,14 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
 }
 
 class CompilerCore {
-
+    /**
+     * 
+     */
     private gl: WebGLRenderingContext;
 
+    /**
+     * 
+     */
     private limLib: Limit;
 
     /**
@@ -104,26 +112,59 @@ class CompilerCore {
     */
     private extLib: Extension;
 
+    /**
+     * 
+     */
     private stats: IStats;
 
+    /**
+     * 
+     */
     private bufferState: BufferState;
 
+    /**
+     * 
+     */
     private elementState: ElementsState;
 
+    /**
+     * 
+     */
     private attributeState: AttributeState;
 
+    /**
+     * 
+     */
     private stringState: StringState;
 
+    /**
+     * 
+     */
     private textureState: TextureState;
 
+    /**
+     * 
+     */
     private shaderState: ShaderState;
 
+    /**
+     * 
+     */
     private programState: ProgramState;
 
+    /**
+     * 
+     */
     private renderbufferState: RenderbufferState;
 
+    /**
+     * 
+     */
     private framebufferState: FramebufferState;
 
+    /**
+     * 
+     */
     private performance: IPerformance;
 
     /**
@@ -254,8 +295,6 @@ class CompilerCore {
         emitStatus(pipeline, iBlock, pipelineData.status);
         //处理program
         emitProgram(pipeline, iBlock, pipelineData);
-        //处理attribute
-        emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet);
         //批量绘制
         emitBatch(pipeline, iBlock, pipelineData, extLib, instances);
     }
@@ -287,7 +326,7 @@ class CompilerCore {
         //处理attribute
         emitProgram(pipeline, iBlock, pipelineData);
         //处理attribute
-        emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet);
+        emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet, P0_NAME);
         //处理uniform
         emitUniform(pipeline, iBlock, oBlock, pipelineData.program.Uniforms, pipelineData.uniformRecordSet, P0_NAME);
         //处理绘制

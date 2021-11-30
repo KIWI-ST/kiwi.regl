@@ -1,6 +1,7 @@
 import { Block } from "kiwi.codegen";
 import { Extension } from "../core/Extension";
 import { IPipelineData, Pipeline } from "../core/Pipeline";
+import { emitAttribute } from "./emitAttribute";
 import { emitElement } from "./emitElement";
 import { emitFramebuffer } from "./emitFramebuffer";
 import { emitUniform } from "./emitUniform";
@@ -27,10 +28,13 @@ const emitBatch = (
     const scope0 = batchBlock.createScope(), iBlock = scope0.Entry, oBlock = scope0.Exit;
     //1.处理framebuffer
     emitFramebuffer(pipeline, iBlock, oBlock, pipelineData.framebuffer, extLib);
+    //2.处理attribute
+    emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet,P0_NAME);
     //2.处理uniform
     emitUniform(pipeline, iBlock, oBlock, pipelineData.program.Uniforms, pipelineData.uniformRecordSet, P0_NAME);
     //3.batch draw
     emitElement(pipeline, extLib, pipelineData.vao, iBlock, pipelineData.element, instances);
+    //4.循环体结束
     batchBlock.push(`}`);
 }
 

@@ -18,7 +18,8 @@ const emitBuffer = (
     iBlock: Block,
     attribute: IActiveInfo,
     record: IAttributeRecord,
-    extLib: Extension
+    extLib: Extension,
+    input0: string
 ) => {
     const GL_NAME = pipeline.getVariable('gl'),
         ATTRIBUTE_NAME = pipeline.link(attribute),
@@ -31,16 +32,36 @@ const emitBuffer = (
     //写入buffer信息，如果buffer没生成，则binding buffer
     const cond1 = iBlock.createConditionT(`!${BINDING_NAME}.buffer`);
     cond1.Then.push(`${GL_NAME}.enableVertexAttribArray(${LOCATION_NAME})`);
-    //判断2，可行条件下执行buffer赋值操作
-    const cond2 = iBlock.createConditionT(`${BINDING_NAME}.component!==${BUFFER_NAME}.component||${BINDING_NAME}.size!==${SIZE_NAME}||${BINDING_NAME}.buffer!==${BUFFER_NAME}||${BINDING_NAME}.normalized!==${record.normalized || false}||${BINDING_NAME}.offset!==${record.offset || 0}||${BINDING_NAME}.stride!==${record.stride || 0}`);
-    cond2.Then.push(`${BINDING_NAME}.component=${BUFFER_NAME}.component`);
-    cond2.Then.push(`${BINDING_NAME}.size=${SIZE_NAME}`);
-    cond2.Then.push(`${BINDING_NAME}.buffer=${BUFFER_NAME}`);
-    cond2.Then.push(`${BINDING_NAME}.normalized=${record.normalized || false}`);
-    cond2.Then.push(`${BINDING_NAME}.offset=${record.offset || 0}`);
-    cond2.Then.push(`${BINDING_NAME}.stride=${record.stride || 0}`);
-    cond2.Then.push(`${GL_NAME}.bindBuffer(${CArraybufferTarget['ARRAY_BUFFER']},${BUFFER_NAME}.buffer)`);
-    cond2.Then.push(`${GL_NAME}.vertexAttribPointer(${LOCATION_NAME},${BINDING_NAME}.size,${BINDING_NAME}.component, ${BINDING_NAME}.normalized, ${BINDING_NAME}.offset, ${BINDING_NAME}.stride)`);
+    //判断2，如果buffer是prop记录，则实时生成
+    if (record.p) {
+        const BUFFERSTATE_NAME = pipeline.getVariable('bufferState');
+        record.dyn = iBlock.def(`${input0}${record.p.KEY}`);
+        const cond3 = iBlock.createConditionTE(`!${BINDING_NAME}.buffer`);
+        //2.1 buffer不存在，构造buffer
+        cond3.Then.push(`${BINDING_NAME}.buffer=${BUFFERSTATE_NAME}.createBuffer({data:${record.dyn},target: 'ARRAY_BUFFER'})`);
+        cond3.Then.push(`${BINDING_NAME}.component=${BINDING_NAME}.buffer.component`);
+        cond3.Then.push(`${BINDING_NAME}.size=${SIZE_NAME}`);
+        cond3.Then.push(`${BINDING_NAME}.normalized=${record.normalized || false}`);
+        cond3.Then.push(`${BINDING_NAME}.offset=${record.offset || 0}`);
+        cond3.Then.push(`${BINDING_NAME}.stride=${record.stride || 0}`);
+        cond3.Then.push(`${GL_NAME}.bindBuffer(${CArraybufferTarget['ARRAY_BUFFER']}, ${BINDING_NAME}.buffer.buffer)`);
+        cond3.Then.push(`${GL_NAME}.vertexAttribPointer(${LOCATION_NAME},${BINDING_NAME}.size,${BINDING_NAME}.component, ${BINDING_NAME}.normalized, ${BINDING_NAME}.offset, ${BINDING_NAME}.stride)`);
+        //2.2 buffer存在，替换buffer数据
+        cond3.Else.push(`${BINDING_NAME}.buffer.subData(${record.dyn})`);
+    } 
+    //buffer是存在的，只需要应用并赋值
+    else {
+        //判断2，可行条件下执行buffer赋值操作
+        const cond2 = iBlock.createConditionT(`${BINDING_NAME}.component!==${BUFFER_NAME}.component||${BINDING_NAME}.size!==${SIZE_NAME}||${BINDING_NAME}.buffer!==${BUFFER_NAME}||${BINDING_NAME}.normalized!==${record.normalized || false}||${BINDING_NAME}.offset!==${record.offset || 0}||${BINDING_NAME}.stride!==${record.stride || 0}`);
+        cond2.Then.push(`${BINDING_NAME}.component=${BUFFER_NAME}.component`);
+        cond2.Then.push(`${BINDING_NAME}.size=${SIZE_NAME}`);
+        cond2.Then.push(`${BINDING_NAME}.buffer=${BUFFER_NAME}`);
+        cond2.Then.push(`${BINDING_NAME}.normalized=${record.normalized || false}`);
+        cond2.Then.push(`${BINDING_NAME}.offset=${record.offset || 0}`);
+        cond2.Then.push(`${BINDING_NAME}.stride=${record.stride || 0}`);
+        cond2.Then.push(`${GL_NAME}.bindBuffer(${CArraybufferTarget['ARRAY_BUFFER']},${BUFFER_NAME}.buffer)`);
+        cond2.Then.push(`${GL_NAME}.vertexAttribPointer(${LOCATION_NAME},${BINDING_NAME}.size,${BINDING_NAME}.component, ${BINDING_NAME}.normalized, ${BINDING_NAME}.offset, ${BINDING_NAME}.stride)`);
+    }
     //判断3.是否需要实例化绘制（增加angle标记）
     if (extLib.get('ANGLE_instanced_arrays')) {
         const DIVISOR = record.divisor || 0;
@@ -65,7 +86,8 @@ const emitAttribute = (
     extLib: Extension,
     vao: GVertexArrayObject,
     attributes: IActiveInfo[],
-    attributeRecordSet: Map<string, IAttributeRecord>
+    attributeRecordSet: Map<string, IAttributeRecord>,
+    input0: string
 ): void => {
     //1.判断是否使用VAO
     const cond0 = iBlock.createConditionTE(`${pipeline.getVariable('vao')}`);
@@ -74,11 +96,14 @@ const emitAttribute = (
     cond0.Then.push(`${pipeline.getVariable('vao')}.bindAttrs()`);
     //如果未使用，则绑定att属性
     cond0.Else.push(`${pipeline.getVariable('attributeState')}.setVAO(null)`);
-    !vao ? attributes.forEach((att: IActiveInfo) => {
-        const name = att.name;
-        const record = attributeRecordSet.get(name);
-        emitBuffer(pipeline, iBlock, att, record, extLib);
-    }) : null;
+    //如果不存在VAO绑定，则显式绑定属性
+    if (!vao) {
+        attributes.forEach((att: IActiveInfo) => {
+            const name = att.name;
+            const record = attributeRecordSet.get(name);
+            emitBuffer(pipeline, iBlock, att, record, extLib, input0);
+        })
+    }
 }
 
 export { emitAttribute }

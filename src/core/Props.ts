@@ -5,7 +5,7 @@ type TProps = {
     /**
      * 指代vec2/vec3/mat等
      */
-    [propName in string]: number[]
+    [propName in string]: number|number[]|number[][]
 }
 
 /**

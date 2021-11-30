@@ -2,6 +2,7 @@ import { CComponent } from "../core/Constant";
 import { Extension } from "../core/Extension";
 import { ShapedArrayFormat } from "../core/Format";
 import { Pipeline } from "../core/Pipeline";
+import { Props, TProps } from "../core/Props";
 import { SComponent } from "../core/Support";
 import { GBuffer } from "../res/GBuffer";
 import { IAttributeRecord } from "../res/GVertexArrayObject";
@@ -54,7 +55,7 @@ interface IAttributeBuffer {
  * 限定attribute接口约定类型范围
  */
 type TAttribute = {
-    [propName in string | number]: ShapedArrayFormat | IAttributeBuffer;
+    [propName in string | number]: ShapedArrayFormat | IAttributeBuffer | Props<TProps>;
 }
 
 /**
@@ -139,10 +140,25 @@ const parseAttribute = <TA extends TAttribute>(
             check(Object.values(CComponent).indexOf(record.component) !== -1, `数据类型只能是${Object.values(CComponent)}`);
             check(v0.divisor === 0 || extLib.get('ANGLE_instanced_arrays'), `不支持ANGLE_instanced_arrays插件，不能设置实例化参数divisor`);
             check(v0.divisor >= 0, `不支持的divisor值`);
+            record.divisor = v0.divisor || 0;
             //record buffer属性
             record.buffer = buf;
             record.component = buf.Component;
             record.ln = pipeline.link(buf);
+        }
+        /**
+         * 动态属性，如
+         * attrbutes:{
+         *    position:Props<IProp>
+         * }
+         */
+        else if(v instanceof Props){
+            record.p = v;
+            record.offset = 0;
+            record.stride = 0;
+            record.normalized = false;
+            record.component = CComponent['FLOAT'];
+            record.divisor === 0;
         }
         RECORD_SET.set(record.name, record);
     });

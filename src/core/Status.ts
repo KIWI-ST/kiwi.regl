@@ -82,7 +82,8 @@ class Status {
         this.setFlag('STENCIL_TEST', false);
         this.setVariable('stencilMask', [-1]);
         this.setVariable('stencilOpSeparate', [gl.FRONT, gl.KEEP, gl.KEEP, gl.KEEP]);
-        this.setVariable('stencilOpSeparate', [gl.BACK, gl.KEEP, gl.KEEP, gl.KEEP]);
+        //}{debug stencilOpSeparate方法是否需要重设两次
+        // this.setVariable('stencilOpSeparate', [gl.BACK, gl.KEEP, gl.KEEP, gl.KEEP]);
         //10.scissor
         this.setFlag('SCISSOR_TEST', false);
         this.setVariable('scissor', [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
