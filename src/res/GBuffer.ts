@@ -178,6 +178,14 @@ class GBuffer extends Dispose {
     public bind = () => {
         this.gl.bindBuffer(this.target, this.buffer);
     }
+
+    /**
+     * 解绑buffer
+     */
+    public unbind =()=>{
+        this.gl.bindBuffer(this.target, null);
+        this.decRef();
+    }
 }
 
 export { 

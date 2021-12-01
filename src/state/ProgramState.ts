@@ -53,6 +53,7 @@ class ProgramState {
         this.gl = gl;
         this.shaderState = shaderState;
         this.stringState = stringState;
+        this.reglProgram = null;
     }
 
     /**

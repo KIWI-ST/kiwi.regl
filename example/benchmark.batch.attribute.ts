@@ -1,18 +1,19 @@
-import { PipeGL, Props, TAttribute, TProps, TUniform } from '../src/index';
+import { GBuffer, PipeGL, Props, TAttribute, TProps, TUniform } from '../src/index';
 
-interface IPropOffset extends TProps {
+interface IProp extends TProps {
     offset: number,
-    position: number[][]
+    position: GBuffer
+    // position:number[][]
 }
 
 interface Attribute extends TAttribute {
     // position: number[][];
-    position: Props<IPropOffset>
+    position: Props<IProp>
 }
 
 interface Uniform extends TUniform {
     color: number[];
-    offset: Props<IPropOffset>;
+    offset: Props<IProp>;
 }
 
 const pipegl0 = new PipeGL({
@@ -39,12 +40,12 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
     `,
 
     attributes: {
-        position: new Props<IPropOffset>('position')
+        position: new Props<IProp>('position')
     },
 
     uniforms: {
         color: [1, 0.5, 0, 1],
-        offset: new Props<IPropOffset>('offset')
+        offset: new Props<IProp>('offset')
     },
 
     primitive: 'LINES',
@@ -66,20 +67,26 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
 
 let last = 1;
 
-const anim = (framestamp:number) => {
-    console.log(1000/(framestamp - last));
-    last = framestamp;
-    const rand = 400;
-    const batch = [];
-    for (let k = 0; k < rand; k++) {
-        const pos: number[][] = [];
-        for (let i = 0; i < 5; i++) {
-            const theta = 2.0 * Math.PI * i / k;
-            pos.push([Math.sin(theta), Math.cos(theta)]);
-        }
-        batch.push({ position: pos, offset: 0 })
+const batch: IProp[] = [];
+const rand = 1000;
+
+for (let k = 1; k <= rand; k++) {
+    const arr: number[][] = [];
+    for (let i = 0; i < 81; i++) {
+        const theta = 2.0 * Math.PI * i / k;
+        arr.push([Math.sin(theta), Math.cos(theta)]);
     }
-    draw0.batch<IPropOffset>(batch);
+    const buf = pipegl0.buffer(arr.slice(), { target: 'ARRAY_BUFFER', component:'FLOAT'});
+    batch.push({ position: buf, offset: 0 })
+    // batch.push({position:arr, offset:0})
+}
+
+const anim = (framestamp: number) => {
+    pipegl0.clear({color:[0, 0, 0, 1.0]});
+    console.log(1000 / (framestamp - last));
+    last = framestamp;
+    // batch.push({ position: pos, offset: 0 })
+    draw0.batch<IProp>(batch);
     requestAnimationFrame(anim);
 }
 

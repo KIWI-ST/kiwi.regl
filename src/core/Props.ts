@@ -1,3 +1,5 @@
+import { GBuffer } from "../res/GBuffer";
+
 /**
  * prop对象抽象类型
  */
@@ -5,7 +7,7 @@ type TProps = {
     /**
      * 指代vec2/vec3/mat等
      */
-    [propName in string]: number|number[]|number[][]
+    [propName in string]: number | number[] | number[][] | GBuffer
 }
 
 /**

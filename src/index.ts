@@ -8,6 +8,7 @@ export { IPerformance } from './util/createPerformance';
 export { GFramebuffer } from './res/GFramebuffer';
 export { GTexture } from './res/GTexture';
 export { GVertexArrayObject } from './res/GVertexArrayObject';
+export { GBuffer } from './res/GBuffer';
 
 //Prop
 export { Props, TProps } from './core/Props';
