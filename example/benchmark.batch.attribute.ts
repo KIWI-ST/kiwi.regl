@@ -68,7 +68,7 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
 let last = 1;
 
 const batch: IProp[] = [];
-const rand = 1000;
+const rand = 300;
 
 for (let k = 1; k <= rand; k++) {
     const arr: number[][] = [];
@@ -83,7 +83,7 @@ for (let k = 1; k <= rand; k++) {
 
 const anim = (framestamp: number) => {
     pipegl0.clear({color:[0, 0, 0, 1.0]});
-    console.log(1000 / (framestamp - last));
+    // console.log(1000 / (framestamp - last));
     last = framestamp;
     // batch.push({ position: pos, offset: 0 })
     draw0.batch<IProp>(batch);
