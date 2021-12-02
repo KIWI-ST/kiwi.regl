@@ -1,3 +1,4 @@
+import { GTexture } from "..";
 import { GBuffer } from "../res/GBuffer";
 
 /**
@@ -7,7 +8,7 @@ type TProps = {
     /**
      * 指代vec2/vec3/mat等
      */
-    [propName in string]: number | number[] | number[][] | GBuffer
+    [propName in string]: number | number[] | number[][] | GBuffer | GTexture
 }
 
 /**

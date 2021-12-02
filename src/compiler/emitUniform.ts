@@ -140,9 +140,16 @@ const emitUniform = (
         else if (record.p) {
             //指定使用入参p0作为读取Prop.KEY的内容
             record.dyn = iBlock.def(`${input0}${record.p.KEY}`);
-            const cond0 = iBlock.createConditionTE(`${ISNDARRAY_NAME}(${record.dyn})`);
-            cond0.Then.push(`${GL_NAME}.uniform${prefix}v(${record.ln}.location, ${isMatrix ? 'false,' : ''}${record.dyn})`);
-            cond0.Else.push(`${GL_NAME}.uniform${prefix}(${record.ln}.location, ${isMatrix ? 'false,' : ''}${record.dyn})`);
+            //1.如果是纹理
+            const cond1 = iBlock.createConditionTE(`${ISTEXTURE_NAME}(${record.dyn})`);
+            cond1.Then.push(`${GL_NAME}.uniform${prefix}(${record.ln}.location, ${record.dyn}.bind())`);
+            //末尾销毁
+            const cond11 = oBlock.createConditionT(`${ISTEXTURE_NAME}(${record.dyn})`);
+            cond11.Then.push(`${record.dyn}.unbind()`);
+            //2.不是纹理，则应该是数字或者其他
+            const cond12 = cond1.Else.createConditionTE(`${ISNDARRAY_NAME}(${record.dyn})`);
+            cond12.Then.push(`${GL_NAME}.uniform${prefix}v(${record.ln}.location, ${isMatrix ? 'false,' : ''}${record.dyn})`);
+            cond12.Else.push(`${GL_NAME}.uniform${prefix}(${record.ln}.location, ${isMatrix ? 'false,' : ''}${record.dyn})`);
         }
     });
 }
