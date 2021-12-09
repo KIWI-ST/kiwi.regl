@@ -872,6 +872,11 @@ const CWebGLStatusVariable = {
     blendFuncSeparate: CWebGLStatusTYPE.DECARRAY,
 
     /**
+     * blend func
+     */
+    blendFunc:CWebGLStatusTYPE.DECARRAY,
+
+    /**
      * 
      */
     depthFunc: CWebGLStatusTYPE.NUMBER,
