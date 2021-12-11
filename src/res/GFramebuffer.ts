@@ -1,7 +1,7 @@
-import { Dispose } from "../core/Dispose";
 import { Limit } from "../core/Limit";
 import { check } from "../util/check";
 import { IStats } from "../util/createStats";
+import { Dispose } from "../core/Dispose";
 import { GAttachment } from "./GAttachment";
 
 /**

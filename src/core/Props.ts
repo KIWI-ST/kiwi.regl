@@ -1,5 +1,5 @@
-import { GTexture } from "..";
 import { GBuffer } from "../res/GBuffer";
+import { GTexture } from "../res/GTexture";
 
 /**
  * prop对象抽象类型
@@ -23,9 +23,14 @@ type TProps = {
  * prop.KEY作为读取batch内数据的索引属性
  */
 class Props<T extends TProps>{
-
+    /**
+     * 存储 prop 索引属性
+     */
     private key: string;
 
+    /**
+     * 公开索引，使用时例如 p0[0]['offset']获取batchDraw内的offeset值
+     */
     get KEY(): string {
         return this.key;
     }
@@ -33,7 +38,6 @@ class Props<T extends TProps>{
     constructor(key: keyof { [key in keyof T]: string }) {
         this.key = `['${key}']`;
     }
-
 }
 
 export {

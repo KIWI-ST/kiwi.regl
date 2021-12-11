@@ -56,6 +56,7 @@ class Status {
         //2.blending
         this.setFlag('BLEND', false);
         this.setVariable('blendColor', [0, 0, 0, 0]);
+        // this.setVariable('blendFunc', [gl.SRC_COLOR, gl.DST_COLOR]);
         this.setVariable('blendEquationSeparate', [gl.FUNC_ADD, gl.FUNC_ADD]);
         this.setVariable('blendFuncSeparate', [gl.ONE, gl.ZERO, gl.ONE, gl.ZERO]);
         //3.depth
@@ -90,7 +91,12 @@ class Status {
         this.setVariable('viewport', [0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight]);
     }
 
-    needRefresh = (key: SWebGLStatusFLAG | SWebGLStatusVariable): boolean => {
+    /**
+     * 判断是否需要更新状态（在每个pipeline中，WebGL状态独立判断）
+     * @param key 
+     * @returns 
+     */
+    public needRefresh = (key: SWebGLStatusFLAG | SWebGLStatusVariable): boolean => {
         if (CWebGLStatusFLAG[key]) {
             const k = key as SWebGLStatusFLAG;
             const cur = Status.CURRENT_FLAG_SET.get(k);
@@ -105,14 +111,14 @@ class Status {
             else if (cur.length !== next.length) return true
             else return cur.join() !== next.join();
         }
-        else check(false, `错误：Status-不支持的webgl状态修改，请检查状态是否合法`);
+        else check(false, `Status 错误: 不支持的webgl状态${key}修改，请检查状态是否合法`);
     }
 
     /**
      * 更新状态
      * @param key
      */
-    refresh = (key: SWebGLStatusVariable | SWebGLStatusFLAG) => {
+    public refresh = (key: SWebGLStatusVariable | SWebGLStatusFLAG) => {
         const gl = this.gl;
         if (CWebGLStatusFLAG[key]) {
             const k = key as SWebGLStatusFLAG;
@@ -126,7 +132,7 @@ class Status {
             gl[k as unknown as string].apply(gl, v);
             Status.CURRENT_VARIABLE_SET.set(k, v);
         }
-        else check(false, `错误：Status-不支持的webgl状态修改，请检查状态是否合法`);
+        else check(false, `Status 错误: 不支持的webgl状态${key}修改，请检查状态是否合法`);
     }
 
     /**
@@ -134,7 +140,7 @@ class Status {
      * @param key 
      * @param v 
      */
-    setFlag = (key: SWebGLStatusFLAG, v: boolean): void => {
+    public setFlag = (key: SWebGLStatusFLAG, v: boolean): void => {
         this.NEXT_FLAG_SET.set(key, v);
         this.statusList.push(key);
     }
@@ -144,7 +150,7 @@ class Status {
      * @param key 
      * @param v 
      */
-    setVariable = (key: SWebGLStatusVariable, v: any[]): void => {
+    public setVariable = (key: SWebGLStatusVariable, v: any[]): void => {
         this.NEXT_VARIABLE_SET.set(key, v.slice());
         this.statusList.push(key);
     }

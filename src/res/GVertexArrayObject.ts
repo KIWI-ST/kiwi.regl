@@ -1,15 +1,14 @@
-import { CArraybufferTarget, CAttributeTS, CPrimitive } from "../core/Constant";
-import { Dispose } from "../core/Dispose";
-import { IPipelineLink } from "../core/Pipeline";
-import { SPrimitive } from "../core/Support";
+import { check } from "../util/check";
 import { IStats } from "../util/createStats";
 import { GBuffer } from "./GBuffer";
-import { GElementsbuffer } from "./GElementsbuffer";
-import { defaultValue } from '../util/defaultValue';
-import { check } from "../util/check";
+import { Dispose } from "../core/Dispose";
+import { SPrimitive } from "../core/Support";
 import { ProgramState } from "../state/ProgramState";
+import { defaultValue } from '../util/defaultValue';
 import { Props, TProps } from "../core/Props";
-
+import { IPipelineLink } from "../core/Pipeline";
+import { GElementsbuffer } from "./GElementsbuffer";
+import { CArraybufferTarget, CAttributeTS, CPrimitive } from "../core/Constant";
 
 /**
  * 
@@ -220,6 +219,10 @@ class GVertexArrayObject extends Dispose {
         VAO_SET.set(this.ID, this);
     }
 
+    /**
+     * 
+     * @param opts 
+     */
     public refresh = (
         opts: {
             recordSet?: Map<string, IAttributeRecord>,
@@ -253,7 +256,7 @@ class GVertexArrayObject extends Dispose {
                 //顶点缓冲
                 if (att.buffer instanceof GBuffer) {
                     const act = this.programState.Current.AttActiveInfo.get(loc);
-                    check(act, `VAO错误：VAO绑定属性与当前Program不一致`);
+                    check(act, `GVertexArrayObject 错误: VAO绑定属性与当前Program不一致`);
                     const pos = act.location as number;
                     const size = CAttributeTS[act.info.type];
                     //告诉显卡从当前绑定的缓冲区读取顶点数据
@@ -264,7 +267,7 @@ class GVertexArrayObject extends Dispose {
                         this.extITA.vertexAttribDivisorANGLE(pos, att.divisor);
                 } else if (Array.isArray(att.buffer)) {
                     const act = this.programState.Current.AttActiveInfo.get(loc);
-                    check(act, `VAO错误：VAO绑定属性与当前Program不一致`);
+                    check(act, `GVertexArrayObject 错误: VAO绑定属性与当前Program不一致`);
                     const pos = act.location as number;
                     gl.disableVertexAttribArray(pos);
                     //使用fv代替float verctor, 要求buffer长度是4
