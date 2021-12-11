@@ -26,8 +26,6 @@ const emitBatch = (
     //创建for循环体
     batchBlock.push(`for(${LOOP_NAME};${LOOP_NAME}<p0.length;++${LOOP_NAME}){`);
     const scope0 = batchBlock.createScope(), iBlock = scope0.Entry, oBlock = scope0.Exit;
-    //1.处理framebuffer
-    emitFramebuffer(pipeline, iBlock, oBlock, pipelineData.framebuffer, extLib);
     //2.处理attribute
     emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet,P0_NAME);
     //2.处理uniform

@@ -5,7 +5,6 @@ import { Limit } from "../core/Limit";
 import { IPipelineData, Pipeline } from "../core/Pipeline";
 import { SPrimitive, SWebGLStatus } from "../core/Support";
 import { GElementsbuffer } from "../res/GElementsbuffer";
-import { GFramebuffer } from "../res/GFramebuffer";
 import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
 import { AttributeState } from "../state/AttributeState";
 import { BufferState } from "../state/BufferState";
@@ -27,6 +26,7 @@ import { emitStatus } from "./emitStatus";
 import { emitUniform } from "./emitUniform";
 import { parseAttribute, TAttribute } from "./parseAttribute";
 import { praseElements } from "./parseElement";
+import { IFramebufferSetting, parseFramebuffer } from "./parseFramebuffer";
 import { parseProgram } from "./parseProgram";
 import { parseStatus } from "./parseStatus";
 import { parseUniform, TUniform } from "./parseUniform";
@@ -78,7 +78,7 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
     /**
      * 
      */
-    framebuffer?: { (performance: IPerformance, batchId: number): GFramebuffer } | GFramebuffer;
+    framebuffer?: IFramebufferSetting;
 
     /**
      * 
@@ -96,6 +96,15 @@ interface ICompileOption<TA extends TAttribute, TU extends TUniform> {
     vao?: GVertexArrayObject;
 }
 
+/**
+ * @author axmand
+ * @description 
+ * 编译核心库：
+ * -各种资源（XState)构造
+ * -Codegen构造
+ * -XPrase解析
+ * -XEmit生成
+ */
 class CompilerCore {
     /**
      * 
@@ -231,7 +240,7 @@ class CompilerCore {
             framebufferState: FramebufferState,
             vao?: GVertexArrayObject,
             primitive?: SPrimitive,
-            framebuffer?: { (performance: IPerformance, batchId: number): GFramebuffer } | GFramebuffer,
+            framebuffer?: IFramebufferSetting,
             elements?: ShapedArrayFormat,
             offset?: number,
             count?: number,
@@ -240,6 +249,8 @@ class CompilerCore {
         }
     ): IPipelineData => {
         let elementbuffer: GElementsbuffer = null, attributeRecordSet: Map<string, IAttributeRecord> = null;
+        //解析framebuffer
+        const framebuffer = parseFramebuffer(opts);
         //解析attribute, 为VAO准备资源
         // const attributeLocations = parseAttribLocation();
         const status = parseStatus(opts);
@@ -266,7 +277,7 @@ class CompilerCore {
             vao: opts.vao,
             element: elementbuffer,
             performance: this.performance,
-            framebuffer: opts.framebuffer
+            framebuffer
         }
         //5.资源Link到pipeline
         opts.pipeline.append(pipelineData);
@@ -293,6 +304,8 @@ class CompilerCore {
         const iBlock = scope0.Entry;    //作batch block输入
         //更新webgl上下文状态
         emitStatus(pipeline, iBlock, pipelineData.status);
+        //1.处理framebuffer
+        emitFramebuffer(pipeline, iBlock, scope0.Exit, pipelineData.framebuffer, extLib);
         //处理program
         emitProgram(pipeline, iBlock, pipelineData);
         //批量绘制

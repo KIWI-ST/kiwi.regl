@@ -1,25 +1,27 @@
-import { GFramebuffer } from "../res/GFramebuffer";
+import { Limit } from "./Limit";
+import { Status } from './Status';
+import { GBuffer } from "../res/GBuffer";
 import { GShader } from "../res/GShader";
 import { GTexture } from "../res/GTexture";
-import { isNDArray } from "../util/isNDArray";
-import { IActiveInfo, GProgram } from '../res/GProgram';
-import { Status } from './Status';
-import { IPerformance } from './../util/createPerformance';
-import { GElementsbuffer } from '../res/GElementsbuffer';
 import { Extension } from "./Extension";
-import { Limit } from "./Limit";
-import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
-import { AttributeState } from "../state/AttributeState";
-import { BufferState } from "../state/BufferState";
-import { ElementsState } from "../state/ElementState";
-import { ProgramState } from "../state/ProgramState";
+import { isNDArray } from "../util/isNDArray";
 import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
+import { BufferState } from "../state/BufferState";
+import { ProgramState } from "../state/ProgramState";
 import { TextureState } from "../state/TextureState";
-import { RenderbufferState } from "../state/RenderbufferState";
+import { ElementsState } from "../state/ElementState";
+import { GFramebuffer } from "../res/GFramebuffer";
+import { IPerformance } from './../util/createPerformance';
+import { IUniformRecord } from "../compiler/parseUniform";
+import { AttributeState } from "../state/AttributeState";
+import { GElementsbuffer } from '../res/GElementsbuffer';
 import { FramebufferState } from "../state/FramebufferState";
+import { RenderbufferState } from "../state/RenderbufferState";
 import { Procedure, Template } from 'kiwi.codegen';
-import { GBuffer } from "../res/GBuffer";
+import { IActiveInfo, GProgram } from '../res/GProgram';
+import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
+import { IFramebufferSetting, IFramebufferInfo as IFramebufferInfo } from "../compiler/parseFramebuffer";
 
 /**
  * 全局静态值，包含属性/对象/函数
@@ -50,16 +52,6 @@ const PipelineConstant = {
      * @returns 
      */
     isFramebuffer: (v: any) => v instanceof GFramebuffer,
-
-    /**
-     * 使用draw buffer插件时调用
-     */
-    backBuffer: [1029],
-
-    /**
-     * 在draw buffer插件下调用
-     */
-    drawBuffer: [[0]],
 };
 
 /**
@@ -150,43 +142,81 @@ interface IPipelineData {
     /**
      * 
      */
-    framebuffer?: GFramebuffer | { (performance: IPerformance, batchId: number): GFramebuffer };
+    framebuffer?: IFramebufferInfo;
 }
 
 /**
  * 构造pipeline时必须的资源准备
  */
 interface IPipelineSchema {
-
+    /**
+     * 
+     */
     gl: WebGLRenderingContext;
 
+    /**
+     * 
+     */
     extLib: Extension;
 
+    /**
+     * 
+     */
     limLib: Limit;
 
+    /**
+     * 
+     */
     attributeState: AttributeState;
 
+    /**
+     * 
+     */
     bufferState: BufferState;
 
+    /**
+     * 
+     */
     elementState: ElementsState;
 
+    /**
+     * 
+     */
     programState: ProgramState;
 
+    /**
+     * 
+     */
     shaderState: ShaderState;
 
+    /**
+     * 
+     */
     stringState: StringState;
 
+    /**
+     * 
+     */
     textureState: TextureState;
 
+    /**
+     * 
+     */
     renderbufferState: RenderbufferState;
 
+    /**
+     * 
+     */
     framebufferState: FramebufferState;
 
     /**
      * 性能统计
      */
     performance: IPerformance;
-
+    
+    /**
+     * 
+     */
     primitive: number;
 
     /**

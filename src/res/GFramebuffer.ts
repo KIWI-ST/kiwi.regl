@@ -5,6 +5,11 @@ import { IStats } from "../util/createStats";
 import { GAttachment } from "./GAttachment";
 
 /**
+ * 
+ */
+const COLOR_ATTACHMENT0_WEBGL = 0x8CE0;
+
+/**
  * 全局FBO资源统计
  */
 const FRAMEBUFFER_SET: Map<number, GFramebuffer> = new Map();
@@ -81,6 +86,12 @@ class GFramebuffer extends Dispose {
      */
     private colorAttachments: GAttachment[] = [];
 
+
+    /**
+     * 
+     */
+    private colorDrawbuffers: number[];
+
     /**
      * 
      */
@@ -113,6 +124,13 @@ class GFramebuffer extends Dispose {
         return this.colorAttachments;
     }
 
+    /**
+     * 
+     */
+    get ColorDrawbuffers(): number[] {
+        return this.colorDrawbuffers;
+    }
+
     constructor(
         gl: WebGLRenderingContext,
         limLib: Limit,
@@ -142,10 +160,12 @@ class GFramebuffer extends Dispose {
             depthStencilAttachment?: GAttachment
         }
     ) => {
+        this.colorDrawbuffers = [];
         this.colorAttachments = opts.colorAttachments;
         this.depthAttachment = opts.depthAttachment;
         this.stencilAttachment = opts.stencilAttachment;
         this.depthStencilAttachment = opts.depthStencilAttachment;
+        this.colorAttachments.forEach((attachment, index) => this.colorDrawbuffers.push(COLOR_ATTACHMENT0_WEBGL + index));
     }
 
     /**
@@ -193,10 +213,13 @@ class GFramebuffer extends Dispose {
         }
         //check fbo status
         const status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
-        check(!gl.isContextLost() && status === gl.FRAMEBUFFER_COMPLETE, `REGLFramebuffer 错误：错误码${status}`);
+        check(!gl.isContextLost() && status === gl.FRAMEBUFFER_COMPLETE, `GFramebuffer 错误: 错误码${status}`);
         //不再需要fbo更新
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-        check(!gl.getError(), `REGLFramebuffer 错误: gl上下文错误`);
+        //get error为0表示无错误
+        const ERROR = gl.getError();
+        check(ERROR === gl.NO_ERROR, `GFramebuffer 错误: gl上下文错误, 错误码 ${ERROR}`);
+        check(ERROR !== gl.INVALID_ENUM, `GFramebuffer 错误: 请检查是否使用了多个颜色附件，多颜色附件必须开启插件WEBGL_draw_buffers`);
     }
 }
 

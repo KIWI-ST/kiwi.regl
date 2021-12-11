@@ -288,18 +288,20 @@ class TextureState {
         w: number,
         h: number,
         c: number,
-        stride: number[] = [0,0,0],
-        offset: number = 0,
         opts: {
+            stride?: number[],
+            offset?: number,
             min?: STextureMINFilter,             //minFilter
             mag?: STextureMAGFilter,             //magFilter
             wrapS?: STextureFillTarget,          //wrapS
             wrapT?: STextureFillTarget,          //wrapT
             mipmap?: SMipmapHint,                 //mipmap采样方式
             anisotropic?: 1 | 2 | 3,                 //各项异性过滤
-        }={}
+        } = {}
     ): GTexture => {
         const gl = this.gl;
+        const offset: number = opts.offset || 0;
+        const stride: number[] = opts.stride || [0, 0, 0];
         //parse options to get reglTexInfo
         const reglTexture = new GTexture(gl, this.limLib, 'TEXTURE_2D', this.stats);
         //1.texInfo
@@ -313,7 +315,11 @@ class TextureState {
         imageData.height = mipmap.height = h;
         imageData.channels = mipmap.channels = c || 4;
         //3.自动配置stride, 指定纹理扫描线size，默认size=1
-        stride = stride[0] === 0 && stride[1] === 0 && stride[2] === 0 ? [imageData.channels, imageData.channels * imageData.width, 1] : stride;
+        if (stride[0] === 0 && stride[1] === 0 && stride[2] === 0) {
+            stride[0] = imageData.channels;
+            stride[1] = imageData.channels * imageData.width;
+            stride[2] = 1;
+        }
         check(imageData.channels >= 1 && imageData.channels <= 4, `TextureState error: 纹理通道必须在1-4之间`);
         if (reglTexture.TexInfo.genMipmaps)
             mipmap.mipmask = (mipmap.width << 1) - 1;

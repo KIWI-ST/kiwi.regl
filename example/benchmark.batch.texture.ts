@@ -110,8 +110,6 @@ const tex0 = pipegl0.texture2D(
     512,
     512,
     4,
-    baboon.stride,
-    baboon.offset,
     {
         mag: 'LINAR',
         min: 'LINEAR'
@@ -121,8 +119,6 @@ const tex1 = pipegl0.texture2D(
     512,
     512,
     4,
-    baboon.stride,
-    baboon.offset,
     {
         mag: 'NEAREST',
         min: 'NEAREST'

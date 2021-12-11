@@ -216,9 +216,9 @@ class PipeGL {
         w: number,
         h: number,
         c: number,
-        stride: number[] = [0, 0, 0],
-        offset: number = 0,
         opts: {
+            stride?: number[],
+            offset?: number,
             min?: STextureMINFilter,             //minFilter
             mag?: STextureMAGFilter,             //magFilter
             wrapS?: STextureFillTarget,          //wrapS
@@ -227,7 +227,7 @@ class PipeGL {
             anisotropic?: 1 | 2 | 3,                 //各项异性过滤
         } = {}
     ): GTexture => {
-        return this.textureState.createTexture2D(data, w, h, c, stride, offset, opts)
+        return this.textureState.createTexture2D(data, w, h, c, opts)
     }
 
     /**
