@@ -18,6 +18,7 @@
 - [x] parseProgram
 - [x] parseStatus
 - [x] parseUniform
+- [x] parseFramebuffer
 
 ### core ###
 - [x] Constant
@@ -60,6 +61,8 @@
 
 ### utils ###
 - [x] check
+- [x] checkAttribute
+- [x] checkTexutre
 - [x] defaultValue
 - [x] detectComponent
 - [x] getFlatten
@@ -75,4 +78,4 @@
 - [x] getPixelSize
 - [x] isPowerOf2
 - [x] isBufferArray
-- [x] checkAttribute
+- [x] isFunction
