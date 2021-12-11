@@ -1,5 +1,7 @@
 
-import { GFramebuffer, GTexture, GVertexArrayObject, TAttribute, TUniform } from "..";
+import { Limit } from "./Limit";
+import { TProps } from "./Props";
+// import { GFramebuffer, GTexture, GVertexArrayObject, TAttribute, TUniform } from "./../res/GFramebuffer";
 import { CompilerCore, ICompileOption } from "../compiler/CompilerCore";
 import { IConfigure, parseConfigure } from "../compiler/parseConfigure";
 import { GBuffer } from "../res/GBuffer";
@@ -19,14 +21,18 @@ import { createPerformance, IPerformance } from "../util/createPerformance";
 import { createStats, IStats } from "../util/createStats";
 import { Extension } from "./Extension";
 import { ShapedArrayFormat, TypedArrayFormat } from "./Format";
-import { Limit } from "./Limit";
-import { TProps } from "./Props";
+
 import { SArraybufferTarget, SComponent, SDimension, SMipmapHint, SPrimitive, SRenderbufferColor, STextureFillTarget, STextureMAGFilter, STextureMINFilter, SUsage } from "./Support";
+import { TAttribute } from "../compiler/parseAttribute";
+import { TUniform } from "../compiler/parseUniform";
+import { GVertexArrayObject } from "../res/GVertexArrayObject";
+import { GTexture } from "../res/GTexture";
+import { GFramebuffer } from "../res/GFramebuffer";
 
 /**
  * 
  */
- interface IPipeCommand {
+interface IPipeCommand {
     /**
      * 常规一次绘制
      */
@@ -201,7 +207,7 @@ class PipeGL {
     }
 
     /**
-     * 
+     * 创建2D纹理
      * @param data 
      * @param w 
      * @param h 
@@ -228,6 +234,32 @@ class PipeGL {
         } = {}
     ): GTexture => {
         return this.textureState.createTexture2D(data, w, h, c, opts)
+    }
+
+    /**
+     * 创建空的2D纹理
+     * @param w 
+     * @param h 
+     * @param c 
+     * @param opts 
+     */
+    public texture2DEmpty = (
+        w: number,
+        h: number,
+        c: number,
+        opts: {
+            stride?: number[],
+            offset?: number,
+            min?: STextureMINFilter,             //minFilter
+            mag?: STextureMAGFilter,             //magFilter
+            wrapS?: STextureFillTarget,          //wrapS
+            wrapT?: STextureFillTarget,          //wrapT
+            mipmap?: SMipmapHint,                 //mipmap采样方式
+            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+        } = {}
+    ): GTexture => {
+        const emptyData = new Uint8Array(w * h * c);
+        return this.texture2D(emptyData, w, h, c, opts);
     }
 
     /**
