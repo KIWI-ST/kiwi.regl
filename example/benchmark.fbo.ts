@@ -65,7 +65,7 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
 
     uniforms: {
         color: [1, 0.5, 0, 1],
-        offset: (performance: IPerformance, batId: number): number => { return Math.sin(performance.count * 0.002); }
+        offset: (performance: IPerformance, batId: number): number => { return Math.sin(performance.count * 0.01); }
     },
 
     framebuffer: {
@@ -144,6 +144,13 @@ const PASS0 = pipegl0.compile<PASS1Attribute, PASSUniform>({
 
 
 const anim = () => {
+    pipegl0.clear(
+        {
+            color:[1,0,1,1],
+            depth:true,
+            stencil:true
+        }
+    )
     draw0.draw();
     PASS0.draw();
     requestAnimationFrame(anim);
