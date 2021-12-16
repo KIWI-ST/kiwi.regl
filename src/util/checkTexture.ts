@@ -69,35 +69,80 @@ const checkMipmapTexture2D = (
         check(mipData.mipmask === (w << 1) - 1, `CheckTexture2D error:丢失/不合法的mipmask`)
     }
     //4.数据类型检查
-    if(mipData.component === 'FLOAT'){
+    if (mipData.component === 'FLOAT') {
         check(extLib.get('OES_texture_float'), `CheckTexture2D error: FLOAT类型纹理需要开启OES_texture_float`);
-        check((texInfo.minFilter!=='NEAREST' || texInfo.magFilter !== 'NEAREST') && extLib.get('OES_texture_float_linear'), `CheckTexture2D error: filter 不支持非NEAREST插值，需开启OES_texture_float_linear`);
+        check((texInfo.minFilter !== 'NEAREST' || texInfo.magFilter !== 'NEAREST') && extLib.get('OES_texture_float_linear'), `CheckTexture2D error: filter 不支持非NEAREST插值，需开启OES_texture_float_linear`);
         check(!texInfo.genMipmaps, `CheckTexture2D error: mipmap生成不支持float纹理类型`);
     }
     //5.检查图片是否处理完成
-    for(let i=0;i<16;++i){
+    for (let i = 0; i < 16; ++i) {
         const mipimg = mipData.images[i];
-        if(mipimg){
-            const mw = w>>i, mh = h>>i;
-            check(mipData.mipmask & (1<<i), `CheckTexture2D error: mipmap数据缺失`);
+        if (mipimg) {
+            const mw = w >> i, mh = h >> i;
+            check(mipData.mipmask & (1 << i), `CheckTexture2D error: mipmap数据缺失`);
             check(mipimg.width === mw && mipimg.height === mh, `CheckTexture2D error: 错误的mipmap images shape信息`);
-            check(mipimg.texColor === mipData.texColor && mipimg.inTexColor === mipData.inTexColor && mipimg.component ===mipData.component, `CheckTexture2D error: 不合适的mipmap image数据类型`);
+            check(mipimg.texColor === mipData.texColor && mipimg.inTexColor === mipData.inTexColor && mipimg.component === mipData.component, `CheckTexture2D error: 不合适的mipmap image数据类型`);
             //compressed
-            if(mipimg.compressed){
+            if (mipimg.compressed) {
                 //check size for compressed images
-            }  
-            else if(mipimg.data){
-                const rowSize = Math.ceil(getPixelSize(mipimg.component, c)*mw/mipimg.unpackAlignment)*mipimg.unpackAlignment;
-                check(mipimg.data.byteLength === rowSize*mh, `CheckTexture2D error: 数据缓冲的大小与image格式对应的数据长度不一致`);
+            }
+            else if (mipimg.data) {
+                const rowSize = Math.ceil(getPixelSize(mipimg.component, c) * mw / mipimg.unpackAlignment) * mipimg.unpackAlignment;
+                check(mipimg.data.byteLength === rowSize * mh, `CheckTexture2D error: 数据缓冲的大小与image格式对应的数据长度不一致`);
             }
         }
     }
     //6.检查压缩纹理
-    if(mipData.compressed)
+    if (mipData.compressed)
         check(!mipData.genMipmaps, `CheckTexture2D error: 纹理压缩格式不支持生成mipmap`);
 }
 
+/**
+ * 
+ * @param info 
+ * @param mipmap 
+ * @param faces 
+ * @param limLib 
+ */
+const checkTextureCube = (
+    info: ITexInfo,
+    mipmap: IMipmap,
+    faces: IMipmap[],
+    limLib: Limit
+): void => {
+    const w = mipmap.width, h = mipmap.height, c = mipmap.channels;
+    check(w > 0 && w <= limLib.maxTextureSize && h > 0 && h <= limLib.maxTextureSize, `checkTextureCube error: 超过设备支持纹理上限`);
+    check(w === h, `checkTextureCube error: 立方体贴图必须是正方形`);
+    check(info.wrapS === 'CLAMP_TO_EDGE' && info.wrapT === 'CLAMP_TO_EDGE', `checkTextureCube error: 立方体贴图wrap模式只支持CLAMP_TO_EDGE`);
+    //
+    faces.forEach(face => {
+        check(face.width === w && face.height === h, `checkTextureCube error: 立方体每个纹理单元分辨率必须一致，${face}分辨率错误`);
+        check(face.mipmask === 1, `checkTextureCube error: 不能指定mimap`);
+        const mipmaps = face.images;
+        for (let k = 0; k < 16; k++) {
+            const img = mipmaps[k];
+            if (img) {
+                const mw = w >> k, mh = h >> k;
+                check(face.mipmask & (1 << k), `checkTextureCube error: mipmap数据丢失`);
+                check(img.width === mw && img.height === mh, `checkTextureCube error: mipmap纹理分辨率错误`);
+                check(img.component === mipmap.component && img.inTexColor === mipmap.inTexColor && img.texColor === mipmap.texColor, `checkTextureCube error: 子图像参数需要一直，包括component/inTexColor/texColor`);
+                if (img.compressed) {
+                    //判断压缩格式和文件大小是否对齐
+                }
+                else if (img.data) {
+                    check(img.data.byteLength === mw * mh ** Math.max(getPixelSize(img.component, c), img.unpackAlignment), `checkTextureCube error: 为压缩格式生成mipmap失败`);
+                }
+                else {
+                    //其他情况待补充
+                }
+            }
+        }
+    });
+}
+
+
 export {
+    checkTextureCube,
     checkTexture2D,
     checkMipmapTexture2D
 }

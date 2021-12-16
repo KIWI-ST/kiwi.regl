@@ -242,7 +242,10 @@ class GTexture extends Dispose {
         this.refCount = 1;
         this.texture = gl.createTexture();
         this.stats = stats;
-        this.stats.textureCount++;
+        if (this.target === CTextureMapTarget.TEXTURE_2D)
+            this.stats.textureCount++;
+        else if (this.target === CTextureMapTarget.TEXTURE_CUBE_MAP)
+            this.stats.cubeCount++;
         TEXTURE_SET.set(this.ID, this);
     }
 
@@ -300,20 +303,6 @@ class GTexture extends Dispose {
         }
         else
             gl.bindTexture(TEXTURE2D$1, null);
-    }
-
-    /**
-     * 为cubeTexture填充iamge
-     */
-    subCubeImage = () => {
-
-    }
-
-    /**
-     * 
-     */
-    resize = () => {
-
     }
 }
 

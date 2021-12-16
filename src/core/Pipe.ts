@@ -264,6 +264,39 @@ class PipeGL {
 
     /**
      * 
+     * @param faces 
+     * @param w 
+     * @param h 
+     * @param c 
+     * @param opts 
+     * @returns 
+     */
+    public textureCube = (      faces:{
+        posx:TypedArrayFormat,
+        negx:TypedArrayFormat,
+        posy:TypedArrayFormat,
+        negy:TypedArrayFormat,
+        posz:TypedArrayFormat,
+        negz:TypedArrayFormat,
+    },
+    w:number,
+    h:number,
+    c:number,
+    opts: {
+        stride?: number[],
+        offset?: number,
+        min?: STextureMINFilter,                 //minFilter
+        mag?: STextureMAGFilter,                 //magFilter
+        wrapS?: STextureFillTarget,              //wrapS
+        wrapT?: STextureFillTarget,              //wrapT
+        mipmap?: SMipmapHint,                    //mipmap采样方式
+        anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+    } = {}):GTexture =>{
+        return this.textureState.createTextureCube(faces, w, h, c, opts);
+    }
+
+    /**
+     * 
      * @param opts 
      * @returns 
      */
