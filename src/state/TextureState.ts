@@ -404,12 +404,11 @@ class TextureState {
             this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset);
             gFaces.push(mipmap);
         });
-        //
+        gTexture.Mipmap = gFaces[0];
         if(texInfo.genMipmaps)
             gTexture.Mipmap.mipmask = (gFaces[0].width<<1)-1;
         else
             gTexture.Mipmap.mipmask = gFaces[0].mipmask;
-        //
         gTexture.TexFlag = gFaces[0] as ITexFlag;
         //检查cubemap参数合法性
         checkTextureCube(texInfo, gTexture.Mipmap, gFaces, this.limLib);
