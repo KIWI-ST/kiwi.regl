@@ -117,7 +117,7 @@ const checkTextureCube = (
     //
     faces.forEach(face => {
         check(face.width === w && face.height === h, `checkTextureCube error: 立方体每个纹理单元分辨率必须一致，${face}分辨率错误`);
-        check(face.mipmask === 1, `checkTextureCube error: 不能指定mimap`);
+        // check(face.mipmask === 1, `checkTextureCube error: 不能指定mimap`);
         const mipmaps = face.images;
         for (let k = 0; k < 16; k++) {
             const img = mipmaps[k];
@@ -130,7 +130,7 @@ const checkTextureCube = (
                     //判断压缩格式和文件大小是否对齐
                 }
                 else if (img.data) {
-                    check(img.data.byteLength === mw * mh ** Math.max(getPixelSize(img.component, c), img.unpackAlignment), `checkTextureCube error: 为压缩格式生成mipmap失败`);
+                    check(img.data.byteLength === mw * mh * Math.max(getPixelSize(img.component, c), img.unpackAlignment), `checkTextureCube error: 为压缩格式生成mipmap失败`);
                 }
                 else {
                     //其他情况待补充

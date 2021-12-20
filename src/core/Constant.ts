@@ -376,7 +376,7 @@ const CTextureMAGFilter = {
     /**
      * 
      */
-    LINAR: 0x2601,
+    LINEAR: 0x2601,
 }
 
 /**
