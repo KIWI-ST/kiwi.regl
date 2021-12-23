@@ -3,6 +3,14 @@
 
 > Rewritten regl completed in typescript, and helps you quickly implement rendering logic by providing smarter tips !
 
+### example ###
+> [Basic-Cube](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.cube.ts)
+
+<img width="257" alt="1640271054(1)" src="https://user-images.githubusercontent.com/5127112/147256602-778aef86-147d-4b91-81db-f7acf71a1054.png"> 
+
+
+
+
 ### compiler ###
 - [x] CompilerCore
 - [x] emitAttribute
