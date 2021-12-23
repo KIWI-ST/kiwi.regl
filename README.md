@@ -17,6 +17,14 @@
 > [Basic-Elements](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.elements.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147257949-3c502ddf-d597-4ab2-852f-d3b863f740ca.png">
 
+> [Basic-Fbo](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.fbo.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147258301-bae84a7c-068c-4186-b425-36b06d3998eb.png">
+
+> [Basic-Mipmap](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.mipmap.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147258370-c58709ce-eb97-4a16-8f17-c42f4f75735b.png">
+
+> [Basic-Triangle](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.triangle.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147258427-8ad4a6ae-088e-4d2d-bd1a-fd3d4d8c0aed.png">
 
 ### compiler ###
 - [x] CompilerCore
