@@ -1,4 +1,4 @@
-import { GTexture, IPerformance, PipeGL, TAttribute, TUniform } from './../src/index';
+import { GTexture, IPerformance, PipeGL, TAttribute, TUniform } from '../../src/index';
 
 const RADIUS: number = 512;
 
@@ -141,7 +141,6 @@ const PASS0 = pipegl0.compile<PASS1Attribute, PASSUniform>({
     count: 6
 
 });
-
 
 const anim = () => {
     pipegl0.clear(

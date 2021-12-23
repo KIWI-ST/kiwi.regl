@@ -1,7 +1,7 @@
-import { PipeGL, Props, TAttribute, TProps, TUniform } from '../src/index';
+import { PipeGL, Props, TAttribute, TProps, TUniform } from '../../src/index';
 
 interface IPropOffset extends TProps {
-    offset: number
+    offset: number;
 }
 
 const pos: number[][] = [];

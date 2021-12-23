@@ -1,4 +1,4 @@
-import { PipeGL, TAttribute, TUniform } from './../src/index';
+import { PipeGL, TAttribute, TUniform } from '../../src/index';
 
 const pos: number[][] = [];
 
