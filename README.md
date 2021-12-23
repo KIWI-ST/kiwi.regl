@@ -26,6 +26,16 @@
 > [Basic-Triangle](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.triangle.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147258427-8ad4a6ae-088e-4d2d-bd1a-fd3d4d8c0aed.png">
 
+> [Batch-Attribute](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.attribute.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259352-b172d45e-4dc3-42f0-9d46-b99be1d8e859.png">
+
+> [Batch-Texture](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.texture.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259472-2803d751-ece8-419c-98e3-ca955707f550.png">
+
+> [Batch-Uniform](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.uniform.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259560-cf08ee02-11bf-4d93-8293-eb229a1431d0.png">
+
+
 ### compiler ###
 - [x] CompilerCore
 - [x] emitAttribute
