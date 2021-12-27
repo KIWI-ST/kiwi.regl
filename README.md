@@ -35,6 +35,9 @@
 > [Batch-Uniform](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.uniform.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259560-cf08ee02-11bf-4d93-8293-eb229a1431d0.png">
 
+> [Light-Color](https://github.com/KIWI-ST/pipegl/blob/master/example/light/benchmark.light.color.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147429700-c04347e9-3b6a-45d0-9bff-8be6c168aa7e.png">
+
 
 ## Modules ##
 

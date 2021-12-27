@@ -84,7 +84,9 @@ class GVertexArrayObject extends Dispose {
      * 
      */
     decRef(): void {
-        throw new Error("Method not implemented.");
+        if(this.refCount-- == 0){
+            this.dispose();
+        }
     }
 
     /**
