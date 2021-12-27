@@ -4,6 +4,8 @@
 > Rewritten regl completed in typescript, and helps you quickly implement rendering logic by providing smarter tips !
 
 ## example ##
+
+### Basic ###
 > [Basic-Cube](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.cube.ts)
 
 <img width="257" alt="1640271054(1)" src="https://user-images.githubusercontent.com/5127112/147256602-778aef86-147d-4b91-81db-f7acf71a1054.png"> 
@@ -26,6 +28,8 @@
 > [Basic-Triangle](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.triangle.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147258427-8ad4a6ae-088e-4d2d-bd1a-fd3d4d8c0aed.png">
 
+### Batch ###
+
 > [Batch-Attribute](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.attribute.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259352-b172d45e-4dc3-42f0-9d46-b99be1d8e859.png">
 
@@ -35,9 +39,10 @@
 > [Batch-Uniform](https://github.com/KIWI-ST/pipegl/blob/master/example/batch/benchmark.uniform.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147259560-cf08ee02-11bf-4d93-8293-eb229a1431d0.png">
 
+### Light ###
+
 > [Light-Color](https://github.com/KIWI-ST/pipegl/blob/master/example/light/benchmark.light.color.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147429700-c04347e9-3b6a-45d0-9bff-8be6c168aa7e.png">
-
 
 ## Modules ##
 
