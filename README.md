@@ -6,8 +6,11 @@
 ## example ##
 
 ### Basic ###
-> [Basic-Cube](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.cube.ts)
 
+> [Basic-Instances](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.instances.ts)
+<img width="257" alt="1640271054(1)" src="https://user-images.githubusercontent.com/5127112/147443605-3a67e8ad-e022-475d-ae63-b1499bfc06ed.png"> 
+
+> [Basic-Cube](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.cube.ts)
 <img width="257" alt="1640271054(1)" src="https://user-images.githubusercontent.com/5127112/147256602-778aef86-147d-4b91-81db-f7acf71a1054.png"> 
 
 > [Basic-Cubemap-Reflect](https://github.com/KIWI-ST/pipegl/blob/master/example/basic/benchmark.cubemap.reflect.ts)
