@@ -155,11 +155,11 @@ interface CubeUniform extends TUniform {
     projection: number[];
     view: number[];
     model: { (performance: IPerformance, batchId: number): number[] };
-    ambient: number;         //light相关：环境光
-    lightColor: number[];    //light相关：光颜色
-    lightPosition: number[]; //light相关：光源位置
-    specular: number;        //light相关：镜面反射率
-    viewPosition: number[];   //light相关：摄像头位置
+    ambient: number;            //light相关：环境光
+    lightColor: number[];       //light相关：光颜色
+    lightPosition: number[];    //light相关：光源位置
+    specular: number;           //light相关：镜面反射率
+    viewPosition: number[];     //light相关：摄像头位置
 }
 
 const cube0 = pipegl0.compile<CubeAttribute, CubeUniform>({
@@ -325,7 +325,6 @@ const plane0 = pipegl0.compile<PlaneAttribute, PlaneUinform>({
         'lights[0].position': LIGHT_POSITION0,
         texture: SHADOW_TEXTURE,
     },
-
 
     elements: [0, 1, 2, 0, 2, 3],
 

@@ -50,6 +50,10 @@
 > [Light-Shadow](https://github.com/KIWI-ST/pipegl/blob/master/example/light/benchmark.light.shadow.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147485068-6866e58a-366a-4bf6-ac92-0fcc11bde887.png">
 
+### Rendering Tech ###
+>[PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.pbr.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147548190-cbd8d671-7cce-4db2-976d-1d6792de6b1e.png">
+
 ## Modules ##
 
 ### compiler ###
