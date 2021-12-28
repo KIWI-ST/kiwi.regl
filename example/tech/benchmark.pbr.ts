@@ -178,7 +178,6 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
         color = pow(color, vec3(1.0 / 2.2));                //gamma矫正
 
         gl_FragColor = vec4(color, 1.0);
-        // gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
     }`,
 
     attributes: {
