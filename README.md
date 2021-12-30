@@ -52,7 +52,7 @@
 
 ### Rendering Tech ###
 >[PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.pbr.ts)
-<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147548190-cbd8d671-7cce-4db2-976d-1d6792de6b1e.png">
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147713802-495d50dd-df3f-42ac-8596-b7236089d227.png">
 
 ## Modules ##
 
