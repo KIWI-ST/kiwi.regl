@@ -51,8 +51,8 @@
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147485068-6866e58a-366a-4bf6-ac92-0fcc11bde887.png">
 
 ### Rendering Tech ###
->[PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.pbr.ts)
-<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147713802-495d50dd-df3f-42ac-8596-b7236089d227.png">
+>[Tech-PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.pbr.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147803838-6d1237d8-4a4a-4e68-91a5-14b6fb5c038d.png">
 
 ## Modules ##
 

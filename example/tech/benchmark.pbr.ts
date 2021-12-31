@@ -22,6 +22,7 @@
  *          F,(Fresnel Rquation),在不同表面角度下所反射得光线所占得比率。
  *          G,(Geometry Function),描述微平面自成阴影得属性，当一个平面相对比较粗糙时，平面表面上得微平面有可能挡住其他平面从而减少表面所反射的光线。
  * 
+ * 
  */
 
 import { Mat4, Vec3 } from "kiwi.matrix";
@@ -68,10 +69,7 @@ const PROJECTION = Mat4.perspective(Math.PI / 3, RADIUS / RADIUS, 0.01, 1000);
 const VIEW = new Mat4().lookAt(CAMERA_POSITION, new Vec3().set(0, 0, 0), new Vec3().set(0, 1, 0)).invert();
 const IDENTITY = new Mat4().identity();
 
-const pipegl0 = new PipeGL({
-    width: RADIUS,
-    height: RADIUS,
-});
+const pipegl0 = new PipeGL({width: RADIUS, height: RADIUS});
 
 const draw0 = pipegl0.compile<Attribute, Uniform>({
     vert: `precision mediump float;
@@ -153,39 +151,39 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
      }
  
      void main(){
-         vec3 N = normalize(vNormal);                        //法线
-         vec3 V = normalize(cameraPosition - vPosition);     //物体->视角 方向向量
-         vec3 F0 = vec3(0.04);                               //经验值，菲涅尔方程下绝缘体的表面反射力为0.04（不反射），表示入射光反射比率
-         F0 = mix(F0, albedo, metallic);                     //应用金属度，材质反射率参数后的菲涅尔表面反射参数
+         vec3 N = normalize(vNormal);                               //法线
+         vec3 V = normalize(cameraPosition - vPosition);            //物体->视角 方向向量
+         vec3 F0 = vec3(0.04);                                      //经验值，菲涅尔方程下绝缘体的表面反射力为0.04（不反射），表示入射光反射比率
+         F0 = mix(F0, albedo, metallic);                            //应用金属度，材质反射率参数后的菲涅尔表面反射参数
          
          //能量衰减
-         vec3 L = normalize(lightPosition - vPosition);      //
-         vec3 H = normalize(V + L);                          //halfway vector
-         float distance = length(lightPosition - vPosition); //光源到物体的距离
-         float attenuation = 1.0/(distance*distance);        //指数能量衰减
-         vec3 radiance = lightColor * attenuation;           //衰减后光源到物体顶点上的辐射通量
+         vec3 L = normalize(lightPosition - vPosition);             //
+         vec3 H = normalize(V + L);                                 //halfway vector
+         float distance = length(lightPosition - vPosition);        //光源到物体的距离
+         float attenuation = 1.0/(distance*distance);               //指数能量衰减
+         vec3 radiance = lightColor * attenuation;                  //衰减后光源到物体顶点上的辐射通量
  
          //DFG分量
-         float D = D_GGX(N, H, roughness);                   //微平面一致率
-         float G = G_GGX(N, V, L, roughness);                //几何遮蔽
-         vec3 F = F_Fresnel(clamp(dot(H, V), 0.0, 1.0), F0); //菲涅尔参数
+         float D = D_GGX(N, H, roughness);                          //微平面一致率
+         float G = G_GGX(N, V, L, roughness);                       //几何遮蔽
+         vec3 F = F_Fresnel(clamp(dot(H, V), 0.0, 1.0), F0);        //菲涅尔参数
  
          //计算总辐射量L0
          vec3 numerator = D * G * F;
          //归一化参数，加偏移量防止除以0
          float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
          vec3 specular = numerator / denominator;
-         vec3 ks = F;                                        //菲涅尔系数，反射比率
-         vec3 kd = vec3(1.0)-ks;                             //菲涅尔系数，折射比率
-         kd *= 1.0-metallic;                                 //仅为金属不会折射光线，因此不会有漫反射
+         vec3 ks = F;                                               //菲涅尔系数，反射比率
+         vec3 kd = vec3(1.0)-ks;                                    //菲涅尔系数，折射比率
+         kd *= 1.0-metallic;                                        //仅为金属不会折射光线，因此不会有漫反射
          float NL = max(dot(N, L), 0.0);
-         vec3 L0 = (kd * albedo / PI + specular) * radiance;      //BRDF完成
+         vec3 L0 = (kd * albedo / PI + specular) * radiance;        //BRDF完成
  
          //后期处理
-         vec3 ambient = vec3(0.03) * albedo * ao;            //环境光
+         vec3 ambient = vec3(0.03) * albedo * ao;                   //环境光
          vec3 color = ambient + L0;
-         color = color / (color + vec3(1.0));                //HDR处理
-         color = pow(color, vec3(1.0 / 2.2));                //gamma矫正
+         color = color / (color + vec3(1.0));                       //HDR处理
+         color = pow(color, vec3(1.0 / 2.2));                       //gamma矫正
  
          gl_FragColor = vec4(color, 1.0);
      }`,
@@ -202,13 +200,13 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
         model: (performance: IPerformance, batchId: number): number[] => {
             return IDENTITY.rotateY(0.001).value;
         },
-        lightColor: [1.0, 1.0, 1.0],                    //光照颜色
+        lightColor: [1.0, 1.0, 1.0],                                        //光照颜色
         lightPosition: LIGHT_POSITION.value,
         cameraPosition: CAMERA_POSITION.value,
-        albedo: [0.5, 0.5, 0.5],                        //材质反射率
-        ao: 0.8,                                        //环境光
-        roughness: new Props('roughness'),                                 //粗糙度
-        metallic: new Props('metallic'),                                  //金属度
+        albedo: [0.5, 0.5, 0.5],                                            //材质反射率
+        ao: 0.8,                                                            //环境光
+        roughness: new Props('roughness'),                                  //粗糙度
+        metallic: new Props('metallic'),                                    //金属度
         offset:new Props('offset'), 
     },
 
