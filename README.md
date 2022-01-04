@@ -54,6 +54,11 @@
 >[Tech-PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.pbr.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/147803838-6d1237d8-4a4a-4e68-91a5-14b6fb5c038d.png">
 
+>[Tech-IBL-Radiance](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.radiance.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148082443-5f22b7ea-9684-4c40-a58c-7e251ba3735a.png">
+
+
+
 ## Modules ##
 
 ### compiler ###
