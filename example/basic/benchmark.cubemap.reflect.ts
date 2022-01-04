@@ -1,11 +1,10 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { cubeElements, cubePositions, cubeUvs } from "../createCube";
+import { createRGBA } from "../createRGBA";
+import { createNormals } from "../createNormals";
+import { cubeElements, cubePositions } from "../createCube";
 
 import { GTexture, IPerformance, PipeGL, TAttribute, TUniform } from "../../src";
-import { createNormals } from "../createNormals";
-import { createRGBA } from "../createRGBA";
-
 
 interface Attribute extends TAttribute {
     position: number[][];       //顶点坐标
@@ -46,7 +45,7 @@ const cubeSource = [
 
 Promise.all(cubeSource).then(cubeFaces => {
 
-    const w = 2048, h = 2048, c = 4;
+    const w = 512, h = 512, c = 4;
     const faces: {
         posx: Uint8Array,
         negx: Uint8Array,

@@ -43,7 +43,7 @@ const cubeSource = [
 
 Promise.all(cubeSource).then(cubeFaces => {
 
-    const w = 2048, h = 2048, c = 4;
+    const w = 512, h = 512, c = 4;
 
     const faces: {
         posx: Uint8Array,
@@ -77,7 +77,7 @@ Promise.all(cubeSource).then(cubeFaces => {
         }
     );
 
-    const w0 = 512, h0 = 512;
+    const w0 = 32, h0 = 32;
 
     //辐射立方体纹理, 存储环境贴图漫反射采样结果
     const irradianceCubeTexuture = pipegl0.textureCube(

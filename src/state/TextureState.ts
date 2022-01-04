@@ -11,7 +11,7 @@ import { IMipmap, mipmapPool0 } from "../pool/MipmapPool";
 import { ITexImage, texImagePool0 } from "../pool/TexImagePool";
 import { ITexInfo, GTexture, TEXTURE_SET } from "../res/GTexture";
 import { checkMipmapTexture2D, checkTextureCube } from "../util/checkTexture";
-import { SMipmapHint, STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
+import { SColorSpace, SMipmapHint, STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
 import { CColorSpace, CMipmapHint, CTextureColor, CTextureComponent, CTextureFillTarget, CTextureMAGFilter, CTextureMapTarget, CTextureMINFilter } from "../core/Constant";
 
 /**
@@ -25,12 +25,12 @@ import { CColorSpace, CMipmapHint, CTextureColor, CTextureComponent, CTextureFil
  * Float64Array:    // 64，8
  * BYTES_PRE_ELEMENT 得到的占用字节数
  */
-const GL_TEXTURE_MAX_ANISOTROPY_EXT:number = 0x84FE;
+const GL_TEXTURE_MAX_ANISOTROPY_EXT: number = 0x84FE;
 
 /**
  * cube maps
  */
-const GL_TEXTURE_CUBE_MAPS:STextureMapTarget[] = [
+const GL_TEXTURE_CUBE_MAPS: STextureMapTarget[] = [
     'TEXTURE_CUBE_MAP_POSITIVE_X',  //0x8515
     'TEXTURE_CUBE_MAP_NEGATIVE_X',
     'TEXTURE_CUBE_MAP_POSITIVE_Y',
@@ -268,9 +268,22 @@ class TextureState {
      * @param offset 
      * @returns 
      */
-    private fixMipmap = (mipmap: IMipmap, arr: TypedArrayFormat, shape: number[], stride: number[], offset: number): IMipmap => {
+    private fixMipmap = (
+        mipmap: IMipmap,
+        arr: TypedArrayFormat,
+        shape: number[],
+        stride: number[],
+        offset: number,
+        opts: {
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,           //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;     //纹理读取时一次读取字节位
+        } = {}
+    ): IMipmap => {
         const imageData = mipmap.images[0] = texImagePool0.allocImage();
-        getCopy(imageData, mipmap);
+        getCopy(imageData, mipmap, opts);
+        this.setTexFlags(imageData as ITexFlag);
         check(!imageData.compressed || arr instanceof Uint8Array, `TextureState error: 压缩纹理必须以Uint8Array格式传输`);
         imageData.component = mipmap.component = detectComponent(arr);
         const w = shape[0], h = shape[1], c = shape[2];
@@ -280,7 +293,7 @@ class TextureState {
         imageData.texColor = imageData.inTexColor = CHANNEL_TEX_COLOR[c];
         imageData.neddsFree = true;
         Transpose.TransposeData(imageData, arr, stride[0], stride[1], stride[2], offset);
-        getCopy(mipmap, mipmap.images[0]);
+        getCopy(mipmap, mipmap.images[0], opts);
         return mipmap;
     }
 
@@ -303,12 +316,17 @@ class TextureState {
         opts: {
             stride?: number[],
             offset?: number,
-            min?: STextureMINFilter,             //minFilter
-            mag?: STextureMAGFilter,             //magFilter
-            wrapS?: STextureFillTarget,          //wrapS
-            wrapT?: STextureFillTarget,          //wrapT
+            min?: STextureMINFilter,              //minFilter
+            mag?: STextureMAGFilter,              //magFilter
+            wrapS?: STextureFillTarget,           //wrapS
+            wrapT?: STextureFillTarget,           //wrapT
             mipmap?: SMipmapHint,                 //mipmap采样方式
-            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+            anisotropic?: 1 | 2 | 3,              //各项异性过滤
+            //setimage parameter
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,           //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;      //纹理读取时一次读取字节位
         } = {}
     ): GTexture => {
         const gl = this.gl;
@@ -338,7 +356,7 @@ class TextureState {
         //4.缓存gl.flags相关信息， copyFlags
         gTexture.TexFlag = mipmap as ITexFlag;
         //5.解析data
-        gTexture.Mipmap = this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset);
+        gTexture.Mipmap = this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset, opts);
         //5.1 设置texFlag
         // this.setTexFlags(gTexture.TexFlag);
         //6.check texture2d
@@ -358,17 +376,17 @@ class TextureState {
      * 待补充
      */
     public createTextureCube = (
-        faces:{
-            posx:TypedArrayFormat,
-            negx:TypedArrayFormat,
-            posy:TypedArrayFormat,
-            negy:TypedArrayFormat,
-            posz:TypedArrayFormat,
-            negz:TypedArrayFormat,
+        faces: {
+            posx: TypedArrayFormat,
+            negx: TypedArrayFormat,
+            posy: TypedArrayFormat,
+            negy: TypedArrayFormat,
+            posz: TypedArrayFormat,
+            negz: TypedArrayFormat,
         },
-        w:number,
-        h:number,
-        c:number,
+        w: number,
+        h: number,
+        c: number,
         opts: {
             stride?: number[],
             offset?: number,
@@ -376,22 +394,27 @@ class TextureState {
             mag?: STextureMAGFilter,             //magFilter
             wrapS?: STextureFillTarget,          //wrapS
             wrapT?: STextureFillTarget,          //wrapT
-            mipmap?: SMipmapHint,                 //mipmap采样方式
-            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+            mipmap?: SMipmapHint,                //mipmap采样方式
+            anisotropic?: 1 | 2 | 3,             //各项异性过滤
+            //setimage四个属性
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,           //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;     //纹理读取时一次读取字节位
         } = {}
     ) => {
-        const offset:number = opts.offset||0;
-        const stride:number[] = opts.stride ||[0,0,0];
+        const offset: number = opts.offset || 0;
+        const stride: number[] = opts.stride || [0, 0, 0];
         const gTexture = new GTexture(this.gl, this.limLib, 'TEXTURE_CUBE_MAP', this.stats);
         //
         const texInfo = this.fixTexInfo(opts);
         gTexture.TexInfo = texInfo;
-        const gFaces:IMipmap[] = [];
+        const gFaces: IMipmap[] = [];
         //
-        Object.keys(faces).forEach((key:string)=>{
+        Object.keys(faces).forEach((key: string) => {
             const data = faces[key];
             const mipmap = mipmapPool0.allocMipmap();
-            const imageData = mipmap.images[0]= texImagePool0.allocImage();
+            const imageData = mipmap.images[0] = texImagePool0.allocImage();
             mipmap.mipmask = 1;
             imageData.width = mipmap.width = w;
             imageData.height = mipmap.height = h;
@@ -403,12 +426,12 @@ class TextureState {
                 stride[2] = 1;
             }
             check(imageData.channels >= 1 && imageData.channels <= 4, `TextureState error: 纹理通道必须在1-4之间`);
-            this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset);
+            this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset, opts);
             gFaces.push(mipmap);
         });
         gTexture.Mipmap = gFaces[0];
-        if(texInfo.genMipmaps)
-            gTexture.Mipmap.mipmask = (gFaces[0].width<<1)-1;
+        if (texInfo.genMipmaps)
+            gTexture.Mipmap.mipmask = (gFaces[0].width << 1) - 1;
         else
             gTexture.Mipmap.mipmask = gFaces[0].mipmask;
         gTexture.TexFlag = gFaces[0] as ITexFlag;
@@ -417,12 +440,12 @@ class TextureState {
         //检查cubemap参数合法性
         checkTextureCube(texInfo, gTexture.Mipmap, gFaces, this.limLib);
         gTexture.tempBind();
-        gFaces.forEach((mipmap:IMipmap, i:number)=>{
+        gFaces.forEach((mipmap: IMipmap, i: number) => {
             this.setMipmap(mipmap, GL_TEXTURE_CUBE_MAPS[i]);
         });
         this.setTexInfo(texInfo, 'TEXTURE_CUBE_MAP');
         gTexture.tempRestore();
-        gFaces.forEach((mipmap:IMipmap)=>{
+        gFaces.forEach((mipmap: IMipmap) => {
             mipmapPool0.freeMipmap(mipmap);
         });
         //

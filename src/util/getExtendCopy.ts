@@ -22,7 +22,8 @@ const getExtend = (target: object, ...exts: object[]): object => {
 const getCopy = (target: object, ...exts: object[]): object => {
     exts.forEach((ext: object) => {
         Object.keys(target)?.forEach((key:string)=>{
-            target[key] = ext[key] || target[key];
+            if(ext[key] !== undefined && ext[key] !== null)
+                target[key] = ext[key];
         });  
     });
     return target;

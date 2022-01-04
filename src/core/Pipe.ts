@@ -25,7 +25,7 @@ import { IConfigure, parseConfigure } from "../compiler/parseConfigure";
 import { CompilerCore, ICompileOption } from "../compiler/CompilerCore";
 import { createPerformance, IPerformance } from "../util/createPerformance";
 import { ShapedArrayFormat, TypedArrayFormat } from "./Format";
-import { SArraybufferTarget, SComponent, SDimension, SMipmapHint, SPrimitive, SRenderbufferColor, STextureFillTarget, STextureMAGFilter, STextureMINFilter, SUsage } from "./Support";
+import { SArraybufferTarget, SColorSpace, SComponent, SDimension, SMipmapHint, SPrimitive, SRenderbufferColor, STextureFillTarget, STextureMAGFilter, STextureMINFilter, SUsage } from "./Support";
 
 /**
  * 
@@ -217,12 +217,17 @@ class PipeGL {
         opts: {
             stride?: number[],
             offset?: number,
-            min?: STextureMINFilter,             //minFilter
-            mag?: STextureMAGFilter,             //magFilter
-            wrapS?: STextureFillTarget,          //wrapS
-            wrapT?: STextureFillTarget,          //wrapT
+            min?: STextureMINFilter,              //minFilter
+            mag?: STextureMAGFilter,              //magFilter
+            wrapS?: STextureFillTarget,           //wrapS
+            wrapT?: STextureFillTarget,           //wrapT
             mipmap?: SMipmapHint,                 //mipmap采样方式
-            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+            anisotropic?: 1 | 2 | 3,              //各项异性过滤
+            //setimage四个属性
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,           //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;      //纹理读取时一次读取字节位
         } = {}
     ): GTexture => {
         return this.textureState.createTexture2D(data, w, h, c, opts)
@@ -242,12 +247,17 @@ class PipeGL {
         opts: {
             stride?: number[],
             offset?: number,
-            min?: STextureMINFilter,             //minFilter
-            mag?: STextureMAGFilter,             //magFilter
-            wrapS?: STextureFillTarget,          //wrapS
-            wrapT?: STextureFillTarget,          //wrapT
+            min?: STextureMINFilter,              //minFilter
+            mag?: STextureMAGFilter,              //magFilter
+            wrapS?: STextureFillTarget,           //wrapS
+            wrapT?: STextureFillTarget,           //wrapT
             mipmap?: SMipmapHint,                 //mipmap采样方式
-            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+            anisotropic?: 1 | 2 | 3,              //各项异性过滤
+            //setimage四个属性
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,           //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;      //纹理读取时一次读取字节位
         } = {}
     ): GTexture => {
         const emptyData = new Uint8Array(w * h * c);
@@ -283,6 +293,11 @@ class PipeGL {
         wrapT?: STextureFillTarget,              //wrapT
         mipmap?: SMipmapHint,                    //mipmap采样方式
         anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+        //setimage四个属性
+        flipY?: boolean,
+        premultiplyAlpha?: boolean,              //RGB通道已预乘alpha
+        colorSpace?: SColorSpace;
+        unpackAlignment?: 1 | 2 | 4 | 8;         //纹理读取时一次读取字节位
     } = {}):GTexture =>{
         return this.textureState.createTextureCube(faces, w, h, c, opts);
     }

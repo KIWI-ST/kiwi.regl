@@ -48,7 +48,7 @@ const cubeSource = [
 
 Promise.all(cubeSource).then(cubeFaces => {
 
-    const w = 2048, h = 2048, c = 4;
+    const w = 512, h = 512, c = 4;
     const faces: {
         posx: Uint8Array,
         negx: Uint8Array,

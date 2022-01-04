@@ -29,6 +29,7 @@ const pipegl0 = new PipeGL({
 });
 
 createRGBA('/assets/texture0.jpg').then(t => {
+
     const draw0 = pipegl0.compile<Attribute, Uniform>({
 
         vert: `
@@ -88,7 +89,8 @@ createRGBA('/assets/texture0.jpg').then(t => {
         t.c,
         {
             mag: 'LINEAR',
-            min: 'LINEAR'
+            min: 'LINEAR',
+            flipY:true,
         });
 
     const tex1 = pipegl0.texture2D(
@@ -98,7 +100,8 @@ createRGBA('/assets/texture0.jpg').then(t => {
         t.c,
         {
             mag: 'NEAREST',
-            min: 'NEAREST'
+            min: 'NEAREST',
+            flipY:false,
         });
 
     batch.push({ texture: tex0, offset: 0 });
