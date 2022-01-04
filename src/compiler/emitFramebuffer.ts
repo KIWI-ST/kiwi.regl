@@ -3,7 +3,7 @@ import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
 import { GFramebuffer } from "../res/GFramebuffer";
 import { IPerformance } from "../util/createPerformance";
-import { IFramebufferInfo, IFramebufferSetting } from "./parseFramebuffer";
+import { IFramebufferInfo } from "./parseFramebuffer";
 
 /**
  * 
@@ -26,20 +26,29 @@ const emitFramebuffer = (
         NEXT_NAME = `${FRAMEBUFFERSTATE_NAME}.Next`,
         CURRENT_NAME = `${FRAMEBUFFERSTATE_NAME}.Current`;
     //如果fbo存在，则使用fbo
+    //Version 0.1.5 起支持cube map framebuffer贴图
     if (framebuffer && framebuffer.framebuffer instanceof GFramebuffer) {
         const FRAMEBUFFER_NAME = pipeline.link(framebuffer.framebuffer);
         const NEXT_FRAMEBUFFER_CACHED_NAME = iBlock.def(`${NEXT_NAME}`);
         iBlock.push(`${NEXT_NAME}=${FRAMEBUFFER_NAME}`);
         oBlock.push(`${NEXT_NAME}=${NEXT_FRAMEBUFFER_CACHED_NAME}`);
+
+        //支持多FBO绑定
+        const LOOP_FBO_NAME = iBlock.def(0);
+        iBlock.push(`for(${LOOP_FBO_NAME};${LOOP_FBO_NAME}<${FRAMEBUFFER_NAME}.FBO.length;++${LOOP_FBO_NAME}){`);
+
         //判断当前framebuffer是否和framebufferState.Current一样
         const cond0 = iBlock.createConditionT(`${FRAMEBUFFER_NAME}!==${CURRENT_NAME}`);
         const cond0_1 = cond0.Then.createConditionTE(`${FRAMEBUFFER_NAME}`);
-        cond0_1.Then.push(`${FRAMEBUFFER_NAME}.bind()`);
+        cond0_1.Then.push(`${FRAMEBUFFER_NAME}.bind(${LOOP_FBO_NAME})`);
 
         if (EXT_DRAWBUFFERS_NAME) cond0_1.Then.push(`${EXT_DRAWBUFFERS_NAME}.drawBuffersWEBGL(${FRAMEBUFFER_NAME}.ColorDrawbuffers)`);
         cond0_1.Else.push(`${GL_NAME}.bindFramebuffer(${GL_NAME}.FRAMEBUFFER, null)`);
 
         iBlock.push(`${FRAMEBUFFERSTATE_NAME}.Current=${NEXT_NAME}`);
+
+        //FBO_SCOPE结束
+        oBlock.push(`}`);
     }
     //动态framebuffer
     else if (framebuffer && framebuffer.framebuffer) {

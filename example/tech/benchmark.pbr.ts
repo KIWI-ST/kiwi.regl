@@ -30,12 +30,12 @@ import { Mat4, Vec3 } from "kiwi.matrix";
 import { createNormals } from "../createNormals";
 import { cubeElements, cubePositions, cubeUvs } from "../createCube";
 
-import { IPerformance, PipeGL, Props, TAttribute, TProps, TUniform } from "../../src";
+import { PipeGL, Props, TAttribute, TProps, TUniform } from "../../src";
 
 interface IProps extends TProps {
-    offset: number;
     metallic: number;
     roughness: number;
+    model: number[];
 }
 
 interface Attribute extends TAttribute {
@@ -47,14 +47,14 @@ interface Attribute extends TAttribute {
 interface Uniform extends TUniform {
     projection: number[];
     view: number[];
-    model: { (performance: IPerformance, batchId: number): number[] };
+    model: Props<IProps>;
     //
     albedo: number[];
     metallic: Props<IProps>;
     roughness: Props<IProps>;
     ao: number;
     //
-    offset: Props<IProps>;
+
     lightPosition: number[];
     cameraPosition: number[];
     lightColor: number[];
@@ -62,131 +62,133 @@ interface Uniform extends TUniform {
 
 const RADIUS: number = 700;
 
-const CAMERA_POSITION = new Vec3().set(3, 0, 3);
+const CAMERA_POSITION = new Vec3().set(5, 0, 0);
 const LIGHT_POSITION = new Vec3().set(1, 0, 1);
 
 const PROJECTION = Mat4.perspective(Math.PI / 3, RADIUS / RADIUS, 0.01, 1000);
 const VIEW = new Mat4().lookAt(CAMERA_POSITION, new Vec3().set(0, 0, 0), new Vec3().set(0, 1, 0)).invert();
-const IDENTITY = new Mat4().identity();
 
-const pipegl0 = new PipeGL({width: RADIUS, height: RADIUS});
+const pipegl0 = new PipeGL({
+    width: RADIUS,
+    height: RADIUS,
+});
 
 const draw0 = pipegl0.compile<Attribute, Uniform>({
     vert: `precision mediump float;
- 
-     attribute vec3 position;
-     attribute vec3 normal;
-     attribute vec2 uv;
- 
-     uniform mat4 projection, view, model;
-
-     //batch偏移
-     uniform float offset;
- 
-     varying vec3 vPosition;
-     varying vec3 vNormal;
-     varying vec2 vUv;
-     
-     void main(){
-         vUv = uv;
-         vPosition = vec3(model * vec4(position.x+offset,position.y,position.z,1.0));
-         vNormal = mat3(model) * normal;
-         gl_Position = projection * view * model * vec4(position.x+offset,position.y,position.z, 1.0);
-     }`,
+   
+       attribute vec3 position;
+       attribute vec3 normal;
+       attribute vec2 uv;
+   
+       uniform mat4 projection, view, model;
+  
+       //batch偏移
+       uniform float offset;
+   
+       varying vec3 vPosition;
+       varying vec3 vNormal;
+       varying vec2 vUv;
+       
+       void main(){
+           vUv = uv;
+           vPosition = vec3(model * vec4(position.x,position.y,position.z,1.0));
+           vNormal = mat3(model) * normal;
+           gl_Position = projection * view * model * vec4(position.x,position.y,position.z, 1.0);
+       }`,
 
     frag: `precision mediump float;
- 
-     const float PI = 3.141592653;
- 
-     varying vec3 vPosition;
-     varying vec3 vNormal;
-     varying vec2 vUv;
- 
-     //光照，点光源
-     uniform vec3 lightPosition;
-     uniform vec3 lightColor;
- 
-     //view位置
-     uniform vec3 cameraPosition;
-
-     //PBR材质属性
-     uniform float metallic;         //金属度
-     uniform float roughness;        //粗糙度
-     uniform float ao;               //环境光分量
-     uniform vec3 albedo;            //材质反射率，分辨对三个颜色分量的反射率
-     
-     //参数roughness: 微平面表面镜面与Halfway Vector一致性比率
-     float D_GGX(vec3 N, vec3 H, float roughness){
-         float a = roughness * roughness;
-         float a2 = a * a;
-         float NH = max(dot(N, H), 0.0);
-         float NH2 = NH * NH;
-         float nom = a2;
-         float denom = (NH2 * (a2 - 1.0) + 1.0);
-         denom = PI * denom * denom;
-         return nom/denom;
-     }
- 
-     //参数roughness: 应用roughness计算几何遮蔽
-     float G_GGX0(float theta, float roughness){
-         float r = roughness + 1.0;
-         float k = (r * r)/8.0;
-         float nom = theta;
-         float denom = theta * (1.0 -k) + k;
-         return nom/denom;
-     }
- 
-     //参数roughness: 几何遮蔽
-     float G_GGX(vec3 N, vec3 V, vec3 L, float roughness){
-         float NV = max(dot(N, V), 0.0);
-         float NL = max(dot(N, L), 0.0);
-         float ggx1 = G_GGX0(NV, roughness);
-         float ggx2 = G_GGX0(NL, roughness);
-         return ggx1 * ggx2;
-     }
- 
-     //菲涅尔方程
-     vec3 F_Fresnel(float cosTheta, vec3 F0){
-         return F0 + (1.0 - F0) * pow(clamp(1.0-cosTheta, 0.0, 1.0), 5.0);
-     }
- 
-     void main(){
-         vec3 N = normalize(vNormal);                               //法线
-         vec3 V = normalize(cameraPosition - vPosition);            //物体->视角 方向向量
-         vec3 F0 = vec3(0.04);                                      //经验值，菲涅尔方程下绝缘体的表面反射力为0.04（不反射），表示入射光反射比率
-         F0 = mix(F0, albedo, metallic);                            //应用金属度，材质反射率参数后的菲涅尔表面反射参数
-         
-         //能量衰减
-         vec3 L = normalize(lightPosition - vPosition);             //
-         vec3 H = normalize(V + L);                                 //halfway vector
-         float distance = length(lightPosition - vPosition);        //光源到物体的距离
-         float attenuation = 1.0/(distance*distance);               //指数能量衰减
-         vec3 radiance = lightColor * attenuation;                  //衰减后光源到物体顶点上的辐射通量
- 
-         //DFG分量
-         float D = D_GGX(N, H, roughness);                          //微平面一致率
-         float G = G_GGX(N, V, L, roughness);                       //几何遮蔽
-         vec3 F = F_Fresnel(clamp(dot(H, V), 0.0, 1.0), F0);        //菲涅尔参数
- 
-         //计算总辐射量L0
-         vec3 numerator = D * G * F;
-         //归一化参数，加偏移量防止除以0
-         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-         vec3 specular = numerator / denominator;
-         vec3 ks = F;                                               //菲涅尔系数，反射比率
-         vec3 kd = vec3(1.0)-ks;                                    //菲涅尔系数，折射比率
-         kd *= 1.0-metallic;                                        //仅为金属不会折射光线，因此不会有漫反射
-         float NL = max(dot(N, L), 0.0);
-         vec3 L0 = (kd * albedo / PI + specular) * radiance;        //BRDF完成
- 
-         //后期处理
-         vec3 ambient = vec3(0.03) * albedo * ao;                   //环境光
-         vec3 color = ambient + L0;
-         color = color / (color + vec3(1.0));                       //HDR处理
-         color = pow(color, vec3(1.0 / 2.2));                       //gamma矫正
- 
-         gl_FragColor = vec4(color, 1.0);
-     }`,
+   
+       const float PI = 3.141592653;
+   
+       varying vec3 vPosition;
+       varying vec3 vNormal;
+       varying vec2 vUv;
+   
+       //光照，点光源
+       uniform vec3 lightPosition;
+       uniform vec3 lightColor;
+   
+       //view位置
+       uniform vec3 cameraPosition;
+  
+       //PBR材质属性
+       uniform float metallic;         //金属度
+       uniform float roughness;        //粗糙度
+       uniform float ao;               //环境光分量
+       uniform vec3 albedo;            //材质反射率，分辨对三个颜色分量的反射率
+       
+       //参数roughness: 微平面表面镜面与Halfway Vector一致性比率
+       float D_GGX(vec3 N, vec3 H, float roughness){
+           float a = roughness * roughness;
+           float a2 = a * a;
+           float NH = max(dot(N, H), 0.0);
+           float NH2 = NH * NH;
+           float nom = a2;
+           float denom = (NH2 * (a2 - 1.0) + 1.0);
+           denom = PI * denom * denom;
+           return nom/denom;
+       }
+   
+       //参数roughness: 应用roughness计算几何遮蔽
+       float G_GGX0(float theta, float roughness){
+           float r = roughness + 1.0;
+           float k = (r * r)/8.0;
+           float nom = theta;
+           float denom = theta * (1.0 -k) + k;
+           return nom/denom;
+       }
+   
+       //参数roughness: 几何遮蔽
+       float G_GGX(vec3 N, vec3 V, vec3 L, float roughness){
+           float NV = max(dot(N, V), 0.0);
+           float NL = max(dot(N, L), 0.0);
+           float ggx1 = G_GGX0(NV, roughness);
+           float ggx2 = G_GGX0(NL, roughness);
+           return ggx1 * ggx2;
+       }
+   
+       //菲涅尔方程
+       vec3 F_Fresnel(float cosTheta, vec3 F0){
+           return F0 + (1.0 - F0) * pow(clamp(1.0-cosTheta, 0.0, 1.0), 5.0);
+       }
+   
+       void main(){
+           vec3 N = normalize(vNormal);                               //法线
+           vec3 V = normalize(cameraPosition - vPosition);            //物体->视角 方向向量
+           vec3 F0 = vec3(0.04);                                      //经验值，菲涅尔方程下绝缘体的表面反射力为0.04（不反射），表示入射光反射比率
+           F0 = mix(F0, albedo, metallic);                            //应用金属度，材质反射率参数后的菲涅尔表面反射参数
+           
+           //能量衰减
+           vec3 L = normalize(lightPosition - vPosition);             //
+           vec3 H = normalize(V + L);                                 //halfway vector
+           float distance = length(lightPosition - vPosition);        //光源到物体的距离
+           float attenuation = 1.0/(distance*distance);               //指数能量衰减
+           vec3 radiance = lightColor * attenuation;                  //衰减后光源到物体顶点上的辐射通量
+   
+           //DFG分量
+           float D = D_GGX(N, H, roughness);                          //微平面一致率
+           float G = G_GGX(N, V, L, roughness);                       //几何遮蔽
+           vec3 F = F_Fresnel(clamp(dot(H, V), 0.0, 1.0), F0);        //菲涅尔参数
+   
+           //计算总辐射量L0
+           vec3 numerator = D * G * F;
+           //归一化参数，加偏移量防止除以0
+           float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+           vec3 specular = numerator / denominator;
+           vec3 ks = F;                                               //菲涅尔系数，反射比率
+           vec3 kd = vec3(1.0)-ks;                                    //菲涅尔系数，折射比率
+           kd *= 1.0-metallic;                                        //仅为金属不会折射光线，因此不会有漫反射
+           float NL = max(dot(N, L), 0.0);
+           vec3 L0 = (kd * albedo / PI + specular) * radiance;        //BRDF完成
+   
+           //后期处理
+           vec3 ambient = vec3(0.03) * albedo * ao;                   //环境光
+           vec3 color = ambient + L0;
+           color = color / (color + vec3(1.0));                       //HDR处理
+           color = pow(color, vec3(1.0 / 2.2));                       //gamma矫正
+   
+           gl_FragColor = vec4(color, 1.0);
+       }`,
 
     attributes: {
         position: cubePositions,
@@ -197,27 +199,34 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
     uniforms: {
         projection: PROJECTION.value,
         view: VIEW.value,
-        model: (performance: IPerformance, batchId: number): number[] => {
-            return IDENTITY.rotateY(0.001).value;
-        },
-        lightColor: [1.0, 1.0, 1.0],                                        //光照颜色
+        model: new Props('model'),
+        lightColor: [1.0, 1.0, 1.0],                    //光照颜色（总能量）
         lightPosition: LIGHT_POSITION.value,
         cameraPosition: CAMERA_POSITION.value,
-        albedo: [0.5, 0.5, 0.5],                                            //材质反射率
-        ao: 0.8,                                                            //环境光
-        roughness: new Props('roughness'),                                  //粗糙度
-        metallic: new Props('metallic'),                                    //金属度
-        offset:new Props('offset'), 
+        //PBR属性设置
+        albedo: [1.0, 0.0, 0.0],                        //材质反射率
+        ao: 0.5,                                        //环境光
+        roughness: new Props('roughness'),              //粗糙度
+        metallic: new Props('metallic'),                //金属度
+        offset: new Props('offset'),
     },
 
     elements: cubeElements,
 });
 
+const IDENTITY0 = new Mat4().identity().translate(new Vec3().set(0, 0, 1.5));
+const IDENTITY1 = new Mat4().identity();
+const IDENTITY2 = new Mat4().identity().translate(new Vec3().set(0, 0, -1.5));
+
 const anim = () => {
+    pipegl0.clear({
+        color: [0, 0, 0, 1],
+        depth: true,
+    });
     draw0.batch<IProps>([
-        {offset:0, roughness:0.2, metallic:0.5},
-        {offset:1.1, roughness:0.7, metallic:0.9},
-        {offset:-1.1, roughness:0.1, metallic:0.1},
+        { model: IDENTITY0.rotateY(0.005).value, roughness: 0.6, metallic: 0.1 },
+        { model: IDENTITY1.rotateY(0.005).value, roughness: 0.3, metallic: 0.1 },
+        { model: IDENTITY2.rotateY(0.005).value, roughness: 0.2, metallic: 0.9 },
     ]);
     requestAnimationFrame(anim);
 }

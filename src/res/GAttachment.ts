@@ -86,12 +86,12 @@ class GAttachment extends Dispose {
      * 
      * @param location 
      */
-    public attach = (location: number): void => {
-        const gl = this.gl;
-        if (this.reglTexture) 
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, location, this.target, this.reglTexture.Texutre, 0);
-        else 
-            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, this.target, this.reglRenderbuffer.Renderbuffer);
+    public attach = (location: number, textureTarget: number = -1): void => {
+        const gl = this.gl, target = textureTarget === -1 ? this.target : textureTarget;
+        if (this.reglTexture)
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, location, target, this.reglTexture.Texutre, 0);
+        else
+            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, target, this.reglRenderbuffer.Renderbuffer);
     }
 }
 

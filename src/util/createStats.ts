@@ -23,6 +23,11 @@ interface IStats {
     framebufferCount: number;
 
     /**
+     * 
+     */
+    framebufferCubeCount:number;
+
+    /**
      * shader count
      */
     shaderCount: number;
@@ -60,6 +65,7 @@ const createStats = (): IStats => {
         bufferCount: 0,
         elementsCount: 0,
         framebufferCount: 0,
+        framebufferCubeCount:0,
         shaderCount: 0,
         textureCount: 0,
         cubeCount: 0,

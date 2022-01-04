@@ -21,10 +21,10 @@ const emitBatch = (
     extLib: Extension,
     instances: number
 ) => {
-    const LOOP_NAME = batchBlock.def(0);
-    const P0_NAME = `p0[${LOOP_NAME}]`;
+    const LOOP_BATCH_NAME = batchBlock.def(0);
+    const P0_NAME = `p0[${LOOP_BATCH_NAME}]`;
     //创建for循环体
-    batchBlock.push(`for(${LOOP_NAME};${LOOP_NAME}<p0.length;++${LOOP_NAME}){`);
+    batchBlock.push(`for(${LOOP_BATCH_NAME};${LOOP_BATCH_NAME}<p0.length;++${LOOP_BATCH_NAME}){`);
     const scope0 = batchBlock.createScope(), iBlock = scope0.Entry, oBlock = scope0.Exit;
     //2.处理attribute
     emitAttribute(pipeline, iBlock, extLib, pipelineData.vao, pipelineData.program.Attributes, pipelineData.attributeRecordSet,P0_NAME);

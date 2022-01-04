@@ -158,8 +158,7 @@ Promise.all(cubeSource).then(cubeFaces => {
         void main(){
             vReflectDir = (invertView*vec4(position, 1.0, 0.0)).xyz; //记录摄像头出射向量
             gl_Position = vec4(position, 1.0, 1.0);
-        }
-        `,
+        }`,
 
         frag:`precision mediump float;
         
@@ -169,8 +168,7 @@ Promise.all(cubeSource).then(cubeFaces => {
 
         void main(){
             gl_FragColor = textureCube(texture, normalize(vReflectDir.xyz));
-        }
-        `,
+        }`,
 
         attributes:{
             position:[

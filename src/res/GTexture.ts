@@ -148,6 +148,11 @@ class GTexture extends Dispose {
     /**
      * 
      */
+    private isCubeTexture: boolean = false;
+
+    /**
+     * 
+     */
     private stats: IStats;
 
     /**
@@ -221,6 +226,13 @@ class GTexture extends Dispose {
     }
 
     /**
+     * 返回是否是立方体贴图
+     */
+    get IsCubeTexture(): boolean {
+        return this.isCubeTexture;
+    }
+
+    /**
      * 
      * @param gl 
      * @param limLib 
@@ -244,8 +256,10 @@ class GTexture extends Dispose {
         this.stats = stats;
         if (this.target === CTextureMapTarget.TEXTURE_2D)
             this.stats.textureCount++;
-        else if (this.target === CTextureMapTarget.TEXTURE_CUBE_MAP)
+        else if (this.target === CTextureMapTarget.TEXTURE_CUBE_MAP) {
+            this.isCubeTexture = true;
             this.stats.cubeCount++;
+        }
         TEXTURE_SET.set(this.ID, this);
     }
 
