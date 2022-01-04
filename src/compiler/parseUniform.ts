@@ -1,5 +1,5 @@
-import { isFunction } from "../util/isFunction";
 import { GTexture } from "../res/GTexture";
+import { isFunction } from "../util/isFunction";
 import { IPerformance } from "../util/createPerformance";
 import { Props, TProps } from "../core/Props";
 import { IPipelineLink, Pipeline } from "../core/Pipeline";

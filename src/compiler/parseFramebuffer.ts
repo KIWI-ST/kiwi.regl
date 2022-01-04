@@ -1,5 +1,6 @@
-import { GFramebuffer, IPerformance } from "..";
 import { check } from "../util/check";
+import { GFramebuffer } from "../res/GFramebuffer";
+import { IPerformance } from "../util/createPerformance";
 
 /**
  * Framebuffer对象参数设置

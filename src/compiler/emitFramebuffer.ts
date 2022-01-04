@@ -1,6 +1,6 @@
 import { Block } from "kiwi.codegen";
-import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
+import { Extension } from "../core/Extension";
 import { GFramebuffer } from "../res/GFramebuffer";
 import { IPerformance } from "../util/createPerformance";
 import { IFramebufferInfo } from "./parseFramebuffer";

@@ -1,10 +1,10 @@
-
-import { Extension } from "../core/Extension";
 import { Limit } from "../core/Limit";
-import { SRenderbufferColor } from "../core/Support";
-import { GRenderbuffer, RENDERBUFFER_SET } from "../res/GRenderbuffer";
 import { check } from "../util/check";
 import { IStats } from "../util/createStats";
+import { Extension } from "../core/Extension";
+import { SRenderbufferColor } from "../core/Support";
+import { GRenderbuffer, RENDERBUFFER_SET } from "../res/GRenderbuffer";
+
 
 /**
  * @author axmand

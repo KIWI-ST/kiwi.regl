@@ -1,13 +1,13 @@
-import { Extension } from "../core/Extension";
 import { Limit } from "../core/Limit";
-import { SRenderbufferColor, STextureComponent } from "../core/Support";
-import { GAttachment } from "../res/GAttachment";
-import { FRAMEBUFFER_SET, GFramebuffer } from "../res/GFramebuffer";
-import { GRenderbuffer } from "../res/GRenderbuffer";
-import { GTexture } from "../res/GTexture";
 import { IStats } from "../util/createStats";
-import { RenderbufferState } from "./RenderbufferState";
+import { GTexture } from "../res/GTexture";
+import { Extension } from "../core/Extension";
+import { GAttachment } from "../res/GAttachment";
 import { TextureState } from "./TextureState";
+import { GRenderbuffer } from "../res/GRenderbuffer";
+import { RenderbufferState } from "./RenderbufferState";
+import { FRAMEBUFFER_SET, GFramebuffer } from "../res/GFramebuffer";
+import { SRenderbufferColor, STextureComponent } from "../core/Support";
 
 /**
  * empty uint8array 

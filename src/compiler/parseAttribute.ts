@@ -1,15 +1,15 @@
-import { CComponent } from "../core/Constant";
-import { Extension } from "../core/Extension";
-import { ShapedArrayFormat } from "../core/Format";
-import { Pipeline } from "../core/Pipeline";
-import { Props, TProps } from "../core/Props";
-import { SComponent } from "../core/Support";
-import { GBuffer } from "../res/GBuffer";
-import { IAttributeRecord } from "../res/GVertexArrayObject";
-import { BufferState } from "../state/BufferState";
 import { check } from "../util/check";
-import { checkAttribute } from "../util/checkAttribute";
+import { GBuffer } from "../res/GBuffer";
+import { Pipeline } from "../core/Pipeline";
+import { Extension } from "../core/Extension";
+import { SComponent } from "../core/Support";
+import { CComponent } from "../core/Constant";
+import { BufferState } from "../state/BufferState";
+import { Props, TProps } from "../core/Props";
 import { isBufferArray } from "../util/isBufferArray";
+import { checkAttribute } from "../util/checkAttribute";
+import { IAttributeRecord } from "../res/GVertexArrayObject";
+import { ShapedArrayFormat } from "../core/Format";
 
 /**
  * 

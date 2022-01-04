@@ -1,4 +1,3 @@
-
 import { check } from '../util/check';
 import { Dispose } from '../core/Dispose';
 import { CShaderTarget } from '../core/Constant';

@@ -1,33 +1,31 @@
 
+import { check } from "../util/check";
 import { Limit } from "./Limit";
 import { TProps } from "./Props";
-// import { GFramebuffer, GTexture, GVertexArrayObject, TAttribute, TUniform } from "./../res/GFramebuffer";
-import { CompilerCore, ICompileOption } from "../compiler/CompilerCore";
-import { IConfigure, parseConfigure } from "../compiler/parseConfigure";
 import { GBuffer } from "../res/GBuffer";
-import { GElementsbuffer } from "../res/GElementsbuffer";
-import { GRenderbuffer } from "../res/GRenderbuffer";
-import { AttributeState } from "../state/AttributeState";
-import { BufferState } from "../state/BufferState";
-import { ElementsState } from "../state/ElementState";
-import { FramebufferState } from "../state/FramebufferState";
-import { ProgramState } from "../state/ProgramState";
-import { RenderbufferState } from "../state/RenderbufferState";
+import { TUniform } from "../compiler/parseUniform";
+import { GTexture } from "../res/GTexture";
+import { Extension } from "./Extension";
+import { TAttribute } from "../compiler/parseAttribute";
 import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
+import { BufferState } from "../state/BufferState";
 import { TextureState } from "../state/TextureState";
-import { check } from "../util/check";
-import { createPerformance, IPerformance } from "../util/createPerformance";
-import { createStats, IStats } from "../util/createStats";
-import { Extension } from "./Extension";
-import { ShapedArrayFormat, TypedArrayFormat } from "./Format";
-
-import { SArraybufferTarget, SComponent, SDimension, SMipmapHint, SPrimitive, SRenderbufferColor, STextureFillTarget, STextureMAGFilter, STextureMINFilter, SUsage } from "./Support";
-import { TAttribute } from "../compiler/parseAttribute";
-import { TUniform } from "../compiler/parseUniform";
-import { GVertexArrayObject } from "../res/GVertexArrayObject";
-import { GTexture } from "../res/GTexture";
 import { GFramebuffer } from "../res/GFramebuffer";
+import { ProgramState } from "../state/ProgramState";
+import { GRenderbuffer } from "../res/GRenderbuffer";
+import { ElementsState } from "../state/ElementState";
+import { AttributeState } from "../state/AttributeState";
+import { GElementsbuffer } from "../res/GElementsbuffer";
+import { FramebufferState } from "../state/FramebufferState";
+import { RenderbufferState } from "../state/RenderbufferState";
+import { GVertexArrayObject } from "../res/GVertexArrayObject";
+import { createStats, IStats } from "../util/createStats";
+import { IConfigure, parseConfigure } from "../compiler/parseConfigure";
+import { CompilerCore, ICompileOption } from "../compiler/CompilerCore";
+import { createPerformance, IPerformance } from "../util/createPerformance";
+import { ShapedArrayFormat, TypedArrayFormat } from "./Format";
+import { SArraybufferTarget, SComponent, SDimension, SMipmapHint, SPrimitive, SRenderbufferColor, STextureFillTarget, STextureMAGFilter, STextureMINFilter, SUsage } from "./Support";
 
 /**
  * 
@@ -37,12 +35,6 @@ interface IPipeCommand {
      * 常规一次绘制
      */
     draw(): void;
-
-    /**
-     * 动态property绘制，支持单个属性
-     * @param prop 
-     */
-    draw<T extends TProps>(prop: T): void;
 
     /**
      * 动态property绘制，批量绘制

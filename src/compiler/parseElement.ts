@@ -1,8 +1,8 @@
-import { ShapedArrayFormat } from "../core/Format";
-import { SPrimitive } from "../core/Support";
-import { GElementsbuffer } from "../res/GElementsbuffer";
-import { ElementsState } from "../state/ElementState";
 import { isNDArray } from "../util/isNDArray";
+import { SPrimitive } from "../core/Support";
+import { ElementsState } from "../state/ElementState";
+import { GElementsbuffer } from "../res/GElementsbuffer";
+import { ShapedArrayFormat } from "../core/Format";
 
 /**
  * @description

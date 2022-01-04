@@ -20,7 +20,6 @@ interface IrradianceAttribute extends TAttribute {
 }
 
 interface IrradianceUniform extends TUniform {
-
     invertView:number[];
     texture:GTexture;
 }
@@ -29,7 +28,7 @@ const RADIUS = 700;
 
 const CAMERAPOSITION = [0, 0, 5];
 
-const InvertViewMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAPOSITION[1], CAMERAPOSITION[2]), new Vec3().set(0, 0.0, 0), new Vec3().set(0, 1, 0));
+const CameraMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAPOSITION[1], CAMERAPOSITION[2]), new Vec3().set(0, 0.0, 0), new Vec3().set(0, 1, 0));
 
 const pipegl0 = new PipeGL({ width: RADIUS, height: RADIUS });
 
@@ -44,10 +43,8 @@ const cubeSource = [
 
 Promise.all(cubeSource).then(cubeFaces => {
 
-    //
     const w = 2048, h = 2048, c = 4;
 
-    //
     const faces: {
         posx: Uint8Array,
         negx: Uint8Array,
@@ -80,9 +77,9 @@ Promise.all(cubeSource).then(cubeFaces => {
         }
     );
 
-    const w0 = 1024, h0 = 1024;
+    const w0 = 512, h0 = 512;
 
-    //辐射立方体纹理, 用于attach到framebuffer里存储
+    //辐射立方体纹理, 存储环境贴图漫反射采样结果
     const irradianceCubeTexuture = pipegl0.textureCube(
         {
             posx: new Uint8Array(w0 * h0 * 4),
@@ -106,7 +103,7 @@ Promise.all(cubeSource).then(cubeFaces => {
         colors: [irradianceCubeTexuture]
     });
 
-    const irradiance0 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
+    const irradianceGenerate = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
         vert:`precision mediump float;
 
         attribute vec2 position;
@@ -116,18 +113,44 @@ Promise.all(cubeSource).then(cubeFaces => {
         varying vec3 vReflectDir;
 
         void main(){
-            vReflectDir = (invertView*vec4(position, 1.0, 0.0)).xyz; //记录摄像头出射向量
+            vReflectDir = (invertView*vec4(position, 1.0, 0.0)).xyz;    //记录摄像头出射向量
             gl_Position = vec4(position, 1.0, 1.0);
         }`,
 
         frag:`precision mediump float;
+
+        const float PI = 3.14159265359;
 
         uniform samplerCube texture;
 
         varying vec3 vReflectDir;
 
         void main(){
-            gl_FragColor = textureCube(texture, normalize(vReflectDir.xyz));
+            vec3 N = normalize(vReflectDir);                            //摄像头观察世界的射线
+            vec3 irradiance = vec3(0.0);                                //辐射量（颜色值）
+
+            vec3 up = vec3(0.0, 1.0, 0.0);
+            vec3 right = normalize(cross(up,N));
+            up = normalize(cross(N, right));
+
+            const float sampleDelta = 0.025;
+            float nrSamples = 0.0;
+
+            for(float phi = 0.0; phi < 2.0 * PI; phi += sampleDelta)
+            {
+                for(float theta = 0.0; theta < 0.5 * PI; theta += sampleDelta)
+                {
+                    // spherical to cartesian (in tangent space)
+                    vec3 tangentSample = vec3(sin(theta) * cos(phi),  sin(theta) * sin(phi), cos(theta));
+                    // tangent space to world
+                    vec3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * N; 
+                    irradiance += textureCube(texture, sampleVec).rgb * cos(theta) * sin(theta);
+                    nrSamples++;
+                }
+            } 
+
+            irradiance = PI * irradiance * (1.0 / nrSamples);
+            gl_FragColor = vec4(irradiance, 1.0);
         }`,
 
         attributes:{
@@ -142,7 +165,7 @@ Promise.all(cubeSource).then(cubeFaces => {
         },
 
         uniforms:{
-            invertView:InvertViewMatrix.value,
+            invertView:CameraMatrix.value,
             texture:cubeTexture
         },
 
@@ -158,9 +181,9 @@ Promise.all(cubeSource).then(cubeFaces => {
         }
     });
 
-    irradiance0.draw();
+    irradianceGenerate.draw();
 
-    const irradiance1 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
+    const irradiancePASS0 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
         vert:`precision mediump float;
 
         attribute vec2 position;
@@ -196,17 +219,17 @@ Promise.all(cubeSource).then(cubeFaces => {
         },
 
         uniforms:{
-            invertView:InvertViewMatrix.value,
-            texture:irradianceCubeTexuture
+            invertView:CameraMatrix.value,
+            texture:irradianceCubeTexuture,                 //环境光漫反射结果
         },
 
         count:6,
 
         status:{
             DEPTH_TEST:true,
-            depthFunc:[0x0203]      //参考值小于或等于模板值时通过
+            depthFunc:[0x0203]                              //参考值小于或等于模板值时通过
         }
     });
 
-    irradiance1.draw();
+    irradiancePASS0.draw();
 });

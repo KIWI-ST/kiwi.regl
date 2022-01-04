@@ -1,10 +1,9 @@
 import { Block } from "kiwi.codegen";
 import { Extension } from "../core/Extension";
-import { IPipelineData, Pipeline } from "../core/Pipeline";
-import { emitAttribute } from "./emitAttribute";
 import { emitElement } from "./emitElement";
-import { emitFramebuffer } from "./emitFramebuffer";
 import { emitUniform } from "./emitUniform";
+import { emitAttribute } from "./emitAttribute";
+import { IPipelineData, Pipeline } from "../core/Pipeline";
 
 /**
  * 

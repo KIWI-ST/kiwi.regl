@@ -1,5 +1,4 @@
 import { Block } from "kiwi.codegen";
-
 import { Pipeline } from "../core/Pipeline";
 import { Extension } from "../core/Extension";
 import { IActiveInfo } from "../res/GProgram";

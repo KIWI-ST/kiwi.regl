@@ -1,6 +1,6 @@
 import { Block } from "kiwi.codegen";
-import { Pipeline } from "../core/Pipeline";
 import { Status } from "../core/Status";
+import { Pipeline } from "../core/Pipeline";
 import { SWebGLStatusFLAG, SWebGLStatusVariable } from "../core/Support";
 
 /**

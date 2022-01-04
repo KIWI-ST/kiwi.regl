@@ -1,7 +1,7 @@
 import { Block } from "kiwi.codegen";
-import { CComponent } from "../core/Constant";
-import { Extension } from "../core/Extension";
 import { Pipeline } from "../core/Pipeline";
+import { Extension } from "../core/Extension";
+import { CComponent } from "../core/Constant";
 import { GElementsbuffer } from "../res/GElementsbuffer";
 import { GVertexArrayObject } from "../res/GVertexArrayObject";
 

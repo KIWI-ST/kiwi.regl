@@ -15,13 +15,14 @@ import { GFramebuffer } from "../res/GFramebuffer";
 import { IPerformance } from './../util/createPerformance';
 import { IUniformRecord } from "../compiler/parseUniform";
 import { AttributeState } from "../state/AttributeState";
-import { GElementsbuffer } from '../res/GElementsbuffer';
+import { GElementsbuffer } from '../res/GElementsbuffer'
 import { FramebufferState } from "../state/FramebufferState";
+import { IFramebufferInfo } from "../compiler/parseFramebuffer";
 import { RenderbufferState } from "../state/RenderbufferState";
 import { Procedure, Template } from 'kiwi.codegen';
 import { IActiveInfo, GProgram } from '../res/GProgram';
 import { IAttributeRecord, GVertexArrayObject } from "../res/GVertexArrayObject";
-import { IFramebufferSetting, IFramebufferInfo as IFramebufferInfo } from "../compiler/parseFramebuffer";
+
 
 /**
  * 全局静态值，包含属性/对象/函数
@@ -213,7 +214,7 @@ interface IPipelineSchema {
      * 性能统计
      */
     performance: IPerformance;
-    
+
     /**
      * 
      */

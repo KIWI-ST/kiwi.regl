@@ -1,8 +1,8 @@
-import { CPrimitive } from "../core/Constant";
-import { Dispose } from "../core/Dispose";
-import { ShapedArrayFormat, TypedArrayFormat } from "../core/Format";
-import { SComponent, SPrimitive, SUsage } from "../core/Support";
 import { GBuffer } from "./GBuffer";
+import { Dispose } from "../core/Dispose";
+import { CPrimitive } from "../core/Constant";
+import { SComponent, SPrimitive, SUsage } from "../core/Support";
+import { ShapedArrayFormat, TypedArrayFormat } from "../core/Format";
 
 /**
  * 

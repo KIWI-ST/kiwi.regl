@@ -1,9 +1,8 @@
-import { bufferPool0 } from "../pool/BufferPool";
 import { ITexImage } from "../pool/TexImagePool";
-import { toHalfFloat } from "../util/toHalfFloat";
-import { TypedArrayFormat } from "./Format";
 import { SComponent } from "./Support";
-
+import { toHalfFloat } from "../util/toHalfFloat";
+import { bufferPool0 } from "../pool/BufferPool";
+import { TypedArrayFormat } from "./Format";
 
 /**
  * }{debug

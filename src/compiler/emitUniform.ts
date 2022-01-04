@@ -1,9 +1,9 @@
 import { Block } from "kiwi.codegen";
-import { Pipeline } from "../core/Pipeline";
-import { IActiveInfo } from "../res/GProgram";
-import { GTexture } from "../res/GTexture";
 import { check } from "../util/check";
+import { Pipeline } from "../core/Pipeline";
+import { GTexture } from "../res/GTexture";
 import { isNDArray } from "../util/isNDArray";
+import { IActiveInfo } from "../res/GProgram";
 import { IUniformRecord } from "./parseUniform";
 
 interface IUC {

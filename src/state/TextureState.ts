@@ -7,10 +7,10 @@ import { Extension } from "../core/Extension";
 import { Transpose } from "../core/Transpose";
 import { detectComponent } from "../util/detectComponent";
 import { TypedArrayFormat } from "../core/Format";
-import { checkMipmapTexture2D, checkTextureCube } from "../util/checkTexture";
 import { IMipmap, mipmapPool0 } from "../pool/MipmapPool";
 import { ITexImage, texImagePool0 } from "../pool/TexImagePool";
 import { ITexInfo, GTexture, TEXTURE_SET } from "../res/GTexture";
+import { checkMipmapTexture2D, checkTextureCube } from "../util/checkTexture";
 import { SMipmapHint, STextureFillTarget, STextureMAGFilter, STextureMapTarget, STextureMINFilter } from "../core/Support";
 import { CColorSpace, CMipmapHint, CTextureColor, CTextureComponent, CTextureFillTarget, CTextureMAGFilter, CTextureMapTarget, CTextureMINFilter } from "../core/Constant";
 
@@ -339,6 +339,8 @@ class TextureState {
         gTexture.TexFlag = mipmap as ITexFlag;
         //5.解析data
         gTexture.Mipmap = this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset);
+        //5.1 设置texFlag
+        // this.setTexFlags(gTexture.TexFlag);
         //6.check texture2d
         checkMipmapTexture2D(texInfo, mipmap, this.extLib, this.limLib);
         if (texInfo.genMipmaps)
@@ -410,6 +412,8 @@ class TextureState {
         else
             gTexture.Mipmap.mipmask = gFaces[0].mipmask;
         gTexture.TexFlag = gFaces[0] as ITexFlag;
+        //5.1 设置texFlag
+        //this.setTexFlags(gTexture.TexFlag);
         //检查cubemap参数合法性
         checkTextureCube(texInfo, gTexture.Mipmap, gFaces, this.limLib);
         gTexture.tempBind();

@@ -1,9 +1,8 @@
-import { GProgram } from "../res/GProgram";
 import { GShader } from "../res/GShader";
-import { ProgramState } from "../state/ProgramState";
+import { GProgram } from "../res/GProgram";
 import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
-
+import { ProgramState } from "../state/ProgramState";
 /**
  * create REGLProgram
  * @param opts 
