@@ -283,7 +283,6 @@ class TextureState {
     ): IMipmap => {
         const imageData = mipmap.images[0] = texImagePool0.allocImage();
         getCopy(imageData, mipmap, opts);
-        this.setTexFlags(imageData as ITexFlag);
         check(!imageData.compressed || arr instanceof Uint8Array, `TextureState error: 压缩纹理必须以Uint8Array格式传输`);
         imageData.component = mipmap.component = detectComponent(arr);
         const w = shape[0], h = shape[1], c = shape[2];
@@ -358,13 +357,13 @@ class TextureState {
         //5.解析data
         gTexture.Mipmap = this.fixMipmap(mipmap, data, [imageData.width, imageData.height, imageData.channels], stride, offset, opts);
         //5.1 设置texFlag
-        // this.setTexFlags(gTexture.TexFlag);
         //6.check texture2d
         checkMipmapTexture2D(texInfo, mipmap, this.extLib, this.limLib);
         if (texInfo.genMipmaps)
             gTexture.Mipmap.mipmask = (mipmap.width << 1) - 1;
         //7.纹理绑定
         gTexture.tempBind();
+        this.setTexFlags(gTexture.TexFlag);
         this.setMipmap(gTexture.Mipmap, 'TEXTURE_2D');
         this.setTexInfo(gTexture.TexInfo, 'TEXTURE_2D');
         gTexture.tempRestore();
@@ -436,10 +435,10 @@ class TextureState {
             gTexture.Mipmap.mipmask = gFaces[0].mipmask;
         gTexture.TexFlag = gFaces[0] as ITexFlag;
         //5.1 设置texFlag
-        //this.setTexFlags(gTexture.TexFlag);
         //检查cubemap参数合法性
         checkTextureCube(texInfo, gTexture.Mipmap, gFaces, this.limLib);
         gTexture.tempBind();
+        this.setTexFlags(gTexture.TexFlag);
         gFaces.forEach((mipmap: IMipmap, i: number) => {
             this.setMipmap(mipmap, GL_TEXTURE_CUBE_MAPS[i]);
         });

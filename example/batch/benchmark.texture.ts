@@ -101,7 +101,6 @@ createRGBA('/assets/texture0.jpg').then(t => {
         {
             mag: 'NEAREST',
             min: 'NEAREST',
-            flipY:false,
         });
 
     batch.push({ texture: tex0, offset: 0 });

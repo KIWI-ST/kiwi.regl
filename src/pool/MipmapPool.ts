@@ -1,5 +1,6 @@
 import { CMipmapHint } from "../core/Constant";
 import { createTexFlag, ITexFlag } from "../util/createTexFlag";
+import { getExtend } from "../util/getExtendCopy";
 import { ITexImage, texImagePool0 } from "./TexImagePool";
 
 /**
@@ -44,6 +45,7 @@ class MipmapPool {
      */
     allocMipmap = (): IMipmap => {
         const mipmap: IMipmap = this.mipmapQueue.pop() || createTexFlag() as IMipmap;
+        getExtend(mipmap, createTexFlag());
         mipmap.genMipmaps = false;
         mipmap.mipmapHint = CMipmapHint['DONT_CARE'];
         mipmap.mipmask = 0;

@@ -28,6 +28,7 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 
 import { createNormals } from "../createNormals";
+
 import { cubeElements, cubePositions, cubeUvs } from "../createCube";
 
 import { PipeGL, Props, TAttribute, TProps, TUniform } from "../../src";

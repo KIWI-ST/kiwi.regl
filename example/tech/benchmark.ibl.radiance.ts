@@ -1,27 +1,30 @@
-
 /**
  * 
- * IBL
+ * IBL（一）：漫反射部分
+ * 
  * 基于图像的光照（Image based lighting, IBL)是一类光照技术的集合，其光源不是直接光源，而是将周围环境视为一个大光源。
  * 技术：通常使用环境立方体贴图（cubemap)实现
  * 原理：视立方体贴图每个像素为光源，再渲染方程中直接使用
  * 
  * 此示例构造环境光贴图的漫反射积分结果
+ * 参考资料：
+ * https://learnopengl-cn.github.io/07%20PBR/03%20IBL/02%20Specular%20IBL/
  * 
  */
 
 import { Mat4, Vec3 } from "kiwi.matrix";
-import { GTexture, PipeGL, TAttribute, TUniform } from "../../src";
 
 import { createRGBA } from "../createRGBA";
+
+import { GTexture, PipeGL, TAttribute, TUniform } from "../../src";
 
 interface IrradianceAttribute extends TAttribute {
     position: number[][]
 }
 
 interface IrradianceUniform extends TUniform {
-    invertView:number[];
-    texture:GTexture;
+    invertView: number[];
+    texture: GTexture;
 }
 
 const RADIUS = 700;
@@ -103,8 +106,9 @@ Promise.all(cubeSource).then(cubeFaces => {
         colors: [irradianceCubeTexuture]
     });
 
+    //
     const irradianceGenerate = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
-        vert:`precision mediump float;
+        vert: `precision mediump float;
 
         attribute vec2 position;
 
@@ -117,7 +121,7 @@ Promise.all(cubeSource).then(cubeFaces => {
             gl_Position = vec4(position, 1.0, 1.0);
         }`,
 
-        frag:`precision mediump float;
+        frag: `precision mediump float;
 
         const float PI = 3.14159265359;
 
@@ -153,38 +157,38 @@ Promise.all(cubeSource).then(cubeFaces => {
             gl_FragColor = vec4(irradiance, 1.0);
         }`,
 
-        attributes:{
-            position:[
-                [-1,-1],
-                [1,-1],
-                [-1,1],
-                [-1,1],
-                [1,-1],
-                [1,1]
+        attributes: {
+            position: [
+                [-1, -1],
+                [1, -1],
+                [-1, 1],
+                [-1, 1],
+                [1, -1],
+                [1, 1]
             ]
         },
 
-        uniforms:{
-            invertView:CameraMatrix.value,
-            texture:cubeTexture
+        uniforms: {
+            invertView: CameraMatrix.value,
+            texture: cubeTexture
         },
 
-        count:6,
+        count: 6,
 
-        framebuffer:{
-            framebuffer:irradianceFramebuffer
+        framebuffer: {
+            framebuffer: irradianceFramebuffer
         },
 
-        status:{
-            DEPTH_TEST:true,
-            depthFunc:[0x0203]      //参考值小于或等于模板值时通过
+        status: {
+            DEPTH_TEST: true,
+            depthFunc: [0x0203]      //参考值小于或等于模板值时通过
         }
     });
 
     irradianceGenerate.draw();
 
     const irradiancePASS0 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
-        vert:`precision mediump float;
+        vert: `precision mediump float;
 
         attribute vec2 position;
 
@@ -197,7 +201,7 @@ Promise.all(cubeSource).then(cubeFaces => {
             gl_Position = vec4(position, 1.0, 1.0);
         }`,
 
-        frag:`precision mediump float;
+        frag: `precision mediump float;
 
         uniform samplerCube texture;
 
@@ -207,27 +211,27 @@ Promise.all(cubeSource).then(cubeFaces => {
             gl_FragColor = textureCube(texture, normalize(vReflectDir.xyz));
         }`,
 
-        attributes:{
-            position:[
-                [-1,-1],
-                [1,-1],
-                [-1,1],
-                [-1,1],
-                [1,-1],
-                [1,1]
+        attributes: {
+            position: [
+                [-1, -1],
+                [1, -1],
+                [-1, 1],
+                [-1, 1],
+                [1, -1],
+                [1, 1]
             ]
         },
 
-        uniforms:{
-            invertView:CameraMatrix.value,
-            texture:irradianceCubeTexuture,                 //环境光漫反射结果
+        uniforms: {
+            invertView: CameraMatrix.value,
+            texture: irradianceCubeTexuture,                 //环境光漫反射结果
         },
 
-        count:6,
+        count: 6,
 
-        status:{
-            DEPTH_TEST:true,
-            depthFunc:[0x0203]                              //参考值小于或等于模板值时通过
+        status: {
+            DEPTH_TEST: true,
+            depthFunc: [0x0203]                              //参考值小于或等于模板值时通过
         }
     });
 
