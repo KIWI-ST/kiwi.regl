@@ -63,6 +63,8 @@
 >[Tech-IBL-Specular-BRDF](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.specular.brdf.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148491545-43f80ea2-a3b9-4ff8-9735-edaad65bb11d.png">
 
+>[Tech-IBL-PBR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.pbr.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148520967-9ea5652a-96d9-4c99-8e52-4e70306ab766.png">
 
 ## Modules ##
 

@@ -21,11 +21,11 @@ import { createRGBA } from "../createRGBA";
 
 import { GTexture, PipeGL, TAttribute, TUniform } from "../../src";
 
-interface IrradianceAttribute extends TAttribute {
+interface hdrAttribute extends TAttribute {
     position: number[][]
 }
 
-interface IrradianceUniform extends TUniform {
+interface hdrUniform extends TUniform {
     cameraMatrix: number[];
     texture: GTexture;
     roughness:number;
@@ -114,7 +114,7 @@ Promise.all(cubeSource).then(cubeFaces => {
     //预过滤HDR环境贴图(镜面反射分量), 基于Hammersley随机生成采样点序方法
     //还有位运算符版本：
     //https://learnopengl-cn.github.io/07%20PBR/03%20IBL/02%20Specular%20IBL/#hdr
-    const hrd0 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
+    const hrd0 = pipegl0.compile<hdrAttribute, hdrUniform>({
         vert: `precision mediump float;
  
          attribute vec2 position;
@@ -214,6 +214,7 @@ Promise.all(cubeSource).then(cubeFaces => {
              }
 
              prefilterColor = prefilterColor/totalWeight;
+             
              gl_FragColor = vec4(prefilterColor, 1.0);
          }`,
 
@@ -249,7 +250,7 @@ Promise.all(cubeSource).then(cubeFaces => {
 
     hrd0.draw();
 
-    const hdrPASS0 = pipegl0.compile<IrradianceAttribute, IrradianceUniform>({
+    const hdrPASS0 = pipegl0.compile<hdrAttribute, hdrUniform>({
         vert: `precision mediump float;
  
          attribute vec2 position;
