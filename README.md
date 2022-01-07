@@ -57,8 +57,11 @@
 >[Tech-IBL-Radiance](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.radiance.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148082443-5f22b7ea-9684-4c40-a58c-7e251ba3735a.png">
 
->[Tech-IBL-Specular](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.specular.ts)
+>[Tech-IBL-Specular-HDR](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.specular.prefilterHDR.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148483755-2539ac3a-9bcb-435e-aca0-68f380958749.png">
+
+>[Tech-IBL-Specular-BRDF](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.ibl.specular.brdf.ts)
+<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148491545-43f80ea2-a3b9-4ff8-9735-edaad65bb11d.png">
 
 
 ## Modules ##
