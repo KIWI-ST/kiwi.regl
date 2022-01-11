@@ -22,6 +22,7 @@ const pipegl0 = new PipeGL({
 });
 
 const draw0 = pipegl0.compile<Attribute, Uniform>({
+
     frag: `
         precision mediump float;
         uniform vec4 color;
@@ -61,6 +62,7 @@ const draw0 = pipegl0.compile<Attribute, Uniform>({
         [2, 4],
         [3, 4]
     ]
+    
 });
 
 const batch: IProp[] = [];
