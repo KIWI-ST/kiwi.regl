@@ -282,6 +282,8 @@ const LightPASS = pipegl0.compile<LightAttribute, LightUniform>({
 
 });
 
+//3. 绘制灯光物体
+
 interface IProps extends TProps {
     position: number[];
 }
@@ -328,18 +330,11 @@ const Light0 = pipegl0.compile<TAttribute, LightPositionUniform>({
     }
 });
 
-
-let lastStamp: number = 0;
-
 const anim = (stamp: number) => {
     lightsBatch = [];
-    // MODEL_MATRIX.rotateY(0.003);
-    // IT_MODEL_MATRIX.rotateY(0.003);
     GeometryPASS.draw();
     LightPASS.draw();
     Light0.batch<IProps>(lightsBatch);
-    console.log(1000.0 / (stamp - lastStamp));
-    lastStamp = stamp;
     requestAnimationFrame(anim);
 }
 

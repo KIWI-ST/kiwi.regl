@@ -69,8 +69,6 @@
 >[Tech-Deferred-Rendering](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.deffer.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148930075-6617e52f-c0ad-4c41-9f52-12836528f85d.png">
 
-
-
 ## Modules ##
 
 ### compiler ###
@@ -86,9 +84,9 @@
 - [x] parseConfigure
 - [x] parseElement
 - [x] parseProgram
+- [x] parseFramebuffer
 - [x] parseStatus
 - [x] parseUniform
-- [x] parseFramebuffer
 
 ### core ###
 - [x] Constant
@@ -96,11 +94,12 @@
 - [x] Extension
 - [x] Format
 - [x] Limit
+- [x] Pipe
+- [x] Pipeline
 - [x] Props
 - [x] Status
 - [x] Support
 - [x] Transpose
-- [x] Pipe
 
 ### pool ###
 - [x] BufferPool
@@ -119,33 +118,37 @@
 - [x] GVertexArrayObject
 
 ### state ###
+- [x] AttributeState
 - [x] BufferState
 - [x] ElementState
-- [x] StringState
-- [x] ShaderState
-- [x] ProgramState
-- [x] TextureState
-- [x] AttributeState
-- [x] RenderbufferState
 - [x] FramebufferState
+- [x] ProgramState
+- [x] RenderbufferState
+- [x] ShaderState
+- [x] StringState
+- [x] TextureState
 
 ### utils ###
 - [x] check
 - [x] checkAttribute
 - [x] checkTexutre
-- [x] defaultValue
-- [x] detectComponent
-- [x] getFlatten
-- [x] getIdx
-- [x] isTypedArray
-- [x] toHalfFloat
-- [x] createTexFlag
 - [x] createPerformance
 - [x] createStats
-- [x] isNDArray
-- [x] checkTexture
+- [x] createTexFlag
+- [x] defaultValue
+- [x] detectComponent
 - [x] getExtendCopy
+- [x] getFlatten
+- [x] getIdx
 - [x] getPixelSize
-- [x] isPowerOf2
 - [x] isBufferArray
 - [x] isFunction
+- [x] isNDArray
+- [x] isPowerOf2
+- [x] isTypedArray
+- [x] toHalfFloat
+
+
+
+
+
