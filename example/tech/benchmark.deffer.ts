@@ -66,7 +66,8 @@ const aTexture = pipegl0.texture2D(new Uint8Array(RADIUS * RADIUS * 4), RADIUS, 
 
 const depthBuffer = pipegl0.renderbuffer({ w: RADIUS, h: RADIUS, format: 'DEPTH_COMPONENT16' });
 
-const defferFramebuffer = pipegl0.framebuffer({ colors: [pTexture, nTexture, aTexture], depth: depthBuffer });
+ //如果这里需要共享全局全场景的深度，建议使用texutre_float插件。使用texture作colorAttachment附件交付fbo绘制
+const defferFramebuffer = pipegl0.framebuffer({ colors: [pTexture, nTexture, aTexture], depth: depthBuffer }); 
 
 //1.几何处理阶段
 
