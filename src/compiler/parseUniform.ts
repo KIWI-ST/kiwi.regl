@@ -67,7 +67,7 @@ const parseUniform = <TU extends TUniform>(
 }
 
 export {
-    IUniformRecord,
-    TUniform,
+    type IUniformRecord,
+    type TUniform,
     parseUniform
 }

@@ -323,6 +323,6 @@ class GTexture extends Dispose {
 export {
     TEXTURE_UNIT_ARR,
     TEXTURE_SET,
-    ITexInfo,
+    type ITexInfo,
     GTexture
 }

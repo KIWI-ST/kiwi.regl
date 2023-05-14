@@ -273,32 +273,32 @@ class PipeGL {
      * @param opts 
      * @returns 
      */
-    public textureCube = (      faces:{
-        posx:TypedArrayFormat,
-        negx:TypedArrayFormat,
-        posy:TypedArrayFormat,
-        negy:TypedArrayFormat,
-        posz:TypedArrayFormat,
-        negz:TypedArrayFormat,
+    public textureCube = (faces: {
+        posx: TypedArrayFormat,
+        negx: TypedArrayFormat,
+        posy: TypedArrayFormat,
+        negy: TypedArrayFormat,
+        posz: TypedArrayFormat,
+        negz: TypedArrayFormat,
     },
-    w:number,
-    h:number,
-    c:number,
-    opts: {
-        stride?: number[],
-        offset?: number,
-        min?: STextureMINFilter,                 //minFilter
-        mag?: STextureMAGFilter,                 //magFilter
-        wrapS?: STextureFillTarget,              //wrapS
-        wrapT?: STextureFillTarget,              //wrapT
-        mipmap?: SMipmapHint,                    //mipmap采样方式
-        anisotropic?: 1 | 2 | 3,                 //各项异性过滤
-        //setimage四个属性
-        flipY?: boolean,
-        premultiplyAlpha?: boolean,              //RGB通道已预乘alpha
-        colorSpace?: SColorSpace;
-        unpackAlignment?: 1 | 2 | 4 | 8;         //纹理读取时一次读取字节位
-    } = {}):GTexture =>{
+        w: number,
+        h: number,
+        c: number,
+        opts: {
+            stride?: number[],
+            offset?: number,
+            min?: STextureMINFilter,                 //minFilter
+            mag?: STextureMAGFilter,                 //magFilter
+            wrapS?: STextureFillTarget,              //wrapS
+            wrapT?: STextureFillTarget,              //wrapT
+            mipmap?: SMipmapHint,                    //mipmap采样方式
+            anisotropic?: 1 | 2 | 3,                 //各项异性过滤
+            //setimage四个属性
+            flipY?: boolean,
+            premultiplyAlpha?: boolean,              //RGB通道已预乘alpha
+            colorSpace?: SColorSpace;
+            unpackAlignment?: 1 | 2 | 4 | 8;         //纹理读取时一次读取字节位
+        } = {}): GTexture => {
         return this.textureState.createTextureCube(faces, w, h, c, opts);
     }
 
@@ -375,15 +375,19 @@ class PipeGL {
         check(color.length === 4, `Error: clear color must consist of 4`);
         //clear to black, fluuy opaque
         gl.clearColor(color[0], color[1], color[2], color[3]);
-        let bit = gl.COLOR_BUFFER_BIT;
-        if (depth) bit = bit | gl.DEPTH_BUFFER_BIT;
-        if (stencil) bit = bit | gl.STENCIL_BUFFER_BIT;
+        let bit: number = gl.COLOR_BUFFER_BIT;
+        if (depth) {
+            bit = bit | gl.DEPTH_BUFFER_BIT;
+        }
+        if (stencil) {
+            bit = bit | gl.STENCIL_BUFFER_BIT;
+        }
         //clear
         gl.clear(bit);
     }
 }
 
 export {
-    IPipeCommand,
+    type IPipeCommand,
     PipeGL
 }

@@ -76,6 +76,6 @@ const createStats = (): IStats => {
 }
 
 export { 
-    IStats,
+    type IStats,
     createStats 
 }

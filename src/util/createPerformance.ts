@@ -32,6 +32,6 @@ const createPerformance = (): IPerformance => {
 }
 
 export {
-    IPerformance,
+    type IPerformance,
     createPerformance
 }

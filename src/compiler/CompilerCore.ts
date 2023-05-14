@@ -429,6 +429,6 @@ class CompilerCore {
 }
 
 export { 
-    ICompileOption,
+    type ICompileOption,
     CompilerCore 
 }

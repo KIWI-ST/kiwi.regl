@@ -166,7 +166,7 @@ const parseAttribute = <TA extends TAttribute>(
 }
 
 export {
-    IAttributeBuffer,
-    TAttribute,
+    type IAttributeBuffer,
+    type TAttribute,
     parseAttribute
 }

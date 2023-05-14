@@ -120,6 +120,6 @@ const parseConfigure = (opts: IConfigure = {}): IConfigure => {
 
 export {
     defaultWebGLOptions,
-    IConfigure,
+    type IConfigure,
     parseConfigure
 }

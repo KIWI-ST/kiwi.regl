@@ -102,6 +102,6 @@ const createTexFlag = (): ITexFlag => {
 }
 
 export { 
-    ITexFlag,
+    type ITexFlag,
     createTexFlag 
 }

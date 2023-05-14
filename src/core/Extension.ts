@@ -90,7 +90,7 @@ class Extension {
 }
 
 export {
-    SExtension,
-    IExtension,
+    type SExtension,
+    type IExtension,
     Extension
 }

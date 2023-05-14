@@ -285,6 +285,6 @@ class GVertexArrayObject extends Dispose {
 
 export {
     VAO_SET,
-    IAttributeRecord,
+    type IAttributeRecord,
     GVertexArrayObject
 }

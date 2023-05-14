@@ -36,11 +36,11 @@ class Props<T extends TProps>{
     }
 
     constructor(key: keyof { [key in keyof T]: string }) {
-        this.key = `['${key}']`;
+        this.key = `['${String(key)}']`;
     }
 }
 
 export {
-    TProps,
+    type TProps,
     Props
 }

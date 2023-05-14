@@ -14,7 +14,7 @@ type TypedArrayFormat = Int8Array | Uint8Array | Int16Array | Uint16Array | Int3
 type ShapedArrayFormat = number[][][] | number[][] | number[] | TypedArrayFormat;
 
 export {
-    ExtensionFormat,
-    TypedArrayFormat,
-    ShapedArrayFormat
+    type ExtensionFormat,
+    type TypedArrayFormat,
+    type ShapedArrayFormat
 }

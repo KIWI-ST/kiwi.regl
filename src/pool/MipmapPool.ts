@@ -71,6 +71,6 @@ class MipmapPool {
 const mipmapPool0 = new MipmapPool();
 
 export {
-    IMipmap,
+    type IMipmap,
     mipmapPool0
 }

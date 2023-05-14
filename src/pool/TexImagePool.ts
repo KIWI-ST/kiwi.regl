@@ -85,6 +85,6 @@ class TexImagePool {
 const texImagePool0 = new TexImagePool();
 
 export {
-    ITexImage,
+    type ITexImage,
     texImagePool0
 }

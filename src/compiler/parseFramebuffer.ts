@@ -70,7 +70,7 @@ const parseFramebuffer = (
 }
 
 export {
-    IFramebufferSetting,
-    IFramebufferInfo,
+    type IFramebufferSetting,
+    type IFramebufferInfo,
     parseFramebuffer
 }

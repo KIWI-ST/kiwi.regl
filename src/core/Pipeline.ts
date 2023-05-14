@@ -393,8 +393,8 @@ class Pipeline {
 }
 
 export {
-    IPipelineLink,
-    IPipelineData,
-    IPipelineSchema,
+    type IPipelineLink,
+    type IPipelineData,
+    type IPipelineSchema,
     Pipeline,
 }

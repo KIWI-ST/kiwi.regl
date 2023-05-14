@@ -1,8 +1,8 @@
 //Pipe Object
-export { PipeGL, IPipeCommand } from './core/Pipe';
+export { PipeGL, type IPipeCommand } from './core/Pipe';
 
 //performance
-export { IPerformance } from './util/createPerformance';
+export { type IPerformance } from './util/createPerformance';
 
 //resource
 export { GFramebuffer } from './res/GFramebuffer';
@@ -11,9 +11,9 @@ export { GVertexArrayObject } from './res/GVertexArrayObject';
 export { GBuffer } from './res/GBuffer';
 
 //Prop
-export { Props, TProps } from './core/Props';
+export { Props, type TProps } from './core/Props';
 
 //attribute/uniform
-export { TUniform } from './compiler/parseUniform';
-export { TAttribute } from './compiler/parseAttribute';
-export { IAttributeBuffer } from './compiler/parseAttribute';
+export { type TUniform } from './compiler/parseUniform';
+export { type TAttribute } from './compiler/parseAttribute';
+export { type IAttributeBuffer } from './compiler/parseAttribute';

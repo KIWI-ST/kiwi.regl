@@ -248,6 +248,6 @@ class GProgram extends Dispose {
 
 export {
     PROGRAM_SET,
-    IActiveInfo,
+    type IActiveInfo,
     GProgram
 }
