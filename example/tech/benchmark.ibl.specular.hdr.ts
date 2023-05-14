@@ -40,12 +40,12 @@ const CameraMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAP
 const pipegl0 = new PipeGL({ width: RADIUS, height: RADIUS });
 
 const cubeSource = [
-    createRGBA('/assets/cube/negx.jpg', 'negx'),
-    createRGBA('/assets/cube/negy.jpg', 'negy'),
-    createRGBA('/assets/cube/negz.jpg', 'negz'),
-    createRGBA('/assets/cube/posx.jpg', 'posx'),
-    createRGBA('/assets/cube/posy.jpg', 'posy'),
-    createRGBA('/assets/cube/posz.jpg', 'posz'),
+    createRGBA('/example/assets/cube/negx.jpg', 'negx'),
+    createRGBA('/example/assets/cube/negy.jpg', 'negy'),
+    createRGBA('/example/assets/cube/negz.jpg', 'negz'),
+    createRGBA('/example/assets/cube/posx.jpg', 'posx'),
+    createRGBA('/example/assets/cube/posy.jpg', 'posy'),
+    createRGBA('/example/assets/cube/posz.jpg', 'posz'),
 ];
 
 Promise.all(cubeSource).then(cubeFaces => {

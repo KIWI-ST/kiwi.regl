@@ -5,8 +5,14 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "vite --debug",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/pipegl-lib.mjs",
+      "require": "./dist/pipegl-lib.umd.js"
+    }
   },
   "repository": {
     "type": "git",

@@ -28,7 +28,7 @@ const pipegl0 = new PipeGL({
     extensions: ['ANGLE_instanced_arrays', 'OES_vertex_array_object']
 });
 
-createRGBA('/assets/texture0.jpg').then(t => {
+createRGBA('/example/assets/texture0.jpg').then(t => {
 
     const draw0 = pipegl0.compile<Attribute, Uniform>({
 

@@ -5,8 +5,9 @@
  * @param message error message
  */
 const check = (pred: any, message: string) => {
-    if (!pred)
+    if (!pred){
         throw new Error(`pipegl:${message}`);
+    }
 }
 
 export { check }

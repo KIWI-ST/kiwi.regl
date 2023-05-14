@@ -17,3 +17,4 @@ export { Props, type TProps } from './core/Props';
 export { type TUniform } from './compiler/parseUniform';
 export { type TAttribute } from './compiler/parseAttribute';
 export { type IAttributeBuffer } from './compiler/parseAttribute';
+
