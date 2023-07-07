@@ -11,7 +11,7 @@ class BufferState{
     /**
      * 
      */
-    static REGLBUFFER_SET: Map<number, GBuffer> = BUFFER_SET;
+    static GBUFFER_SET: Map<number, GBuffer> = BUFFER_SET;
 
     /**
      *  
@@ -26,7 +26,7 @@ class BufferState{
     /**
      * 
      */
-    private reglBuffer: GBuffer;
+    private gBuffer: GBuffer;
 
     /**
      * 
@@ -79,7 +79,7 @@ class BufferState{
             this.gl.bufferData(CArraybufferTarget[target], byteLength, CUsage[usage]);
         else
             buffer.paddingWithData(data, usage, component);
-        this.reglBuffer = buffer;
+        this.gBuffer = buffer;
         this.stats.bufferCount++;
         return buffer;
     }
@@ -95,7 +95,7 @@ class BufferState{
         const buffer = this.streamPool.pop() || new GBuffer(this.gl, target, usage, component, dimension);
         buffer.bind();
         buffer.paddingWithData(data, usage, component);
-        this.reglBuffer = buffer;
+        this.gBuffer = buffer;
         return buffer;
     }
 

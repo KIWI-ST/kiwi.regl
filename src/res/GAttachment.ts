@@ -31,12 +31,12 @@ class GAttachment extends Dispose {
     /**
      * 
      */
-    private reglTexture: GTexture;
+    private gTexture: GTexture;
 
     /**
      * 
      */
-    private reglRenderbuffer: GRenderbuffer;
+    private gRenderbuffer: GRenderbuffer;
 
     /**
      * 
@@ -57,7 +57,7 @@ class GAttachment extends Dispose {
      * 
      */
     get Texture(): GTexture {
-        return this.reglTexture;
+        return this.gTexture;
     }
 
     /**
@@ -75,11 +75,11 @@ class GAttachment extends Dispose {
         this.gl = gl;
         this.target = CAttachmentTarget[target || 'TEXTURE_2D'] || 0;
         if (attach instanceof GTexture)
-            this.reglTexture = attach;
+            this.gTexture = attach;
         else if (attach instanceof GRenderbuffer)
-            this.reglRenderbuffer = attach;
-        this.width = this.reglTexture?.Width || this.reglRenderbuffer?.Width || 0;
-        this.height = this.reglTexture?.Height || this.reglRenderbuffer?.Height || 0;
+            this.gRenderbuffer = attach;
+        this.width = this.gTexture?.Width || this.gRenderbuffer?.Width || 0;
+        this.height = this.gTexture?.Height || this.gRenderbuffer?.Height || 0;
     }
 
     /**
@@ -88,10 +88,10 @@ class GAttachment extends Dispose {
      */
     public attach = (location: number, textureTarget: number = -1): void => {
         const gl = this.gl, target = textureTarget === -1 ? this.target : textureTarget;
-        if (this.reglTexture)
-            gl.framebufferTexture2D(gl.FRAMEBUFFER, location, target, this.reglTexture.Texutre, 0);
+        if (this.gTexture)
+            gl.framebufferTexture2D(gl.FRAMEBUFFER, location, target, this.gTexture.Texutre, 0);
         else
-            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, target, this.reglRenderbuffer.Renderbuffer);
+            gl.framebufferRenderbuffer(gl.FRAMEBUFFER, location, target, this.gRenderbuffer.Renderbuffer);
     }
 }
 

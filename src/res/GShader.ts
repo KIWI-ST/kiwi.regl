@@ -16,7 +16,7 @@ const VERTSHADER_SET: Map<number, GShader> = new Map();
 /**
  * @author axamnd
  * @example
- * const shader = new REGLShader(gl, id);
+ * const shader = new GShader(gl, id);
  */
 class GShader extends Dispose {
     /**

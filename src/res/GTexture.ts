@@ -282,7 +282,7 @@ class GTexture extends Dispose {
                 this.unit = i;
                 break;
             }
-            check(this.unit < numTexUnits, `REGLTexture错误：使用纹理超过设备支持上限${this.limLib.maxTextureUnits}`);
+            check(this.unit < numTexUnits, `Texture错误：使用纹理超过设备支持上限${this.limLib.maxTextureUnits}`);
             gl.activeTexture(gl.TEXTURE0 + this.unit);
             gl.bindTexture(target, this.texture);
         }

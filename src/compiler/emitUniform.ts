@@ -105,7 +105,7 @@ const emitUniform = (
         //获取后缀，处理静态值
         if (record.v) {
             if (record.v instanceof GTexture) {
-                //bind regltexture
+                //bind Gtexture
                 record.dn = pipeline.link(record.v);
                 iBlock.push(`${GL_NAME}.uniform${prefix}(${record.ln}.location, ${record.dn}.bind())`);
                 //末尾销毁

@@ -43,7 +43,7 @@ const emitBuffer = (
         //2.1-1, dyn是数组, 基于该数组创建buffer
         const cond3_0 = cond3.Then.createConditionTE(`${ISNDARRAY_NAME}(${record.dyn})`);
         cond3_0.Then.push(`${BINDING_NAME}.buffer=${BUFFERSTATE_NAME}.createBuffer({data:${record.dyn},target: 'ARRAY_BUFFER'})`);
-        //2.1-1，dyn是reglbuffer
+        //2.1-1，dyn是pipeglBuffer
         cond3_0.Else.push(`${BINDING_NAME}.buffer=${record.dyn}`);
         //2.1余下逻辑：正常设置buffer属性
         cond3.Then.push(`${BINDING_NAME}.component=${BINDING_NAME}.buffer.component`);

@@ -46,7 +46,7 @@ class GFramebuffer extends Dispose {
      */
     dispose(): void {
         const gl = this.gl;
-        check(this.framebuffer, `REGLFramebuffer 错误: 请不要重复清理FBO`);
+        check(this.framebuffer, `Framebuffer 错误: 请不要重复清理FBO`);
         gl.deleteFramebuffer(this.framebuffer);
         this.framebuffer = null;
         this.stats.framebufferCount--;

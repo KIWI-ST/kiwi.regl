@@ -4,7 +4,7 @@ import { Extension } from "../core/Extension";
 import { CPrimitive } from "../core/Constant";
 import { BufferState } from "./BufferState";
 import { ShapedArrayFormat } from "../core/Format";
-import { GElementsbuffer, REGLELEMENTBUFFER_SET } from "../res/GElementsbuffer";
+import { GElementsbuffer, GELEMENTBUFFER_SET } from "../res/GElementsbuffer";
 import { SComponent, SDimension, SPrimitive, SUsage } from "../core/Support";
 
 /**
@@ -15,7 +15,7 @@ class ElementsState {
     /**
      * 
      */
-    static ELEMENTBUFFER_SET: Map<number, GElementsbuffer> = REGLELEMENTBUFFER_SET;
+    static ELEMENTBUFFER_SET: Map<number, GElementsbuffer> = GELEMENTBUFFER_SET;
 
     /**
      * 
@@ -68,7 +68,7 @@ class ElementsState {
      */
     private initElements = (
         opts: {
-            reglElementbuffer: GElementsbuffer,
+            gElementbuffer: GElementsbuffer,
             data: ShapedArrayFormat,
             component: SComponent,
             usage: SUsage,
@@ -76,25 +76,25 @@ class ElementsState {
             count?: number
         }
     ): GElementsbuffer => {
-        opts.reglElementbuffer.bind();
-        opts.reglElementbuffer.paddingWithData(opts.data, opts.usage, opts.component);
+        opts.gElementbuffer.bind();
+        opts.gElementbuffer.paddingWithData(opts.data, opts.usage, opts.component);
         //推断primitive类型
         if (!opts.primitive) {
-            opts.reglElementbuffer.Primitive = opts.reglElementbuffer.Dimension === 1 ?
-                CPrimitive['POINTS'] : opts.reglElementbuffer.Dimension === 2 ?
-                    CPrimitive['LINES'] : opts.reglElementbuffer.Dimension === 3 ?
+            opts.gElementbuffer.Primitive = opts.gElementbuffer.Dimension === 1 ?
+                CPrimitive['POINTS'] : opts.gElementbuffer.Dimension === 2 ?
+                    CPrimitive['LINES'] : opts.gElementbuffer.Dimension === 3 ?
                         CPrimitive['TRIANGLES'] : CPrimitive[opts.primitive];
         }
-        else opts.reglElementbuffer.Primitive = CPrimitive[opts.primitive || 'TRIANGLES'];
+        else opts.gElementbuffer.Primitive = CPrimitive[opts.primitive || 'TRIANGLES'];
         //修正vertcount
-        opts.count = opts.count || opts.reglElementbuffer.ByteLength;
+        opts.count = opts.count || opts.gElementbuffer.ByteLength;
         if (opts.component === 'UNSIGNED_SHORT')
             opts.count >>= 1;
         else if (opts.component === 'UNSIGNED_INT')
             opts.count >>= 2;
         //
-        opts.reglElementbuffer.VertCount = opts.count;
-        return opts.reglElementbuffer;
+        opts.gElementbuffer.VertCount = opts.count;
+        return opts.gElementbuffer;
     }
 
     /**
@@ -123,7 +123,7 @@ class ElementsState {
     }
 
     /**
-     * 根据id获取REGLElementbuffer对象
+     * 根据id获取gElementbuffer对象
      * @param id 
      * @returns 
      */
@@ -154,7 +154,7 @@ class ElementsState {
             dimension = opts.dimension || 'TRIANGLES',
             primitive = opts.primitive || 'TRIANGLES', //绘制类型
             byteLength = opts.data.length;
-        const reglbuffer = this.bufferState.createBuffer({
+        const gbuffer = this.bufferState.createBuffer({
             target: target,
             data: data,
             usage: usage,
@@ -162,10 +162,10 @@ class ElementsState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new GElementsbuffer(reglbuffer, primitive);
+        const gElementbuffer = new GElementsbuffer(gbuffer, primitive);
         this.stats.elementsCount++;
         return this.initElements({
-            reglElementbuffer: reglElementbuffer,
+            gElementbuffer: gElementbuffer,
             data: data,
             component: component,
             usage: usage,
@@ -197,7 +197,7 @@ class ElementsState {
             dimension = opts.dimension || 'TRIANGLES',
             primitive = opts.primitive || 'TRIANGLES', //绘制类型
             byteLength = opts.data.length;
-        const reglbuffer = this.bufferState.createBuffer({
+        const gbuffer = this.bufferState.createBuffer({
             target: target,
             data: data,
             usage: usage,
@@ -205,10 +205,10 @@ class ElementsState {
             dimension: dimension,
             byteLength: byteLength
         });
-        const reglElementbuffer = new GElementsbuffer(reglbuffer, primitive);
+        const gElementbuffer = new GElementsbuffer(gbuffer, primitive);
         this.stats.elementsCount++;
         return this.initElements({
-            reglElementbuffer: reglElementbuffer,
+            gElementbuffer: gElementbuffer,
             data: data,
             component: component,
             usage: usage,

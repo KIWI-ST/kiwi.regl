@@ -195,7 +195,7 @@ class PipeGL {
             primitive?: SPrimitive
         } = {}
     ): GVertexArrayObject => {
-        return this.attributeState.createREGLVertexArrayObject(atts, opts);
+        return this.attributeState.createPipeGLVertexArrayObject(atts, opts);
     }
 
     /**

@@ -331,7 +331,7 @@ class TextureState {
         const gl = this.gl;
         const offset: number = opts.offset || 0;
         const stride: number[] = opts.stride || [0, 0, 0];
-        //parse options to get reglTexInfo
+        //parse options to get TexInfo
         const gTexture = new GTexture(gl, this.limLib, 'TEXTURE_2D', this.stats);
         //1.texInfo
         const texInfo = this.fixTexInfo(opts);

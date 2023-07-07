@@ -170,7 +170,7 @@ class AttributeState {
              * @example
              * attributes:{
              *  normals:{
-             *      buffer:new REGLBuffer(),
+             *      buffer:new GBuffer(),
              *      offset:0,
              *      stride:12,
              *      normalized:false,
@@ -209,7 +209,7 @@ class AttributeState {
      * @param opts 
      * @returns 
      */
-    public createREGLVertexArrayObject = <TA extends TAttribute>(
+    public createPipeGLVertexArrayObject = <TA extends TAttribute>(
         attrs: TA,
         opts: {
             elements?: GElementsbuffer | ShapedArrayFormat,

@@ -7,7 +7,7 @@ import { ShapedArrayFormat, TypedArrayFormat } from "../core/Format";
 /**
  * 
  */
-const REGLELEMENTBUFFER_SET: Map<number, GElementsbuffer> = new Map();
+const GELEMENTBUFFER_SET: Map<number, GElementsbuffer> = new Map();
 
 /**
  * @author axmand
@@ -40,20 +40,20 @@ class GElementsbuffer extends Dispose {
     /**
      * 
      */
-    private reglBuffer: GBuffer;
+    private gBuffer: GBuffer;
 
     /**
      * 
      */
     get Dimension(): number {
-        return this.reglBuffer.Dimension
+        return this.gBuffer.Dimension
     }
 
     /**
      * 
      */
     get ByteLength(): number {
-        return this.reglBuffer.ByteLength;
+        return this.gBuffer.ByteLength;
     }
 
     /**
@@ -88,24 +88,24 @@ class GElementsbuffer extends Dispose {
      * 
      */
     get Component(): number {
-        return this.reglBuffer.Component;
+        return this.gBuffer.Component;
     }
 
     /**
      * 
-     * @param reglBuffer 
+     * @param gBuffer 
      * @param primitive 
      */
     constructor(
-        reglBuffer: GBuffer,
+        gBuffer: GBuffer,
         primitive: SPrimitive = 'TRIANGLES'
 
     ) {
         super();
         this.vertCount = 0;
-        this.reglBuffer = reglBuffer;
+        this.gBuffer = gBuffer;
         this.primitive = CPrimitive[primitive || 'TRIANGLES'];
-        REGLELEMENTBUFFER_SET.set(this.ID, this);
+        GELEMENTBUFFER_SET.set(this.ID, this);
     }
 
     /**
@@ -114,7 +114,7 @@ class GElementsbuffer extends Dispose {
      * @param offset 
      */
     subData = (data: TypedArrayFormat, offset: number): void => {
-        this.reglBuffer.subData(data, offset);
+        this.gBuffer.subData(data, offset);
     }
 
     /**
@@ -124,18 +124,18 @@ class GElementsbuffer extends Dispose {
      * @param component 
      */
     paddingWithData = (data: ShapedArrayFormat, usage: SUsage, component: SComponent): void => {
-        this.reglBuffer.paddingWithData(data, usage, component);
+        this.gBuffer.paddingWithData(data, usage, component);
     }
 
     /**
      * 
      */
     bind = (): void => {
-        this.reglBuffer.bind();
+        this.gBuffer.bind();
     }
 }
 
 export {
-    REGLELEMENTBUFFER_SET,
+    GELEMENTBUFFER_SET,
     GElementsbuffer
 }

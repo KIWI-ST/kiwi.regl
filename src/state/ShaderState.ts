@@ -49,9 +49,9 @@ class ShaderState {
     }
 
     /**
-     * create new reglshader object
+     * create new GShader object
      * @example
-     * const reglShader = shaderState.createShader('FRAGMENT_SHADER', this.stringState.id(FragRawSourceText));
+     * const gShader = shaderState.createShader('FRAGMENT_SHADER', this.stringState.id(FragRawSourceText));
      * @param target 
      * @param id 
      * @returns 

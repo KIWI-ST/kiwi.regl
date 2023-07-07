@@ -30,13 +30,13 @@ class ProgramState {
     /**
      * 
      */
-    private reglProgram: GProgram;
+    private gProgram: GProgram;
 
     /**
      * 
      */
     get Current(): GProgram {
-        return this.reglProgram;
+        return this.gProgram;
     }
 
     /**
@@ -53,7 +53,7 @@ class ProgramState {
         this.gl = gl;
         this.shaderState = shaderState;
         this.stringState = stringState;
-        this.reglProgram = null;
+        this.gProgram = null;
     }
 
     /**
@@ -73,18 +73,18 @@ class ProgramState {
         const gl = this.gl, shaderState = this.shaderState, stringState = this.stringState;
         const fragShader = shaderState.createShader('FRAGMENT_SHADER', stringState.id(frag));
         const vertShader = shaderState.createShader('VERTEX_SHADER', stringState.id(vert));
-        const reglProgram = new GProgram(gl, shaderState, stringState, fragShader.ID, vertShader.ID, attribLocations);
-        return reglProgram;
+        const gProgram = new GProgram(gl, shaderState, stringState, fragShader.ID, vertShader.ID, attribLocations);
+        return gProgram;
     }
 
     /**
      * switch program
-     * @param reglProgramId 
+     * @param gProgramId 
      */
-    public useProgram = (reglProgramId: number): void => {
-        const reglProgram = ProgramState.PROGRAM_SET.get(reglProgramId);
-        reglProgram.use();
-        this.reglProgram = reglProgram;
+    public useProgram = (gProgramId: number): void => {
+        const gProgram = ProgramState.PROGRAM_SET.get(gProgramId);
+        gProgram.use();
+        this.gProgram = gProgram;
     }
 }
 

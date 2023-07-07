@@ -61,7 +61,7 @@ type TAttribute = {
 /**
  * @description
  * 解析输入的attribute类型得到record, 需要注意：
- * -解析得到的reglbuffer作为资源Link到当前pipeline中
+ * -解析得到的GBuffer作为资源Link到当前pipeline中
  * -record解析只记录link后的名称, 不记录buffer资源
  * -draw操作时根据buffer资源存在与否，对record资源赋值
  * 
@@ -116,7 +116,7 @@ const parseAttribute = <TA extends TAttribute>(
          * @example
          * attributes:{
          *  normals:{
-         *      buffer:new REGLBuffer(),
+         *      buffer:new GBuffer(),
          *      offset:0,
          *      stride:12,
          *      normalized:false,

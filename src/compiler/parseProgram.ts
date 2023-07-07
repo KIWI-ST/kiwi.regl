@@ -4,7 +4,7 @@ import { ShaderState } from "../state/ShaderState";
 import { StringState } from "../state/StringState";
 import { ProgramState } from "../state/ProgramState";
 /**
- * create REGLProgram
+ * create GProgram
  * @param opts 
  * @param locations 
  * @returns 
