@@ -12,7 +12,11 @@
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "noImplicitThis": true,
-        "lib": ["DOM", "ES2017"]
+        "ignoreDeprecations": "5.0",
+        "lib": [
+            "DOM",
+            "ES2017"
+        ]
     },
     "rootDir": "src",
     "include": [
