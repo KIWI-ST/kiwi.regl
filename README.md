@@ -69,6 +69,8 @@
 >[Tech-Deferred-Rendering](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.deffer.ts)
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148930075-6617e52f-c0ad-4c41-9f52-12836528f85d.png">
 
+>[Tech-Terrain](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.terrain.ts)
+
 ## Modules ##
 
 ### compiler ###
