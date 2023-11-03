@@ -1,6 +1,6 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { cubeElements, cubePositions, cubeUvs } from "../createCube";
+import { cubeElements, cubePositions, cubeUvs } from "../util/createCube";
 
 import { IPerformance, PipeGL, TAttribute, TUniform } from "../../src";
 

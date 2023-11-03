@@ -1,7 +1,7 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 import { GTexture, IPerformance, PipeGL, TAttribute, TUniform } from "../../src";
-import { cubeElements, cubePositions } from "../createCube";
-import { createNormals } from "../createNormals";
+import { cubeElements, cubePositions } from "../util/createCube";
+import { createNormals } from "../util/createNormals";
 
 //https://www.chinedufn.com/webgl-shadow-mapping-tutorial/
 

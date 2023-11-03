@@ -82,6 +82,6 @@ const anim = (framestamp: number) => {
     pipegl0.clear({color:[0, 0, 0, 1.0]});
     draw0.batch<IProp>(batch);
     requestAnimationFrame(anim);
-}
+};
 
 anim(0);

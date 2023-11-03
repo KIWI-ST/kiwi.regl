@@ -4,7 +4,7 @@
  * @param key 
  * @returns 
  */
-const createRGBA = (uri: string, key: string = ``): Promise<{ buf: Uint8Array, w: number, h: number, c: number, key: string }> => {
+const fetchTexture = (uri: string, key: string = ``): Promise<{ buf: Uint8Array, w: number, h: number, c: number, key: string }> => {
     return new Promise((resolve, reject) => {
         fetch(uri).then((res0: Response) => res0.blob()).then((blob: Blob) => createImageBitmap(blob))
             .then((bitmap: ImageBitmap) => {
@@ -26,4 +26,6 @@ const createRGBA = (uri: string, key: string = ``): Promise<{ buf: Uint8Array, w
     });
 }
 
-export { createRGBA }
+export { 
+    fetchTexture 
+}

@@ -27,9 +27,9 @@
 
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { createNormals } from "../createNormals";
+import { createNormals } from "../util/createNormals";
 
-import { cubeElements, cubePositions, cubeUvs } from "../createCube";
+import { cubeElements, cubePositions, cubeUvs } from "../util/createCube";
 
 import { PipeGL, Props, TAttribute, TProps, TUniform } from "../../src";
 
@@ -55,7 +55,6 @@ interface Uniform extends TUniform {
     roughness: Props<IProps>;
     ao: number;
     //
-
     lightPosition: number[];
     cameraPosition: number[];
     lightColor: number[];

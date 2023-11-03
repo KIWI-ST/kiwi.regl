@@ -1,10 +1,10 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { cubeElements, cubePositions, cubeUvs } from "../createCube";
+import { cubeElements, cubePositions, cubeUvs } from "../util/createCube";
 
 import { GTexture, IPerformance, PipeGL, TAttribute, TUniform } from "../../src";
-import { createNormals } from "../createNormals";
-import { createRGBA } from "../createRGBA";
+import { createNormals } from "../util/createNormals";
+import { fetchTexture } from "../util/createTexture";
 
 
 interface AttributeCube extends TAttribute {
@@ -38,12 +38,12 @@ const pipegl0 = new PipeGL({
 });
 
 const cubeSource = [
-    createRGBA('/example/assets/cube/negx.jpg', 'negx'),
-    createRGBA('/example/assets/cube/negy.jpg', 'negy'),
-    createRGBA('/example/assets/cube/negz.jpg', 'negz'),
-    createRGBA('/example/assets/cube/posx.jpg', 'posx'),
-    createRGBA('/example/assets/cube/posy.jpg', 'posy'),
-    createRGBA('/example/assets/cube/posz.jpg', 'posz'),
+    fetchTexture('/example/assets/cube/negx.jpg', 'negx'),
+    fetchTexture('/example/assets/cube/negy.jpg', 'negy'),
+    fetchTexture('/example/assets/cube/negz.jpg', 'negz'),
+    fetchTexture('/example/assets/cube/posx.jpg', 'posx'),
+    fetchTexture('/example/assets/cube/posy.jpg', 'posy'),
+    fetchTexture('/example/assets/cube/posz.jpg', 'posz'),
 ];
 
 Promise.all(cubeSource).then(cubeFaces => {

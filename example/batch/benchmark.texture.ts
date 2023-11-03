@@ -1,7 +1,7 @@
 import { Mat4, Vec3 } from 'kiwi.matrix';
 
-import { createRGBA } from '../createRGBA';
-import { cubeElements, cubePositions, cubeUvs } from '../createCube';
+import { fetchTexture } from '../util/createTexture';
+import { cubeElements, cubePositions, cubeUvs } from '../util/createCube';
 
 import { GTexture, IPerformance, PipeGL, Props, TAttribute, TProps, TUniform } from '../../src/index';
 
@@ -28,7 +28,7 @@ const pipegl0 = new PipeGL({
     extensions: ['ANGLE_instanced_arrays', 'OES_vertex_array_object']
 });
 
-createRGBA('/example/assets/texture0.jpg').then(t => {
+fetchTexture('/example/assets/jpg/texture0.jpg').then(t => {
 
     const draw0 = pipegl0.compile<Attribute, Uniform>({
 

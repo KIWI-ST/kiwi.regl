@@ -1,7 +1,7 @@
 import { Mat4, Vec3 } from "kiwi.matrix";
 import { IPerformance, PipeGL, TAttribute, TUniform } from "../../src";
-import { cubeElements, cubePositions } from "../createCube";
-import { createNormals } from "../createNormals";
+import { cubeElements, cubePositions } from "../util/createCube";
+import { createNormals } from "../util/createNormals";
 
 const RADIUS = 700;
 
@@ -81,7 +81,6 @@ interface CubeUniform extends TUniform {
     specular: number;        //light相关：镜面反射率
     viewPosition: number[];   //light相关：摄像头位置
 }
-
 
 const cube0 = pipegl0.compile<CubeAttribute, CubeUniform>({
 

@@ -75,6 +75,6 @@ const anim = () => {
         { offset: -0.2 }
     ]);
     requestAnimationFrame(anim);
-}
+};
 
 anim();

@@ -18,8 +18,8 @@
 
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { createNormals } from "../createNormals";
-import { cubeElements, cubePositions, cubeUvs } from "../createCube";
+import { createNormals } from "../util/createNormals";
+import { cubeElements, cubePositions, cubeUvs } from "../util/createCube";
 
 import { GTexture, IPerformance, PipeGL, Props, TAttribute, TProps, TUniform } from "../../src";
 

@@ -17,7 +17,7 @@
 
 import { Mat4, Vec3 } from "kiwi.matrix";
 
-import { createRGBA } from "../createRGBA";
+import { fetchTexture } from "../util/createTexture";
 
 import { GTexture, PipeGL, TAttribute, TUniform } from "../../src";
 
@@ -40,12 +40,12 @@ const CameraMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAP
 const pipegl0 = new PipeGL({ width: RADIUS, height: RADIUS });
 
 const cubeSource = [
-    createRGBA('/example/assets/cube/negx.jpg', 'negx'),
-    createRGBA('/example/assets/cube/negy.jpg', 'negy'),
-    createRGBA('/example/assets/cube/negz.jpg', 'negz'),
-    createRGBA('/example/assets/cube/posx.jpg', 'posx'),
-    createRGBA('/example/assets/cube/posy.jpg', 'posy'),
-    createRGBA('/example/assets/cube/posz.jpg', 'posz'),
+    fetchTexture('/example/assets/cube/negx.jpg', 'negx'),
+    fetchTexture('/example/assets/cube/negy.jpg', 'negy'),
+    fetchTexture('/example/assets/cube/negz.jpg', 'negz'),
+    fetchTexture('/example/assets/cube/posx.jpg', 'posx'),
+    fetchTexture('/example/assets/cube/posy.jpg', 'posy'),
+    fetchTexture('/example/assets/cube/posz.jpg', 'posz'),
 ];
 
 Promise.all(cubeSource).then(cubeFaces => {
