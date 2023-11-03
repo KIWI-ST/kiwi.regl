@@ -6,7 +6,7 @@ import { createTerrainV1, fetchCreateTerrainV1 } from "../util/createTerrainV1";
 
 const W:number = 1200;
 const H:number = 600;
-const CAMERAPOSITION = [0, 0, 2];
+const CAMERAPOSITION = [0, -3, 1];
 const ProjectionMatrix = Mat4.perspective(Math.PI / 4, W / H, 0.01, 100);
 const ViewMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAPOSITION[1], CAMERAPOSITION[2]), new Vec3().set(0, 0.0, 0), new Vec3().set(0, 1, 0)).invert();
 const ModelMatrix = new Mat4().identity();
@@ -80,7 +80,7 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 vec2 uv0 = vec2(clamp(u, 0.0, 1.0), clamp(v, 0.0, 1.0));
                 // vec2 uv0 = vec2(u, v);
                 vec4 v4 = texture2D(texture, uv0);
-                return decode_elevation(v4.x, v4.y, v4.z);
+                return decode_elevation(v4.x, v4.y, v4.z) * 0.1;
             }
         
             // 计算以pos为起点三角形的面法线
@@ -141,9 +141,8 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
         
             void main(){
                 float h = get_z(uv.x, uv.y);
-                vPosition = vec3(position.x, position.y, h * 0.15);
+                vPosition = vec3(position.x, position.y, h * 0.3);
                 vNormal = get_vertex_normal(vPosition, uv);
-                vUv = uv;
                 gl_Position = projection * view * model * vec4(vPosition, 1.0);
             }`,
         
@@ -157,7 +156,6 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
         
             varying vec3 vNormal;
             varying vec3 vPosition;
-            varying vec2 vUv;
         
             void main(){
                 //计算环境光结果
@@ -175,7 +173,7 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 vec3 specular0 = specular * spec32 * lightColor;
                 // 颜色汇总
                 gl_FragColor=vec4(ambient0 + diffuse0 + specular0, 1.0);
-                // gl_FragColor=vec4(vUv, 1.0, 1.0);
+                // gl_FragColor=vec4(vNormal, 1.0);
             }`,
         
             attributes: {
