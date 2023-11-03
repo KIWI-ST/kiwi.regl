@@ -70,7 +70,7 @@
 <img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://user-images.githubusercontent.com/5127112/148930075-6617e52f-c0ad-4c41-9f52-12836528f85d.png">
 
 >[Tech-Terrain](https://github.com/KIWI-ST/pipegl/blob/master/example/tech/benchmark.terrain.ts)
-<img width="256" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://github.com/KIWI-ST/RCI/assets/5127112/b08a994d-a2ea-4186-8f82-9d8e9e19d489">
+<img width="512" alt="7f9d2c0bca317cf2e836d13ed85762f" src="https://github.com/KIWI-ST/RCI/assets/5127112/b08a994d-a2ea-4186-8f82-9d8e9e19d489">
 
 ## Modules ##
 
