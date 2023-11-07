@@ -4,9 +4,9 @@ import { createQuads } from "../util/createQuads";
 import { GTexture, IPerformance, IPipeCommand, PipeGL, TAttribute, TUniform } from "../../src";
 import { createTerrainV1, fetchCreateTerrainV1 } from "../util/createTerrainV1";
 
-const W:number = 1200;
-const H:number = 600;
-const CAMERAPOSITION = [0, -3, 1];
+const W:number = 700;
+const H:number = 700;
+const CAMERAPOSITION = [0, -3, 2];
 const ProjectionMatrix = Mat4.perspective(Math.PI / 4, W / H, 0.01, 100);
 const ViewMatrix = new Mat4().lookAt(new Vec3().set(CAMERAPOSITION[0], CAMERAPOSITION[1], CAMERAPOSITION[2]), new Vec3().set(0, 0.0, 0), new Vec3().set(0, 1, 0)).invert();
 const ModelMatrix = new Mat4().identity();
@@ -80,7 +80,7 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 vec2 uv0 = vec2(clamp(u, 0.0, 1.0), clamp(v, 0.0, 1.0));
                 // vec2 uv0 = vec2(u, v);
                 vec4 v4 = texture2D(texture, uv0);
-                return decode_elevation(v4.x, v4.y, v4.z) * 0.1;
+                return decode_elevation(v4.x, v4.y, v4.z) / 16.0;
             }
         
             // 计算以pos为起点三角形的面法线
@@ -92,56 +92,31 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 return normalize(n);
             }
         
-            // 采取9个偏移点计算顶点法向量的方法增强精度
-            // |p8|p7|p6|
+            // 采取5个点计算顶点法向量的方法增强精度
+            // |  |pu|  |
             // ----------
-            // |p1|p0|p5|
+            // |pl|po|pr|
             // -----------
-            // |p2|p3|p4|
+            // |  |pd|  |
             vec3 get_vertex_normal(vec3 p0, vec2 uv0){
-        
-                float px1 = p0.x - lerp;
-                float px2 = p0.x;
-                float px3 = p0.x + lerp;
-        
-                float py1 = p0.y - lerp;
-                float py2 = p0.y;
-                float py3 = p0.y + lerp;
-        
-                float u1 = uv0.x - lerp;
-                float u2 = uv0.x;
-                float u3 = uv0.x + lerp;
-        
-                float v1 = uv0.y - lerp;
-                float v2 = uv0.y;
-                float v3 = uv0.y + lerp;
-        
-                vec3 p1 = vec3(px1, py1, get_z(u1, v1));
-                vec3 p2 = vec3(px2, py1, get_z(u2, v1));
-                vec3 p3 = vec3(px3, py1, get_z(u3, v1));
-        
-                vec3 p4 = vec3(px1, py2, get_z(u1, v2));
-                vec3 p5 = vec3(px3, py2, get_z(u3, v2));
-        
-                vec3 p6 = vec3(px1, py3, get_z(u1, v3));
-                vec3 p7 = vec3(px2, py3, get_z(u2, v3));
-                vec3 p8 = vec3(px3, py3, get_z(u3, v3));
-        
+                vec3 po = p0;
+
+                vec3 pu = vec3(po.x, po.y + lerp, get_z(uv0.x, uv0.y + lerp));
+                vec3 pd = vec3(po.x, po.y - lerp, get_z(uv0.x, uv0.y - lerp));
+
+                vec3 pl = vec3(po.x - lerp, po.y, get_z(uv0.x - lerp, uv0.y));
+                vec3 pr = vec3(po.x + lerp, po.y, get_z(uv0.x + lerp, uv0.y));
+
                 vec3 n = vec3(0.0, 0.0, 0.0);
-        
-                // 四个三角形法线求和
-                n += get_normal(p0, p1, p2);
-                n += get_normal(p0, p3, p4);
-                n += get_normal(p0, p5, p6);
-                n += get_normal(p0, p7, p8);
-                n = normalize(n);
-    
-                return n;
+                n += get_normal(po, pu, pr);
+                n += get_normal(po, pd, pl);
+
+                return normalize(n);
             }
         
             void main(){
                 float h = get_z(uv.x, uv.y);
-                vPosition = vec3(position.x, position.y, h * 0.3);
+                vPosition = vec3(position.x, position.y, h);
                 vNormal = get_vertex_normal(vPosition, uv);
                 gl_Position = projection * view * model * vec4(vPosition, 1.0);
             }`,
@@ -231,6 +206,10 @@ createTerrainPass("assets/terrain/1_1.png", new Vec2().set(0.0, -0.5), new Vec2(
 });
 
 const anim = () => {
+    pipegl0.clear({
+        color: [0, 0, 0, 1],
+        depth: true,
+    });
     for(let i=0;i<queue.length;i++){
         queue[i].draw();
     }
