@@ -27,9 +27,9 @@ const createQuads = (quadCountSqrt: number, min:Vec2, max:Vec2) => {
         const offset = Math.floor(k / vCount1d);
         const p0 = k + offset;
         const p1 = p0 + 1;
-        const p2 = p0 + vCount1d + 2;
-        const p3 = p0 + vCount1d + 1;
-        const indices: number[] = [p0, p1, p2, p2, p3, p0];
+        const p2 = p1 + vCount1d;
+        const p3 = p2 + 1;
+        const indices: number[] = [p0, p2, p3, p3, p1, p0];
         quadIndices.push(indices);
     }
 

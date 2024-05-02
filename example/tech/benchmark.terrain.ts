@@ -13,12 +13,13 @@ const ModelMatrix = new Mat4().identity();
 
 const pipegl0 = new PipeGL({
     width: W,
-    height: H
+    height: H,
+    extensions:["OES_standard_derivatives"]
 });
 
 const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
     
-    const quad1d:number = 64;
+    const quad1d:number = 16;
     const { quadPositions, quadIndices, quadUvs } = createQuads(quad1d, rangeMin, rangeMax);
 
     interface Attribute extends TAttribute {
@@ -48,16 +49,17 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
             t.h,
             t.c,
             {
-                mag: 'NEAREST',
-                min: 'NEAREST',
+                mag: "LINEAR",
+                min: "LINEAR",
                 flipY: true
             }
         );
 
         return pipegl0.compile<Attribute, Uniform>({
     
-            vert: `precision mediump float;
-        
+            vert: `
+            precision mediump float;
+
             attribute vec3 position;
             attribute vec2 uv;
         
@@ -118,10 +120,14 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 float h = get_z(uv.x, uv.y);
                 vPosition = vec3(position.x, position.y, h);
                 vNormal = get_vertex_normal(vPosition, uv);
+                vec3 v3 = vec3(vPosition);
                 gl_Position = projection * view * model * vec4(vPosition, 1.0);
             }`,
         
-            frag: `precision mediump float;
+            frag: `
+            #extension GL_OES_standard_derivatives : enable
+
+            precision mediump float;
         
             uniform float ambient;  //环境光
             uniform float specular; //镜面光
@@ -136,19 +142,31 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 //计算环境光结果
                 vec3 ambient0 = ambient * lightColor;                       
                 //计算漫反射
+                // vec3 vFaceNormal = vNormal;
+                vec3 vFaceNormal = normalize(cross(dFdy(vPosition), dFdx(vPosition)));
                 vec3 lightDir = normalize(lightPosition - vPosition);       
-                float diff = max(dot(vNormal, lightDir), 0.0);
+                float diff = max(dot(vFaceNormal, lightDir), 0.0);
+                // float diff = dot(vFaceNormal, lightDir) > 0.0 ? 1.0 : -1.0;
+                // diff = smoothstep(0.5, 1.0, diff);
+                diff = mod(diff, 15.0);
+                diff = diff/15.0;
+                // diff = smoothstep(0.0, 1.0, diff);
+                // float diff = dot(vFaceNormal, lightDir);
                 vec3 diffuse0 = diff * lightColor;
                 //镜面反射
                 vec3 viewDir = normalize(viewPosition - vPosition);
-                vec3 reflectDir= reflect(-lightDir, vNormal);
+                vec3 reflectDir= reflect(-lightDir, vFaceNormal);
                 float spec = max(dot(viewDir, reflectDir), 0.0);
                 //注意这里pow(float, float), 参数必须是float类型
                 float spec32 = pow(spec, 32.0);                  
                 vec3 specular0 = specular * spec32 * lightColor;
                 // 颜色汇总
-                gl_FragColor=vec4(ambient0 + diffuse0 + specular0, 1.0);
-                // gl_FragColor=vec4(vNormal, 1.0);
+                vec4 color4 = vec4(ambient0 + diffuse0, 1.0);
+                gl_FragColor= pow(color4, vec4(2.2));
+                // gl_FragColor = color4;
+                // gl_FragColor=vec4(ambient0 + diffuse0 + specular0, 1.0);
+                // gl_FragColor=vec4(diffuse0 , 1.0);
+                // gl_FragColor=vec4(diff, diff, diff, 1.0);
             }`,
         
             attributes: {
@@ -168,13 +186,13 @@ const createTerrainPass = (uri:string, rangeMin:Vec2, rangeMax:Vec2)=>{
                 //镜面反射率
                 specular: 0.6,                       
                 //环境光
-                ambient: 0.1,                        
+                ambient: 0.9,                        
                 //白光
                 lightColor: [1, 1, 1],                 
                 //光源位置
                 lightPosition: (performance: IPerformance, batchId: number): number[] => {
-                    const t0 = Math.cos(performance.count * 0.01);
-                    const t1 = Math.sin(performance.count * 0.01);
+                    const t0 = Math.cos(performance.count * 0.001);
+                    const t1 = Math.sin(performance.count * 0.001);
                     const p0 = [t0 * 3.5, t1 * 3, -10.0];
                     return p0;
                 },       

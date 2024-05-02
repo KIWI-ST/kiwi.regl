@@ -9,7 +9,7 @@
         "sourceMap": true,
         "isolatedModules": true,
         "experimentalDecorators": true,
-        "suppressImplicitAnyIndexErrors": true,
+        // "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "noImplicitThis": true,
         "ignoreDeprecations": "5.0",
